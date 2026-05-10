@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import { User, Mail, Lock, Bell, CreditCard, BookOpen, Package, Heart, ChevronRight, Save } from "lucide-react"
@@ -18,6 +18,14 @@ const tabs = [
 ]
 
 export default function MiCuentaPage() {
+  return (
+    <Suspense fallback={null}>
+      <MiCuentaContent />
+    </Suspense>
+  )
+}
+
+function MiCuentaContent() {
   const { user, token, updateUser } = useAuth()
   const searchParams = useSearchParams()
   const initialTab = searchParams.get("tab") || "profile"

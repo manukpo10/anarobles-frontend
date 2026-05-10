@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useSearchParams, useRouter } from "next/navigation"
@@ -105,6 +106,23 @@ function SuccessContent() {
   )
 }
 
+function SuccessFallback() {
+  return (
+    <div className="min-h-screen bg-background pt-24">
+      <div className="mx-auto max-w-2xl px-6 py-20 text-center">
+        <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-green-100">
+          <CheckCircle className="h-12 w-12 text-green-600" />
+        </div>
+        <h1 className="font-serif text-4xl text-foreground">Cargando...</h1>
+      </div>
+    </div>
+  )
+}
+
 export default function CheckoutSuccessPage() {
-  return <SuccessContent />
+  return (
+    <Suspense fallback={<SuccessFallback />}>
+      <SuccessContent />
+    </Suspense>
+  )
 }
