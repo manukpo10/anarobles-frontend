@@ -68,7 +68,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 export const fetchCursosFromAPI = async (): Promise<Curso[]> => {
   try {
     console.log("🔄 Intentando obtener cursos del backend...")
-    const res = await fetch("http://localhost:8080/api/cursos", { 
+    const res = await fetch(`${API_BASE}/api/cursos`, { 
       cache: "no-store"
     })
     console.log("📡 Response status:", res.status)
