@@ -10,7 +10,7 @@ import { ArrowLeft, CreditCard, Lock, Check, ShieldCheck, Loader2, Package, Book
 import { useAuth } from "@/contexts/auth-context"
 import { useCheckout, CheckoutItem } from "@/contexts/checkout-context"
 import { useCart } from "@/contexts/cart-context"
-import { confirmarCheckoutDemo } from "@/lib/data"
+import { confirmarCheckoutDemo, crearPreferenciaCheckout } from "@/lib/data"
 
 const MERCADO_PAGO_PUBLIC_KEY = process.env.NEXT_PUBLIC_MP_PUBLIC_KEY || "TEST-xxxxx"
 
@@ -59,30 +59,26 @@ function CheckoutContent() {
     try {
       if (!token) throw new Error("No estás autenticado")
 
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, token })
-      })
-
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.message || data.error || "Error al procesar el pago")
+      // Use crearPreferenciaCheckout from lib/data.ts - calls backend directly
+      const result = await crearPreferenciaCheckout(token, items)
+      
+      if (!result) {
+        throw new Error("No se pudo conectar con el servidor")
       }
 
-      if (data.demo) {
-        await confirmarCheckoutDemo(token, data.external_reference)
-        setOrderId(data.external_reference)
-        setOrderComplete(true)
-        await processCheckout()
-        setIsProcessing(false)
+      if (result.demo) {
+        // Demo mode: store in sessionStorage, redirect to success page
+        sessionStorage.setItem("checkout-demo", "true")
+        sessionStorage.setItem("checkout-order", result.externalReference)
+        router.push(`/checkout/success?order=${result.externalReference}&demo=true`)
         return
       }
 
-      if (data.init_point) {
-        window.location.href = data.init_point
-      } else if (data.sandbox_init_point) {
-        window.location.href = data.sandbox_init_point
+      // Redirect to Mercado Pago
+      if (result.initPoint) {
+        window.location.href = result.initPoint
+      } else if (result.sandboxInitPoint) {
+        window.location.href = result.sandboxInitPoint
       } else {
         throw new Error("No se pudo obtener el enlace de pago")
       }

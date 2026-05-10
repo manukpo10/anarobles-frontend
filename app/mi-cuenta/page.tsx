@@ -78,22 +78,20 @@ function MiCuentaContent() {
   }, [token])
 
   useEffect(() => {
-    if (user) {
-      // Add sample data for any user if none exist
+    // Only seed localStorage if user exists and no backend data available
+    if (user && backendInscripciones.length === 0 && backendOrders.length === 0) {
+      // Seed localStorage for offline fallback - but don't overwrite backend data
       const existingEnrollments = JSON.parse(localStorage.getItem("enrollments") || "{}")
       if (!existingEnrollments[user.id] || existingEnrollments[user.id].length === 0) {
-        // Add sample enrollments
         existingEnrollments[user.id] = ["1"]
         localStorage.setItem("enrollments", JSON.stringify(existingEnrollments))
         
-        // Add some lesson progress
         const progress = JSON.parse(localStorage.getItem("progress") || "{}")
         if (!progress[user.id]) progress[user.id] = {}
         progress[user.id]["1"] = ["l1", "l2"]
         localStorage.setItem("progress", JSON.stringify(progress))
       }
       
-      // Add sample purchases if none exist
       const existingPurchases = JSON.parse(localStorage.getItem("purchases") || "{}")
       if (!existingPurchases[user.id] || existingPurchases[user.id].length === 0) {
         existingPurchases[user.id] = [
@@ -101,16 +99,30 @@ function MiCuentaContent() {
         ]
         localStorage.setItem("purchases", JSON.stringify(existingPurchases))
       }
-      
-      const enrollmentIds = getUserEnrollments(user.id)
-      const courses = enrollmentIds.map(id => getCursoById(id)).filter(Boolean)
-      setEnrolledCourses(courses)
-      
-      // Load purchases
-      const userPurchases = getUserPurchases(user.id)
-      setPurchases(userPurchases)
     }
-  }, [user])
+  }, [user, backendInscripciones.length, backendOrders.length])
+
+  // Use backend data as primary, fallback to localStorage only for display
+  const displayEnrollments = backendInscripciones.length > 0 
+    ? backendInscripciones.map(i => ({
+        id: String(i.cursoId),
+        title: i.cursoTitulo,
+        image: i.cursoImagen,
+      }))
+    : enrolledCourses
+
+  const displayPurchases = backendOrders.length > 0
+    ? backendOrders.flatMap(o => o.items.map(it => ({
+        id: `${o.externalReference}-${it.id}`,
+        productId: String(it.referenciaId),
+        productName: it.titulo,
+        price: it.precio,
+        quantity: it.cantidad,
+        image: it.imagen,
+        date: o.createdAt,
+        estado: o.estado,
+      })))
+    : purchases
 
   const handleSave = () => {
     updateUser({ name: formData.name, email: formData.email })
@@ -312,7 +324,7 @@ function MiCuentaContent() {
                   <div className="rounded-2xl bg-background p-8 shadow-sm border border-border">
                     <h2 className="font-serif text-2xl font-medium text-foreground mb-6">Mis Pedidos</h2>
                     <div className="space-y-4">
-                      {purchases.length === 0 ? (
+                      {displayPurchases.length === 0 ? (
                         <div className="text-center py-8">
                           <Package className="mx-auto h-16 w-16 text-muted-foreground/30 mb-4" />
                           <p className="text-muted-foreground mb-4">No tienes ningún pedido</p>
@@ -325,7 +337,7 @@ function MiCuentaContent() {
                           </Link>
                         </div>
                       ) : (
-                        purchases.map((purchase) => (
+                        displayPurchases.map((purchase) => (
                           <div key={purchase.id} className="flex items-center justify-between rounded-xl border border-border p-4 hover:bg-muted/30 transition-colors">
                             <div className="flex items-center gap-4">
                               <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-muted">
@@ -355,7 +367,7 @@ function MiCuentaContent() {
                 {activeTab === "courses" && (
                   <div className="rounded-2xl bg-background p-8 shadow-sm border border-border">
                     <h2 className="font-serif text-2xl font-medium text-foreground mb-6">Mis Cursos</h2>
-                    {enrolledCourses.length === 0 ? (
+                    {displayEnrollments.length === 0 ? (
                       <div className="text-center py-8">
                         <p className="text-muted-foreground mb-4">No estás inscripto en ningún curso</p>
                         <Link
@@ -368,7 +380,7 @@ function MiCuentaContent() {
                       </div>
                     ) : (
                       <div className="grid gap-4 md:grid-cols-2">
-                        {enrolledCourses.map((course: any) => {
+                        {displayEnrollments.map((course: any) => {
                           const progress = getCourseProgress(user?.id || "", course.id)
                           const totalLessons = course.modules?.reduce((acc: number, m: any) => acc + m.lessons.length, 0) || 0
                           return (

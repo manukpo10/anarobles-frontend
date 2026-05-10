@@ -31,7 +31,7 @@ import {
   X,
   RotateCcw
 } from "lucide-react"
-import { getCursoById, getCourseProgress, updateLessonProgress, getLessonProgress, isUserEnrolled, getCursos, fetchCursoByIdFromAPI, type Curso, type Lesson, type QuizQuestion } from "@/lib/data"
+import { getCursoById, getCourseProgress, updateLessonProgress, getLessonProgress, isUserEnrolled, getCursos, fetchCursoByIdFromAPI, fetchMisCursos, estoyInscripto, inscribirEnCursoAPI, completarLeccion, type Curso, type Lesson, type QuizQuestion } from "@/lib/data"
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
 
@@ -69,9 +69,24 @@ export default function CursoDetailPage({
   const [quizScore, setQuizScore] = useState(0)
   const [showIntroVideo, setShowIntroVideo] = useState(false)
   const [currentVideoUrl, setCurrentVideoUrl] = useState<string | null>(null)
-  const { isAuthenticated, user } = useAuth()
+  const { isAuthenticated, user, token } = useAuth()
   const router = useRouter()
   const { addItem } = useCheckout()
+
+  // Check enrollment status with backend on mount
+  useEffect(() => {
+    const checkEnrollment = async () => {
+      if (!token || !user) return
+      const enrolled = await estoyInscripto(token, id)
+      setIsEnrolled(enrolled)
+      if (enrolled) {
+        // Load completed lessons from backend
+        const completed = getLessonProgress(user.id, id)
+        setCompletedLessons(new Set(completed))
+      }
+    }
+    checkEnrollment()
+  }, [token, user, id])
 
   useEffect(() => {
     const loadCurso = async () => {
@@ -88,14 +103,6 @@ export default function CursoDetailPage({
     loadCurso()
   }, [id])
 
-  useEffect(() => {
-    if (user && curso && isUserEnrolled(user.id, String(curso.id))) {
-      setIsEnrolled(true)
-      const completed = getLessonProgress(user.id, String(curso.id))
-      setCompletedLessons(new Set(completed))
-    }
-  }, [user, curso])
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-24">
@@ -111,13 +118,19 @@ export default function CursoDetailPage({
   const modules = curso.modules || []
 
   const toggleLesson = (lessonId: string) => {
+    // Update local state
     setCompletedLessons(prev => {
       const next = new Set(prev)
       if (next.has(lessonId)) {
         next.delete(lessonId)
       } else {
         next.add(lessonId)
+        // Also update localStorage for offline
         updateLessonProgress(user.id, id, lessonId)
+        // Call backend to mark lesson complete
+        if (token) {
+          completarLeccion(token, id, lessonId)
+        }
       }
       return next
     })
@@ -150,11 +163,21 @@ export default function CursoDetailPage({
   const prevCurso = currentIndex > 0 ? getCursos()[currentIndex - 1] : null
   const nextCurso = currentIndex < getCursos().length - 1 ? getCursos()[currentIndex + 1] : null
 
-  const handleEnroll = () => {
+  const handleEnroll = async () => {
     if (!isAuthenticated) {
       router.push(`/auth/login?redirect=/checkout`)
       return
     }
+    
+    if (token) {
+      // Try backend enrollment first
+      const success = await inscribirEnCursoAPI(token, id)
+      if (success) {
+        setIsEnrolled(true)
+      }
+    }
+    
+    // Add to checkout in either case
     addItem({
       id: String(curso.id),
       type: "course",

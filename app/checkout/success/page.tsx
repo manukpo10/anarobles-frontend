@@ -1,23 +1,38 @@
 "use client"
 
-import { Suspense } from "react"
-import { useState, useEffect } from "react"
+import { Suspense, useEffect } from "react"
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { useSearchParams, useRouter } from "next/navigation"
 import { CheckCircle, Package, BookOpen, ArrowRight, Download } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/contexts/auth-context"
+import { confirmarCheckoutDemo } from "@/lib/data"
 
 function SuccessContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { token, isAuthenticated } = useAuth()
   const [orderId, setOrderId] = useState<string | null>(null)
+  const [confirmed, setConfirmed] = useState(false)
 
   useEffect(() => {
     const order = searchParams.get("order")
+    const isDemo = searchParams.get("demo") === "true"
+    
     if (order) {
       setOrderId(order)
+      
+      // If demo mode, confirm the checkout on the backend
+      if (isDemo && token && !confirmed) {
+        confirmarCheckoutDemo(token, order).then(() => {
+          setConfirmed(true)
+          sessionStorage.removeItem("checkout-demo")
+          sessionStorage.removeItem("checkout-order")
+        })
+      }
     }
-  }, [searchParams])
+  }, [searchParams, token, confirmed])
 
   return (
     <div className="min-h-screen bg-background pt-24">

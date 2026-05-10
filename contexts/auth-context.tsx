@@ -65,46 +65,95 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
+  // Session restoration: validate token with backend on mount
+  useEffect(() => {
+    const validateSession = async () => {
+      const savedAuth = localStorage.getItem(STORAGE_KEY)
+      if (!savedAuth) {
+        setIsLoading(false)
+        return
+      }
+      
+      let storedToken: string | null = null
+      try {
+        const parsed = JSON.parse(savedAuth)
+        storedToken = parsed.token || null
+      } catch {
+        setIsLoading(false)
+        return
+      }
+      
+      if (!storedToken) {
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+        const res = await fetch(`${API_BASE}/api/auth/yo`, {
+          headers: { Authorization: `Bearer ${storedToken}` }
+        })
+        
+        if (res.ok) {
+          const data = await res.json()
+          // Populate user from backend response - this is the source of truth
+          setUser({
+            id: String(data.id),
+            name: data.nombre,
+            email: data.email,
+            role: data.role === "ADMIN" ? "admin" : "user",
+            avatar: data.avatar
+          })
+        } else if (res.status === 401) {
+          // Token rejected - clear session and redirect to login
+          localStorage.removeItem(STORAGE_KEY)
+          setUser(null)
+          setToken(null)
+        }
+        // Network error: keep localStorage mock (user stays logged in from stored data)
+      } catch {
+        // Backend unreachable - keep localStorage mock, user stays authenticated from stored data
+      }
+      
+      setIsLoading(false)
+    }
+
+    validateSession()
+  }, [])
+
   const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
     try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
       const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       })
-      
+
       if (res.ok) {
         const data = await res.json()
-        const backendToken = data.token
-        
-        let userData: User
-        if (email === MOCK_ADMIN.email && password === MOCK_ADMIN.password) {
-          userData = {
-            id: MOCK_ADMIN.id,
-            name: MOCK_ADMIN.name,
-            email: MOCK_ADMIN.email,
-            role: "admin",
-            avatar: MOCK_ADMIN.avatar
-          }
-        } else {
-          userData = {
-            id: "user-backend-1",
-            name: email.split("@")[0],
-            email: email,
-            role: "user"
-          }
+        const userData: User = {
+          id: String(data.usuarioId),
+          name: data.nombre,
+          email: data.email,
+          role: data.role === "ADMIN" ? "admin" : "user",
+          avatar: data.avatar
         }
-        
+
         setUser(userData)
-        setToken(backendToken)
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...userData, token: backendToken }))
+        setToken(data.token)
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...userData, token: data.token }))
         return { success: true }
       }
+
+      const errorData = await res.json().catch(() => ({}))
+      return { success: false, error: errorData.message || "Email o contraseña incorrectos" }
     } catch (error) {
-      console.warn("Backend no disponible, usando autenticación local")
+      console.warn("Backend no disponible, usando autenticación local:", error)
     }
 
+    // Fallback a auth localStorage si el backend no responde
     await new Promise(resolve => setTimeout(resolve, 800))
 
     if (email === MOCK_ADMIN.email && password === MOCK_ADMIN.password) {
@@ -136,6 +185,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const register = useCallback(async (name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/registrar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre: name, email, password })
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        const userData: User = {
+          id: String(data.usuarioId),
+          name: data.nombre,
+          email: data.email,
+          role: data.role === "ADMIN" ? "admin" : "user",
+          avatar: data.avatar
+        }
+
+        setUser(userData)
+        setToken(data.token)
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...userData, token: data.token }))
+        return { success: true }
+      }
+
+      const errorData = await res.json().catch(() => ({}))
+      return { success: false, error: errorData.message || "Error al registrarse" }
+    } catch (error) {
+      console.warn("Backend no disponible para registro, usando registro local:", error)
+    }
+
+    // Fallback local
     await new Promise(resolve => setTimeout(resolve, 800))
 
     if (MOCK_USERS[email] || email === MOCK_ADMIN.email) {
@@ -191,6 +272,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   )
+}
+
+// 401 handler helper - exported for use by all fetch functions
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const handleApiError = async (response: Response, logout: () => void, router: any): Promise<{ success: boolean; error?: string }> => {
+  if (response.status === 401) {
+    logout()
+    if (router) {
+      router.push("/auth/login")
+    }
+    return { success: false, error: "Sesión expirada. Por favor, iniciá sesión de nuevo." }
+  }
+  
+  try {
+    const errorData = await response.json()
+    return { success: false, error: errorData.message || `Error ${response.status}` }
+  } catch {
+    return { success: false, error: `Error ${response.status}` }
+  }
 }
 
 export function useAuth() {

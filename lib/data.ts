@@ -166,21 +166,24 @@ export const fetchCursoByIdFromAPI = async (id: string): Promise<Curso | null> =
 
 export const fetchAdminCursos = async (token: string): Promise<Curso[]> => {
   if (!token) {
-    console.warn("No token provided, using localStorage")
-    return getStoredData("cursos", cursos)
+    console.error("No token provided for admin fetch")
+    return []
   }
   try {
     const res = await fetch(`${API_BASE}/api/admin/cursos`, {
       cache: "no-store",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
       mode: "cors"
     })
-    if (!res.ok) throw new Error(`Error fetching admin cursos: ${res.status}`)
+    if (!res.ok) {
+      console.error(`Error fetching admin cursos: ${res.status}`)
+      return []
+    }
     const apiCursos = await res.json()
-    
+
     // If backend returns courses, use ONLY those
     if (apiCursos.length > 0) {
       return apiCursos.map((c: any) => ({
@@ -211,13 +214,12 @@ export const fetchAdminCursos = async (token: string): Promise<Curso[]> => {
         })) || []
       }))
     }
-    
-    // Only fallback to local if backend returned empty
-    console.warn("⚠️ Backend returned empty for admin cursos, usando localStorage")
-    return getStoredData("cursos", cursos)
+
+    // Empty is valid - no cursos created yet
+    return []
   } catch (error) {
     console.error("Error fetching admin cursos:", error)
-    return getStoredData("cursos", cursos)
+    return []
   }
 }
 
@@ -345,7 +347,7 @@ export const actualizarCursoAPI = async (token: string, id: string, curso: Parti
       })
     })
     if (!res.ok) {
-      console.warn(`Error updating curso: ${res.status}, usando localStorage`)
+      console.error(`Error updating curso: ${res.status}`)
       return null
     }
     const c = await res.json()
@@ -440,20 +442,23 @@ export const fetchProductByIdFromAPI = async (id: string): Promise<Product | nul
 }
 
 export const fetchAdminProductos = async (token: string): Promise<Product[]> => {
-  const localProducts = getProducts()
+  if (!token) {
+    console.error("No token provided for admin fetch")
+    return []
+  }
   try {
     const res = await fetch(`${API_BASE}/api/admin/productos`, {
       cache: "no-store",
       headers: { "Authorization": `Bearer ${token}` }
     })
-    if (!res.ok) throw new Error(`Error: ${res.status}`)
-    const apiProducts = (await res.json()).map(mapProductoFromAPI)
-    const combined = [...localProducts, ...apiProducts]
-    const unique = Array.from(new Map(combined.map(p => [p.id, p])).values())
-    return unique
+    if (!res.ok) {
+      console.error(`Error fetching admin productos: ${res.status}`)
+      return []
+    }
+    return (await res.json()).map(mapProductoFromAPI)
   } catch (error) {
     console.error("Error fetching admin productos:", error)
-    return localProducts
+    return []
   }
 }
 
