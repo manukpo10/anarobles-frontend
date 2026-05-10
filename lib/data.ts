@@ -114,8 +114,8 @@ export const fetchCursosFromAPI = async (): Promise<Curso[]> => {
     console.warn("⚠️ Backend returned empty, usando datos locales")
     return getStoredData("cursos", cursos)
   } catch (error) {
-    console.warn("❌ Backend no disponible, usando datos locales:", error)
-    return getStoredData("cursos", cursos)
+    console.warn("❌ Backend no disponible para cursos:", error)
+    return []
   }
 }
 
@@ -416,18 +416,13 @@ const mapProductoFromAPI = (p: any): Product => ({
 })
 
 export const fetchProductsFromAPI = async (): Promise<Product[]> => {
-  const localProducts = getProducts()
   try {
     const res = await fetch(`${API_BASE}/api/productos`, { cache: "no-store" })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const data = (await res.json()).map(mapProductoFromAPI)
-    const apiProducts = data.length > 0 ? data : []
-    const combined = [...localProducts, ...apiProducts]
-    const unique = Array.from(new Map(combined.map(p => [p.id, p])).values())
-    return unique
+    return (await res.json()).map(mapProductoFromAPI)
   } catch (error) {
-    console.warn("Backend no disponible para productos, usando datos locales:", error)
-    return localProducts
+    console.warn("Backend no disponible para productos:", error)
+    return []
   }
 }
 
