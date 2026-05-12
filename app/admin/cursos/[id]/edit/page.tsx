@@ -304,7 +304,13 @@ toast({
     }
   }
 
-  return (
+return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
       {/* Header */}
       <motion.div variants={itemVariants} className="flex items-center gap-4">
         <Button
