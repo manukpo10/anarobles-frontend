@@ -40,7 +40,8 @@ public class SecurityConfig {
             "http://localhost:3000",
             "http://127.0.0.1:3000",
             "https://anarobles-frontend.vercel.app",
-            "https://anarobles-frontend-git-main-manuurobles-8843s-projects.vercel.app"
+            "https://anarobles-frontend-git-main-manuurobles-8843s-projects.vercel.app",
+            "https://anarobles-frontend-ovgr9knbq-manuurobles-8843s-projects.vercel.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
