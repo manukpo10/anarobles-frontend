@@ -11,7 +11,8 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
-import { getProductById, updateProduct, actualizarProductoAPI } from "@/lib/data"
+import { fetchProductByIdFromAPI, actualizarProductoAPI } from "@/lib/data"
+import { Spinner } from "@/components/ui/spinner"
 import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
 
@@ -45,22 +46,27 @@ export default function EditarProductoPage() {
   const [imagePreview, setImagePreview] = useState("")
 
   const { token } = useAuth()
+  const [loadingData, setLoadingData] = useState(true)
 
   useEffect(() => {
-    const productId = params.id as string
-    const product = getProductById(productId)
-    if (product) {
-      setFormData({
-        id: product.id,
-        name: product.name,
-        category: product.category,
-        price: product.price.toString(),
-        description: product.description,
-        image: product.image,
-        featured: product.featured || false
-      })
-      setImagePreview(product.image)
+    const loadProduct = async () => {
+      const productId = params.id as string
+      const product = await fetchProductByIdFromAPI(productId)
+      if (product) {
+        setFormData({
+          id: product.id,
+          name: product.name,
+          category: product.category,
+          price: product.price.toString(),
+          description: product.description,
+          image: product.image,
+          featured: product.featured || false
+        })
+        setImagePreview(product.image)
+      }
+      setLoadingData(false)
     }
+    loadProduct()
   }, [params.id])
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,40 +86,32 @@ export default function EditarProductoPage() {
     setIsLoading(true)
 
     try {
-      if (token) {
-        const updated = await actualizarProductoAPI(token, formData.id, {
-          name: formData.name,
-          category: formData.category,
-          price: parseFloat(formData.price),
-          description: formData.description,
-          image: formData.image,
-          featured: formData.featured,
+      if (!token) {
+        toast({
+          title: "Error",
+          description: "Necesitás estar logueado para editar productos",
+          variant: "destructive"
         })
-        if (updated) {
-          toast({
-            title: "Producto editado correctamente ✓",
-            description: "Guardado en el servidor"
-          })
-          router.push("/admin/productos")
-          return
-        }
+        return
       }
 
-      updateProduct(formData.id, {
+      const updated = await actualizarProductoAPI(token, formData.id, {
         name: formData.name,
         category: formData.category,
         price: parseFloat(formData.price),
         description: formData.description,
         image: formData.image,
-        featured: formData.featured
+        featured: formData.featured,
       })
 
-      toast({
-        title: "Producto editado correctamente ✓",
-        description: "El producto ha sido actualizado exitosamente"
-      })
-
-      router.push("/admin/productos")
+      if (updated) {
+        toast({
+          title: "Producto editado correctamente ✓",
+          description: "Guardado en el servidor"
+        })
+        router.push("/admin/productos")
+        return
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -151,7 +149,12 @@ export default function EditarProductoPage() {
         </div>
       </motion.div>
 
-      <form onSubmit={handleSubmit}>
+      {loadingData ? (
+        <div className="flex items-center justify-center py-20">
+          <Spinner className="h-8 w-8" />
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Main Content */}
           <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
@@ -295,6 +298,7 @@ export default function EditarProductoPage() {
           </motion.div>
         </div>
       </form>
+      )}
     </motion.div>
   )
 }
