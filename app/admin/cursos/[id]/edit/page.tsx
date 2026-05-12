@@ -286,10 +286,10 @@ export default function EditarCursoPage({
       })
 
       if (actualizado) {
-        toast({
-          title: "Curso actualizado",
-          description: "El curso ha sido actualizado exitosamente en el servidor"
-        })
+toast({
+            title: "Curso editado correctamente ✓",
+            description: "El curso ha sido actualizado exitosamente en el servidor"
+          })
         router.push("/admin/cursos")
         return
       }

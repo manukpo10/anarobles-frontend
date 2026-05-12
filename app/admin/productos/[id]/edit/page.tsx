@@ -91,7 +91,7 @@ export default function EditarProductoPage() {
         })
         if (updated) {
           toast({
-            title: "Producto actualizado",
+            title: "Producto editado correctamente ✓",
             description: "Guardado en el servidor"
           })
           router.push("/admin/productos")
@@ -109,7 +109,7 @@ export default function EditarProductoPage() {
       })
 
       toast({
-        title: "Producto actualizado",
+        title: "Producto editado correctamente ✓",
         description: "El producto ha sido actualizado exitosamente"
       })
 

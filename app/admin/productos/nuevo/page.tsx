@@ -77,7 +77,7 @@ export default function NuevoProductoPage() {
           featured: formData.featured,
         })
         if (created) {
-          toast({ title: "Producto creado", description: "Guardado en el servidor" })
+          toast({ title: "Producto creado correctamente ✓", description: "Guardado en el servidor" })
           router.push("/admin/productos")
           return
         }
@@ -87,7 +87,7 @@ export default function NuevoProductoPage() {
       localStorage.setItem("products", JSON.stringify(products))
 
       toast({
-        title: "Producto creado",
+        title: "Producto creado correctamente ✓",
         description: "El producto ha sido creado exitosamente"
       })
 

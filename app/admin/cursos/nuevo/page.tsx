@@ -226,7 +226,7 @@ export default function NuevoCursoPage() {
         
         if (nuevoCurso) {
           toast({
-            title: "Curso creado",
+            title: "Curso creado correctamente ✓",
             description: "El curso ha sido creado exitosamente en el servidor"
           })
           router.push("/admin/cursos")
@@ -254,7 +254,7 @@ export default function NuevoCursoPage() {
       localStorage.setItem("cursos", JSON.stringify(cursos))
 
       toast({
-        title: "Curso creado",
+        title: "Curso creado correctamente ✓",
         description: "El curso ha sido creado exitosamente"
       })
 
