@@ -7,6 +7,7 @@ import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { CheckoutProvider } from "@/contexts/checkout-context"
 import { CartDrawer } from "@/components/cart-drawer"
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
 const inter = Inter({
@@ -75,6 +76,7 @@ export default function RootLayout({
               <main>{children}</main>
               <Footer />
               <CartDrawer />
+              <Toaster />
               {process.env.NODE_ENV === "production" && <Analytics />}
             </CheckoutProvider>
           </AuthProvider>

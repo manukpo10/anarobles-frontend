@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { useAuth } from "@/contexts/auth-context"
 import { crearProductoAPI } from "@/lib/data"
 
@@ -30,7 +30,6 @@ const itemVariants = {
 
 export default function NuevoProductoPage() {
   const router = useRouter()
-  const { toast } = useToast()
   const { token } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -80,7 +79,7 @@ export default function NuevoProductoPage() {
         console.log("crearProductoAPI result:", created)
         if (created) {
           console.log("mostrando toast de exito")
-          toast({ title: "Producto creado correctamente ✓", description: "Guardado en el servidor" })
+          toast.success("Producto creado correctamente ✓", { description: "Guardado en el servidor" })
           setTimeout(() => {
             console.log("redirigiendo a /admin/productos")
             router.push("/admin/productos")
@@ -92,18 +91,11 @@ export default function NuevoProductoPage() {
       products.push(newProduct)
       localStorage.setItem("products", JSON.stringify(products))
 
-      toast({
-        title: "Producto creado correctamente ✓",
-        description: "El producto ha sido creado exitosamente"
-      })
+      toast.success("Producto creado correctamente ✓", { description: "El producto ha sido creado exitosamente" })
 
       router.push("/admin/productos")
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "No se pudo crear el producto",
-        variant: "destructive"
-      })
+      toast.error("Error", { description: "No se pudo crear el producto" })
     } finally {
       setIsLoading(false)
     }

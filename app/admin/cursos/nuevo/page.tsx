@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { useAuth } from "@/contexts/auth-context"
 import { crearCursoAPI } from "@/lib/data"
 
@@ -71,7 +71,6 @@ interface Module {
 
 export default function NuevoCursoPage() {
   const router = useRouter()
-  const { toast } = useToast()
   const { token } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -225,11 +224,10 @@ export default function NuevoCursoPage() {
         })
         
         if (nuevoCurso) {
-          toast({
-            title: "Curso creado correctamente ✓",
-            description: "El curso ha sido creado exitosamente en el servidor"
-          })
-          router.push("/admin/cursos")
+          toast.success("Curso creado correctamente ✓", { description: "El curso ha sido creado exitosamente en el servidor" })
+          setTimeout(() => {
+            router.push("/admin/cursos")
+          }, 2000)
           return
         }
       }
@@ -253,18 +251,13 @@ export default function NuevoCursoPage() {
       cursos.push(newCurso)
       localStorage.setItem("cursos", JSON.stringify(cursos))
 
-      toast({
-        title: "Curso creado correctamente ✓",
-        description: "El curso ha sido creado exitosamente"
-      })
+      toast.success("Curso creado correctamente ✓", { description: "El curso ha sido creado exitosamente" })
 
-      router.push("/admin/cursos")
+      setTimeout(() => {
+        router.push("/admin/cursos")
+      }, 2000)
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "No se pudo crear el curso",
-        variant: "destructive"
-      })
+      toast.error("Error", { description: "No se pudo crear el curso" })
     } finally {
       setIsLoading(false)
     }

@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { fetchCursoByIdFromAPI, actualizarCursoAPI } from "@/lib/data"
 import { Spinner } from "@/components/ui/spinner"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { useAuth } from "@/contexts/auth-context"
 
 function getYouTubeEmbedUrl(url: string): string | null {
@@ -77,7 +77,6 @@ export default function EditarCursoPage({
 }) {
   const { id } = use(params)
   const router = useRouter()
-  const { toast } = useToast()
   const { token } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -262,11 +261,7 @@ export default function EditarCursoPage({
       }))
 
       if (!token) {
-        toast({
-          title: "Error",
-          description: "Necesitás estar logueado para actualizar cursos",
-          variant: "destructive"
-        })
+        toast.error("Error", { description: "Necesitás estar logueado para actualizar cursos" })
         return
       }
 
@@ -285,20 +280,13 @@ export default function EditarCursoPage({
         modules: modulesData,
       })
 
-      if (actualizado) {
-toast({
-            title: "Curso editado correctamente ✓",
-            description: "El curso ha sido actualizado exitosamente en el servidor"
-          })
-          setTimeout(() => router.push("/admin/cursos"), 2000)
-          return
+if (actualizado) {
+        toast.success("Curso editado correctamente ✓", { description: "El curso ha sido actualizado exitosamente en el servidor" })
+        setTimeout(() => router.push("/admin/cursos"), 2000)
+        return
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "No se pudo actualizar el curso",
-        variant: "destructive"
-      })
+      toast.error("Error", { description: "No se pudo actualizar el curso" })
     } finally {
       setIsLoading(false)
     }

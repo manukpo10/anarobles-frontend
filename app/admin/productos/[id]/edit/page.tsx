@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch"
 import { fetchProductByIdFromAPI, actualizarProductoAPI } from "@/lib/data"
 import { Spinner } from "@/components/ui/spinner"
 import { useAuth } from "@/contexts/auth-context"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,7 +32,7 @@ const itemVariants = {
 export default function EditarProductoPage() {
   const router = useRouter()
   const params = useParams()
-  const { toast } = useToast()
+  const { token } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     id: "",
@@ -88,11 +88,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     try {
       if (!token) {
-        toast({
-          title: "Error",
-          description: "Necesitás estar logueado para editar productos",
-          variant: "destructive"
-        })
+        toast.error("Error", { description: "Necesitás estar logueado para editar productos" })
         return
       }
 
@@ -108,10 +104,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       console.log("actualizarProductoAPI result:", updated)
       if (updated) {
         console.log("mostrando toast de exito")
-        toast({
-          title: "Producto editado correctamente ✓",
-          description: "Guardado en el servidor"
-        })
+        toast.success("Producto editado correctamente ✓", { description: "Guardado en el servidor" })
         setTimeout(() => {
           console.log("redirigiendo a /admin/productos")
           router.push("/admin/productos")
@@ -120,11 +113,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       }
     } catch (error) {
       console.log("error en handleSubmit:", error)
-      toast({
-        title: "Error",
-        description: "No se pudo actualizar el producto",
-        variant: "destructive"
-      })
+      toast.error("Error", { description: "No se pudo actualizar el producto" })
     } finally {
       setIsLoading(false)
     }
