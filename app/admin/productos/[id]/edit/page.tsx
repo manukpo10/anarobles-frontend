@@ -105,12 +105,12 @@ export default function EditarProductoPage() {
       })
 
       if (updated) {
-        toast({
-          title: "Producto editado correctamente ✓",
-          description: "Guardado en el servidor"
-        })
-        router.push("/admin/productos")
-        return
+toast({
+            title: "Producto editado correctamente ✓",
+            description: "Guardado en el servidor"
+          })
+          setTimeout(() => router.push("/admin/productos"), 2000)
+          return
       }
     } catch (error) {
       toast({

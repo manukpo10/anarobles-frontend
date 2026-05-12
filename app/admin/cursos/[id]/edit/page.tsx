@@ -290,8 +290,8 @@ toast({
             title: "Curso editado correctamente ✓",
             description: "El curso ha sido actualizado exitosamente en el servidor"
           })
-        router.push("/admin/cursos")
-        return
+          setTimeout(() => router.push("/admin/cursos"), 2000)
+          return
       }
     } catch (error) {
       toast({
