@@ -12,7 +12,8 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
-import { getCursoById, updateCurso, fetchCursoByIdFromAPI, actualizarCursoAPI } from "@/lib/data"
+import { fetchCursoByIdFromAPI, actualizarCursoAPI } from "@/lib/data"
+import { Spinner } from "@/components/ui/spinner"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/contexts/auth-context"
 
@@ -79,7 +80,6 @@ export default function EditarCursoPage({
   const { toast } = useToast()
   const { token } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
-  const [loadingCurso, setLoadingCurso] = useState(true)
   const [formData, setFormData] = useState({
     id: "",
     title: "",
@@ -99,9 +99,11 @@ export default function EditarCursoPage({
   const [lessonVideoPreviews, setLessonVideoPreviews] = useState<Record<string, string>>({})
   const [modules, setModules] = useState<Module[]>([])
 
+  const [loadingData, setLoadingData] = useState(true)
+
   useEffect(() => {
     const loadCurso = async () => {
-      const curso = (await fetchCursoByIdFromAPI(id)) || getCursoById(id)
+      const curso = await fetchCursoByIdFromAPI(id)
       if (curso) {
         setFormData({
           id: curso.id,
@@ -124,7 +126,7 @@ export default function EditarCursoPage({
           setModules((curso as any).modules)
         }
       }
-      setLoadingCurso(false)
+      setLoadingData(false)
     }
     loadCurso()
   }, [id])
@@ -248,76 +250,49 @@ export default function EditarCursoPage({
     e.preventDefault()
     setIsLoading(true)
 
-try {
-        // Prepare modules data
-        const modulesData = modules.map(m => ({
-          ...m,
-          lessons: m.lessons.map(l => ({
-            ...l,
-            quizQuestions: l.type === "quiz" ? l.quizQuestions : undefined,
-            videoUrl: l.type === "video" ? l.videoUrl : undefined,
-            pdfUrl: l.type === "pdf" ? l.pdfUrl : undefined,
-          }))
+    try {
+      const modulesData = modules.map(m => ({
+        ...m,
+        lessons: m.lessons.map(l => ({
+          ...l,
+          quizQuestions: l.type === "quiz" ? l.quizQuestions : undefined,
+          videoUrl: l.type === "video" ? l.videoUrl : undefined,
+          pdfUrl: l.type === "pdf" ? l.pdfUrl : undefined,
         }))
+      }))
 
-        if (token) {
-          try {
-            const actualizado = await actualizarCursoAPI(token, formData.id, {
-              title: formData.title,
-              description: formData.description,
-              precio: parseFloat(formData.precio),
-              image: formData.image,
-              category: formData.category,
-              duracion: formData.duracion,
-              nivel: formData.nivel as any,
-              modalidad: formData.modalidad as any,
-              introVideoUrl: formData.introVideoUrl,
-              publicado: formData.publicado,
-              featured: formData.featured,
-              modules: modulesData,
-            })
-
-          if (actualizado) {
-            toast({
-              title: "Curso actualizado",
-              description: "El curso ha sido actualizado exitosamente en el servidor"
-            })
-            router.push("/admin/cursos")
-            return
-          }
-        } catch {
-          console.log("API no disponible, usando localStorage")
-        }
+      if (!token) {
+        toast({
+          title: "Error",
+          description: "Necesitás estar logueado para actualizar cursos",
+          variant: "destructive"
+        })
+        return
       }
 
-      updateCurso(formData.id, {
+      const actualizado = await actualizarCursoAPI(token, formData.id, {
         title: formData.title,
+        description: formData.description,
+        precio: parseFloat(formData.precio),
+        image: formData.image,
         category: formData.category,
-        modalidad: formData.modalidad as any,
         duracion: formData.duracion,
         nivel: formData.nivel as any,
-        precio: parseFloat(formData.precio),
-        description: formData.description,
-        image: formData.image,
-        featured: formData.featured,
+        modalidad: formData.modalidad as any,
+        introVideoUrl: formData.introVideoUrl,
         publicado: formData.publicado,
-        modules: modules.map(m => ({
-          ...m,
-          lessons: m.lessons.map(l => ({
-            ...l,
-            quizQuestions: l.type === "quiz" ? l.quizQuestions : undefined,
-            videoUrl: l.type === "video" ? l.videoUrl : undefined,
-            pdfUrl: l.type === "pdf" ? l.pdfUrl : undefined,
-          }))
-        }))
+        featured: formData.featured,
+        modules: modulesData,
       })
 
-      toast({
-        title: "Curso actualizado",
-        description: "El curso ha sido actualizado exitosamente"
-      })
-
-      router.push("/admin/cursos")
+      if (actualizado) {
+        toast({
+          title: "Curso actualizado",
+          description: "El curso ha sido actualizado exitosamente en el servidor"
+        })
+        router.push("/admin/cursos")
+        return
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -330,12 +305,6 @@ try {
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6"
-    >
       {/* Header */}
       <motion.div variants={itemVariants} className="flex items-center gap-4">
         <Button
@@ -355,11 +324,16 @@ try {
         </div>
       </motion.div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Main Content */}
-          <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
-            <Card>
+      {loadingData ? (
+        <div className="flex items-center justify-center py-20">
+          <Spinner className="h-8 w-8" />
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-6 lg:grid-cols-3">
+            {/* Main Content */}
+            <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
+              <Card>
               <CardHeader>
                 <CardTitle>Información Básica</CardTitle>
               </CardHeader>
@@ -822,7 +796,8 @@ try {
             </Button>
           </motion.div>
         </div>
-      </form>
+        </form>
+      )}
     </motion.div>
   )
 }
