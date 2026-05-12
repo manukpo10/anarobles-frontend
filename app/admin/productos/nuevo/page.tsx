@@ -78,7 +78,7 @@ export default function NuevoProductoPage() {
         })
         if (created) {
           toast({ title: "Producto creado correctamente ✓", description: "Guardado en el servidor" })
-          router.push("/admin/productos")
+          setTimeout(() => router.push("/admin/productos"), 1500)
           return
         }
       }
