@@ -12,6 +12,7 @@ const retratos = [
   { id: 3, src: "/galeria/retrato-3.jpeg", title: "Retrato 3", año: "2024" },
   { id: 4, src: "/galeria/retrato-4.jpeg", title: "Retrato 4", año: "2024" },
   { id: 5, src: "/galeria/retrato-5.jpeg", title: "Retrato 5", año: "2024" },
+  { id: 17, src: "/galeria/retrato-6.jpeg", title: "Retrato 6", año: "2024" },
 ]
 
 const naturaleza = [
