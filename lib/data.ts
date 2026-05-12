@@ -467,8 +467,15 @@ export const crearProductoAPI = async (token: string, p: Partial<Product>): Prom
         imagen: p.image, categoria: p.category, destacado: p.featured, publicado: true
       })
     })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    return mapProductoFromAPI(await res.json())
+    console.log("crearProductoAPI response status:", res.status)
+    if (!res.ok) {
+      const errText = await res.text()
+      console.error("crearProductoAPI error:", errText)
+      throw new Error(`HTTP ${res.status}`)
+    }
+    const created = await res.json()
+    console.log("crearProductoAPI created:", created)
+    return mapProductoFromAPI(created)
   } catch (error) {
     console.error("Error creating producto:", error)
     return null
