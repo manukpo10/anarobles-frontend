@@ -57,6 +57,7 @@ export default function NuevoProductoPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log("handleSubmit llamado, token:", token)
     setIsLoading(true)
 
     const products = JSON.parse(localStorage.getItem("products") || "[]")
@@ -76,9 +77,14 @@ export default function NuevoProductoPage() {
           category: formData.category,
           featured: formData.featured,
         })
+        console.log("crearProductoAPI result:", created)
         if (created) {
+          console.log("mostrando toast de exito")
           toast({ title: "Producto creado correctamente ✓", description: "Guardado en el servidor" })
-          setTimeout(() => router.push("/admin/productos"), 2000)
+          setTimeout(() => {
+            console.log("redirigiendo a /admin/productos")
+            router.push("/admin/productos")
+          }, 2000)
           return
         }
       }

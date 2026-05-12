@@ -81,8 +81,9 @@ export default function EditarProductoPage() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log("handleSubmit llamado, token:", token)
     setIsLoading(true)
 
     try {
@@ -104,15 +105,21 @@ export default function EditarProductoPage() {
         featured: formData.featured,
       })
 
+      console.log("actualizarProductoAPI result:", updated)
       if (updated) {
-toast({
-            title: "Producto editado correctamente ✓",
-            description: "Guardado en el servidor"
-          })
-          setTimeout(() => router.push("/admin/productos"), 2000)
-          return
+        console.log("mostrando toast de exito")
+        toast({
+          title: "Producto editado correctamente ✓",
+          description: "Guardado en el servidor"
+        })
+        setTimeout(() => {
+          console.log("redirigiendo a /admin/productos")
+          router.push("/admin/productos")
+        }, 2000)
+        return
       }
     } catch (error) {
+      console.log("error en handleSubmit:", error)
       toast({
         title: "Error",
         description: "No se pudo actualizar el producto",
