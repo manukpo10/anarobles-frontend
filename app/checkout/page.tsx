@@ -93,13 +93,25 @@ function CheckoutContent() {
     setIsProcessing(true)
     setMpError(null)
 
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    try {
+      if (!token) throw new Error("No estás autenticado")
 
-    const newOrderId = `ORD-${Date.now()}`
-    setOrderId(newOrderId)
-    setOrderComplete(true)
-    await processCheckout()
-    setIsProcessing(false)
+      // Usar el mismo flujo que MercadoPago para que el backend cree la orden
+      const result = await crearPreferenciaCheckout(token, items)
+
+      if (!result) {
+        throw new Error("No se pudo conectar con el servidor")
+      }
+
+      // Simular: guardar en sessionStorage y redirigir a éxito como demo
+      sessionStorage.setItem("checkout-demo", "true")
+      sessionStorage.setItem("checkout-order", result.externalReference)
+      router.push(`/checkout/success?order=${result.externalReference}&demo=true`)
+    } catch (error: any) {
+      console.error("Simulate payment error:", error)
+      setMpError(error?.message || "Error al simular el pago. Probá de nuevo.")
+      setIsProcessing(false)
+    }
   }
 
   if (authLoading) {

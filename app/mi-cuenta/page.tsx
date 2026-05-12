@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import { User, Mail, Lock, Bell, CreditCard, BookOpen, Package, Heart, ChevronRight, Save } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
@@ -384,31 +385,35 @@ function MiCuentaContent() {
                           const progress = getCourseProgress(user?.id || "", course.id)
                           const totalLessons = course.modules?.reduce((acc: number, m: any) => acc + m.lessons.length, 0) || 0
                           return (
-                            <div key={course.id} className="rounded-xl border border-border p-4 hover:bg-muted/30 transition-colors">
-                              <div className="flex items-start gap-4">
-                                <div className="rounded-lg bg-primary/10 p-3">
-                                  <BookOpen className="h-5 w-5 text-primary" />
-                                </div>
-                                <div className="flex-1">
-                                  <h3 className="font-medium text-foreground">{course.title}</h3>
-                                  <p className="text-sm text-muted-foreground mt-1">
-                                    {totalLessons} lecciones
-                                  </p>
-                                  <div className="mt-3 h-2 w-full rounded-full bg-muted overflow-hidden">
-                                    <div 
-                                      className="h-full bg-primary rounded-full transition-all"
-                                      style={{ width: `${progress}%` }}
-                                    />
+                            <div key={course.id} className="flex items-center gap-4 rounded-xl border border-border p-4 hover:bg-muted/30 transition-colors">
+                              <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-muted shrink-0">
+                                {course.image ? (
+                                  <Image src={course.image} alt={course.title} fill className="object-cover" />
+                                ) : (
+                                  <div className="flex h-full w-full items-center justify-center bg-primary/10">
+                                    <BookOpen className="h-5 w-5 text-primary" />
                                   </div>
-                                  <p className="text-xs text-muted-foreground mt-1">{progress}% completado</p>
-                                  <Link
-                                    href={`/cursos/${course.id}`}
-                                    className="mt-3 inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                                  >
-                                    Continuar aprendiendo
-                                    <ChevronRight className="h-3 w-3" />
-                                  </Link>
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-medium text-foreground truncate">{course.title}</h3>
+                                <p className="text-sm text-muted-foreground mt-1">
+                                  {totalLessons} lecciones
+                                </p>
+                                <div className="mt-3 h-2 w-full rounded-full bg-muted overflow-hidden">
+                                  <div
+                                    className="h-full bg-primary rounded-full transition-all"
+                                    style={{ width: `${progress}%` }}
+                                  />
                                 </div>
+                                <p className="text-xs text-muted-foreground mt-1">{progress}% completado</p>
+                                <Link
+                                  href={`/cursos/${course.id}`}
+                                  className="mt-3 inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                                >
+                                  Continuar aprendiendo
+                                  <ChevronRight className="h-3 w-3" />
+                                </Link>
                               </div>
                             </div>
                           )
