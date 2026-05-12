@@ -44,8 +44,6 @@ export default function EditarProductoPage() {
     featured: false
   })
   const [imagePreview, setImagePreview] = useState("")
-
-  const { token } = useAuth()
   const [loadingData, setLoadingData] = useState(true)
 
   useEffect(() => {
