@@ -162,21 +162,6 @@ export default function LoginPage() {
             </div>
 
             {/* Demo credentials notice */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="rounded-xl bg-secondary/10 p-4 border border-secondary/20"
-            >
-              <p className="text-sm font-medium text-foreground">Credenciales de prueba:</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Admin: admin@anacecilia.art / admin123
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Usuario: usuario@test.com / user123
-              </p>
-            </motion.div>
-
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <motion.div
