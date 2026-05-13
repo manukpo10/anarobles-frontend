@@ -4,11 +4,34 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Plus, Search, Edit, Trash2, Eye, MoreHorizontal, BookOpen } from "lucide-react"
-import { getCursos, getFeaturedCursos, deleteCurso, fetchAdminCursos, eliminarCursoAPI, type Curso } from "@/lib/data"
+import { Plus, Search, Edit, Trash2, Eye, BookOpen } from "lucide-react"
+import { getCursos, deleteCurso, fetchAdminCursos, eliminarCursoAPI, type Curso } from "@/lib/data"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/contexts/auth-context"
+
+const ITEMS_PER_PAGE = 10
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,10 +46,26 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 }
 
+function getNivelBadgeVariant(nivel: string): "secondary" | "outline" | "destructive" {
+  switch (nivel) {
+    case "Inicial":
+      return "secondary"
+    case "Intermedio":
+      return "outline"
+    case "Avanzado":
+      return "destructive"
+    default:
+      return "secondary"
+  }
+}
+
 export default function AdminCursosPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [cursosList, setCursosList] = useState<Curso[]>([])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+  const [deletePending, setDeletePending] = useState(false)
   const { toast } = useToast()
   const { token } = useAuth()
 
@@ -51,25 +90,35 @@ export default function AdminCursosPage() {
     curso.title.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const handleDelete = async (id: string) => {
-    if (confirm("¿Estás seguro de que querés eliminar este curso?")) {
+  const totalPages = Math.ceil(filteredCursos.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const paginatedCursos = filteredCursos.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTargetId) return
+    setDeletePending(true)
+    try {
       if (token) {
-        const success = await eliminarCursoAPI(token, id)
+        const success = await eliminarCursoAPI(token, deleteTargetId)
         if (success) {
-          setCursosList(cursosList.filter(c => c.id !== id))
+          setCursosList(cursosList.filter(c => c.id !== deleteTargetId))
           toast({
             title: "Curso eliminado",
             description: "El curso ha sido eliminado exitosamente"
           })
+          setDeleteTargetId(null)
           return
         }
       }
-      deleteCurso(id)
+      deleteCurso(deleteTargetId)
       setCursosList(getCursos())
       toast({
         title: "Curso eliminado",
         description: "El curso ha sido eliminado exitosamente"
       })
+      setDeleteTargetId(null)
+    } finally {
+      setDeletePending(false)
     }
   }
 
@@ -142,7 +191,7 @@ export default function AdminCursosPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {filteredCursos.map((curso) => (
+              {paginatedCursos.map((curso) => (
                 <tr key={curso.id} className="hover:bg-muted/30 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
@@ -161,13 +210,9 @@ export default function AdminCursosPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${
-                      curso.nivel === "Inicial" ? "bg-green-100 text-green-700" :
-                      curso.nivel === "Intermedio" ? "bg-yellow-100 text-yellow-700" :
-                      "bg-red-100 text-red-700"
-                    }`}>
+                    <Badge variant={getNivelBadgeVariant(curso.nivel)}>
                       {curso.nivel}
-                    </span>
+                    </Badge>
                   </td>
                   <td className="px-6 py-4">
                     <span className="font-semibold text-foreground">${curso.precio}</span>
@@ -202,20 +247,82 @@ export default function AdminCursosPage() {
                       >
                         <BookOpen className="h-4 w-4" />
                       </Link>
-                      <button
-                        onClick={() => handleDelete(curso.id)}
-                        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-destructive transition-colors"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button
+                            onClick={() => setDeleteTargetId(curso.id)}
+                            className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-destructive transition-colors"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>¿Estás seguro de que querés eliminar este curso?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Esta acción no se puede deshacer. El curso será eliminado permanentemente.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel onClick={() => setDeleteTargetId(null)}>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={handleConfirmDelete}
+                              disabled={deletePending}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                              {deletePending ? "Eliminando..." : "Eliminar"}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </td>
                 </tr>
               ))}
+              {paginatedCursos.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">
+                    No se encontraron cursos
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </motion.div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <motion.div variants={itemVariants}>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                />
+              </PaginationItem>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    isActive={currentPage === page}
+                    onClick={() => setCurrentPage(page)}
+                    className="cursor-pointer"
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </motion.div>
+      )}
 
       {/* Add Course Card */}
       <motion.div variants={itemVariants}>
