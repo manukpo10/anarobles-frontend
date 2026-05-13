@@ -105,7 +105,7 @@ export function ShopPreview() {
                     >
                       <Image
                         src={product.image}
-                        alt={product.name}
+                        alt={`${product.name} - ${product.category} - Obra de Ana Cecilia Robles`}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next"
-import { getProductos, getCursos } from "@/lib/data"
+import { getProducts, getCursos } from "@/lib/data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://anaceciliarobles.com"
@@ -45,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   // Product routes
-  const productos = getProductos()
+  const productos = getProducts()
   const productRoutes: MetadataRoute.Sitemap = productos.map((product) => ({
     url: `${baseUrl}/productos/${product.id}`,
     lastModified: new Date(),

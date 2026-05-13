@@ -91,7 +91,7 @@ export default function GaleriaPage() {
                   <div className="relative overflow-hidden">
                     <Image
                       src={obra.src}
-                      alt={obra.title}
+                      alt={`${obra.title} - ${obra.año} - Galería de Ana Cecilia Robles`}
                       width={600}
                       height={800}
                       className={`w-full object-cover transition-all duration-700 group-hover:scale-105 ${imagenCargada[obra.id] ? "opacity-100" : "opacity-0"}`}
@@ -144,7 +144,7 @@ export default function GaleriaPage() {
                 <div className="flex items-center justify-center overflow-auto bg-gray-100 p-4">
                   <img
                     src={obraSeleccionada.src}
-                    alt={obraSeleccionada.title}
+                    alt={`${obraSeleccionada.title} - ${obraSeleccionada.año} - Obra de Ana Cecilia Robles`}
                     className="h-auto w-auto"
                   />
                 </div>

@@ -35,7 +35,7 @@ export function HeroSection() {
         <div className="relative h-48 w-[400px] sm:h-64 sm:w-[550px] lg:h-80 lg:w-[700px]">
           <Image
             src="/logo_transparente.png"
-            alt=""
+            alt="Logo de Ana Cecilia Robles, Artista Plástica"
             fill
             className="object-contain brightness-0 invert"
             priority

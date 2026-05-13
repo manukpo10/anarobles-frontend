@@ -100,8 +100,60 @@ export default function ProductDetailPage({
 
   const details = productDetails[product.id]
 
+  // Product JSON-LD schema
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.description,
+    "image": product.image,
+    "category": product.category,
+    "offers": {
+      "@type": "Offer",
+      "price": product.price,
+      "priceCurrency": "ARS",
+      "availability": details?.stock === "limited" || details?.stock === "last-units"
+        ? "https://schema.org/InStock"
+        : "https://schema.org/InStock",
+    }
+  }
+
+  // BreadcrumbList JSON-LD
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://anaceciliarobles.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Productos",
+        "item": "https://anaceciliarobles.com/productos"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": product.name,
+        "item": `https://anaceciliarobles.com/productos/${product.id}`
+      }
+    ]
+  }
+
   return (
     <div className="min-h-screen bg-background pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Breadcrumb */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}

@@ -131,6 +131,50 @@ function ContactPageContent() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* FAQPage JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Cómo funciona un encargo personalizado?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Primero contactame para discutir tu idea, tamaño y presupuesto. Luego te envío un boceto para aprobación antes de comenzar la obra final."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Cuáles son los tiempos de entrega?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Dependen de la complejidad y el tamaño. Generalmente entre 2 y 6 semanas desde la aprobación del diseño."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Enviás obras a todo el país?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sí, trabajo con servicios de mensajería especializada en obras de arte para garantizar un transporte seguro."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Puedo visitar tu taller?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "¡Por supuesto! Coordinemos una visita para que veas mi espacio de trabajo y charlemos sobre tu proyecto."
+                }
+              }
+            ]
+          })
+        }}
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-primary pt-24">
         {/* Decorative elements */}

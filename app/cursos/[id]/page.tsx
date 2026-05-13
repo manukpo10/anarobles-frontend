@@ -172,6 +172,52 @@ export default function CursoDetailPage({
   const prevCurso = currentIndex > 0 ? getCursos()[currentIndex - 1] : null
   const nextCurso = currentIndex < getCursos().length - 1 ? getCursos()[currentIndex + 1] : null
 
+  // Course JSON-LD schema
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": curso.title,
+    "description": curso.description,
+    "image": curso.image,
+    "provider": {
+      "@type": "Person",
+      "name": "Ana Cecilia Robles",
+      "url": "https://anaceciliarobles.com"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": curso.precio,
+      "priceCurrency": "ARS",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+
+  // BreadcrumbList JSON-LD
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://anaceciliarobles.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Cursos",
+        "item": "https://anaceciliarobles.com/cursos"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": curso.title,
+        "item": `https://anaceciliarobles.com/cursos/${curso.id}`
+      }
+    ]
+  }
+
   const handleEnroll = async () => {
     if (!isAuthenticated) {
       router.push(`/auth/login?redirect=/checkout`)
@@ -231,6 +277,14 @@ export default function CursoDetailPage({
 
   return (
     <div className="min-h-screen bg-background pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Lesson Viewer Modal */}
       <AnimatePresence>
         {currentLesson && (
