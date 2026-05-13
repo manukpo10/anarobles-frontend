@@ -5,6 +5,14 @@ import { notFound } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { useCheckout } from "@/contexts/checkout-context"
 import { 
   Clock, 
@@ -376,22 +384,30 @@ export default function CursoDetailPage({
       </AnimatePresence>
 
       {/* Breadcrumb */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         className="mx-auto max-w-7xl px-6 py-6 lg:px-8"
       >
-        <div className="flex items-center gap-2 text-sm">
-          <Link href="/" className="text-muted-foreground transition-colors hover:text-primary">
-            Inicio
-          </Link>
-          <span className="text-muted-foreground/30">/</span>
-          <Link href="/cursos" className="text-muted-foreground transition-colors hover:text-primary">
-            Cursos
-          </Link>
-          <span className="text-muted-foreground/30">/</span>
-          <span className="text-primary">{curso.title}</span>
-        </div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="text-muted-foreground transition-colors hover:text-primary">
+                Inicio
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/cursos" className="text-muted-foreground transition-colors hover:text-primary">
+                Cursos
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-primary">{curso.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </motion.div>
 
       {/* Main Content */}
