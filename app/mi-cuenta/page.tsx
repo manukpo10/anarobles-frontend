@@ -328,7 +328,7 @@ function MiCuentaContent() {
                       {displayPurchases.length === 0 ? (
                         <div className="text-center py-8">
                           <Package className="mx-auto h-16 w-16 text-muted-foreground/30 mb-4" />
-                          <p className="text-muted-foreground mb-4">No tienes ningún pedido</p>
+                          <p className="text-muted-foreground mb-4">No tenés ningún pedido</p>
                           <Link
                             href="/productos"
                             className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"

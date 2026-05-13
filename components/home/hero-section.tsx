@@ -76,7 +76,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif text-8xl font-light tracking-tight text-primary-foreground md:text-9xl lg:text-[10rem]"
+            className="font-serif text-7xl font-light tracking-tight text-primary-foreground md:text-8xl lg:text-9xl"
           >
             Ana Cecilia
             <span className="block font-semibold">Robles</span>
@@ -163,12 +163,7 @@ export function HeroSection() {
           <span className="text-xs uppercase tracking-[0.3em] text-primary-foreground/40">
             Scroll
           </span>
-          <div className="relative">
-            <ChevronDown className="h-6 w-6 text-primary-foreground/40" />
-            <div className="absolute inset-0 animate-ping">
-              <ChevronDown className="h-6 w-6 text-primary-foreground/20" />
-            </div>
-          </div>
+          <ChevronDown className="h-6 w-6 text-primary-foreground/40" />
         </motion.div>
       </motion.div>
 

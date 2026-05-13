@@ -51,7 +51,7 @@ export default function GaleriaPage() {
   }, [obraSeleccionada])
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-background">
       {/* Hero */}
       <section className="relative flex h-[50vh] items-center justify-center overflow-hidden bg-primary">
         <div className="relative z-10 text-center">
@@ -71,7 +71,7 @@ export default function GaleriaPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-12 font-serif text-4xl font-light text-[#194052] md:text-5xl"
+            className="mb-12 font-serif text-4xl font-light text-secondary md:text-5xl"
           >
             {seccion.titulo}
           </motion.h2>
@@ -85,7 +85,7 @@ export default function GaleriaPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="group mb-6 break-inside-avoid cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-[#194052]/10"
+                  className="group mb-6 break-inside-avoid cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/10"
                   onClick={() => abrirModal(obra)}
                 >
                   <div className="relative overflow-hidden">
@@ -99,10 +99,10 @@ export default function GaleriaPage() {
                     />
                     {!imagenCargada[obra.id] && (
                       <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E16146] border-t-transparent" />
+                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#194052]/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="absolute bottom-0 left-0 right-0 translate-y-full p-6 text-white transition-transform duration-500 group-hover:translate-y-0">
                       <h3 className="font-serif text-2xl font-light">{obra.title}</h3>
                       <p className="mt-2 text-sm text-white/70">{obra.año}</p>
@@ -125,7 +125,7 @@ export default function GaleriaPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#194052]/95 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-secondary/95 backdrop-blur-sm"
             onClick={cerrarModal}
           >
             <motion.div
@@ -137,7 +137,7 @@ export default function GaleriaPage() {
               onClick={e => e.stopPropagation()}
             >
               <button onClick={cerrarModal} className="absolute right-4 top-4 z-10 rounded-full bg-white/80 p-2 backdrop-blur-sm transition-colors hover:bg-white">
-                <X className="h-6 w-6 text-[#194052]" />
+                <X className="h-6 w-6 text-secondary" />
               </button>
 
               <div className="flex flex-col md:flex-row max-h-[85vh]">
@@ -149,16 +149,16 @@ export default function GaleriaPage() {
                   />
                 </div>
                 <div className="flex flex-col justify-center p-8 md:p-12 md:min-w-[300px]">
-                  <h2 className="font-serif text-4xl font-light text-[#194052]">{obraSeleccionada.title}</h2>
+                  <h2 className="font-serif text-4xl font-light text-secondary">{obraSeleccionada.title}</h2>
                   <p className="mt-4 text-sm text-gray-600">{obraSeleccionada.año}</p>
                 </div>
               </div>
 
               <button onClick={() => navegarObra("anterior")} className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-3 backdrop-blur-sm transition-colors hover:bg-white">
-                <ChevronLeft className="h-6 w-6 text-[#194052]" />
+                <ChevronLeft className="h-6 w-6 text-secondary" />
               </button>
               <button onClick={() => navegarObra("siguiente")} className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-3 backdrop-blur-sm transition-colors hover:bg-white">
-                <ChevronRight className="h-6 w-6 text-[#194052]" />
+                <ChevronRight className="h-6 w-6 text-secondary" />
               </button>
             </motion.div>
           </motion.div>

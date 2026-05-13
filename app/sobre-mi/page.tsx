@@ -151,7 +151,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <Quote className="mx-auto h-20 w-20 text-secondary/20" />
-            <p className="mt-12 font-serif text-4xl font-light leading-relaxed tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            <p className="mt-12 font-serif text-4xl font-light leading-relaxed tracking-tight text-foreground md:text-5xl lg:text-5xl">
               El arte no es lo que ves, sino lo que haces ver a los demás. Mi
               misión es transformar emociones invisibles en colores que cuentan
               historias.
