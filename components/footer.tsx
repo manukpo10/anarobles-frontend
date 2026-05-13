@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
-import { Instagram, Mail, Phone, ArrowRight, Palette } from "lucide-react"
-import { NewsletterForm } from "./newsletter-form"
+import { Instagram, Mail, Phone, ArrowRight } from "lucide-react"
 
 const socialLinks = [
   {
-    href: "https://instagram.com/anacecilia",
+    href: "https://www.instagram.com/anaroblesartedibujo/",
     icon: Instagram,
     label: "Instagram",
   },
@@ -51,14 +51,17 @@ export function Footer() {
         <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand with Quote */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20">
-                <Palette className="h-6 w-6 text-secondary" />
+            <Link href="/" className="flex items-center">
+              <div className="relative h-20 w-64 shrink-0">
+                <Image
+                  src="/logo_transparente.png"
+                  alt="Ana Cecilia Robles - Logo"
+                  fill
+                  className="object-contain object-left brightness-0 invert"
+                  priority
+                />
               </div>
-              <h2 className="font-serif text-2xl font-semibold text-primary-foreground">
-                Ana Cecilia Robles
-              </h2>
-            </div>
+            </Link>
             <p className="mt-6 max-w-md font-serif text-lg italic leading-relaxed text-primary-foreground/60">
               "El arte es el diálogo silencioso entre el alma y el lienzo"
             </p>
@@ -67,15 +70,6 @@ export function Footer() {
               que perduran. Cada obra es un diálogo entre el alma y el lienzo.
             </p>
             
-            {/* Newsletter signup */}
-            <div className="mt-8">
-              <p className="text-xs font-medium uppercase tracking-wider text-primary-foreground/60">
-                Suscríbete a mi boletín
-              </p>
-              <div className="mt-3">
-                <NewsletterForm />
-              </div>
-            </div>
           </div>
 
           {/* Navigation */}

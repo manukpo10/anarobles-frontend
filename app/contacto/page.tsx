@@ -16,7 +16,7 @@ const consultationTypes = [
 ]
 
 const socialLinks = [
-  { icon: Instagram, href: "https://instagram.com/anacecilia.art", label: "Instagram", username: "@anacecilia.art" },
+  { icon: Instagram, href: "https://www.instagram.com/anaroblesartedibujo/", label: "Instagram", username: "@anaroblesartedibujo" },
   { icon: Facebook, href: "https://facebook.com/anacecilia.art", label: "Facebook", username: "Ana Cecilia Robles" },
 ]
 

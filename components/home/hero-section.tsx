@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, ChevronDown, Palette, Brush, Camera } from "lucide-react"
 
@@ -29,6 +30,19 @@ export function HeroSection() {
       <div className="absolute left-0 top-1/4 h-72 w-72 rounded-full bg-secondary/15 blur-3xl" />
       <div className="absolute bottom-1/4 right-0 h-[500px] w-[500px] rounded-full bg-accent/10 blur-3xl" />
       
+      {/* Logo watermark */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.04]">
+        <div className="relative h-48 w-[400px] sm:h-64 sm:w-[550px] lg:h-80 lg:w-[700px]">
+          <Image
+            src="/logo_transparente.png"
+            alt=""
+            fill
+            className="object-contain brightness-0 invert"
+            priority
+          />
+        </div>
+      </div>
+
       {/* Artistic brush stroke decoration */}
       <svg className="absolute right-20 top-1/4 w-40 h-40 opacity-10" viewBox="0 0 100 100">
         <path d="M10 50 Q30 20 50 50 T90 50" stroke="#194052" strokeWidth="2" fill="none"/>

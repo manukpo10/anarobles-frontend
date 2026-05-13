@@ -263,7 +263,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center justify-center gap-8 pt-28"
+              className="flex flex-col items-center justify-center gap-5 pt-20 sm:gap-6 sm:pt-24"
             >
               {navLinks.map((link, index) => (
                 <motion.div
@@ -280,7 +280,7 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "font-serif text-4xl transition-all duration-300",
+                      "font-serif text-3xl transition-all duration-300 sm:text-4xl",
                       mounted && pathname === link.href
                         ? "text-primary"
                         : "text-foreground hover:text-primary hover:scale-105"
@@ -306,31 +306,31 @@ export function Navbar() {
                 {/* User Section */}
                 {isAuthenticated ? (
                   <div className="text-center">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-secondary/20">
-                        <User className="h-7 w-7 text-secondary" />
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/20 sm:h-14 sm:w-14">
+                        <User className="h-6 w-6 text-secondary sm:h-7 sm:w-7" />
                       </div>
                     </div>
-                    <p className="font-medium text-foreground">{user?.name}</p>
-                    <span className="mt-1 inline-block rounded-full bg-secondary/10 px-3 py-1 text-xs font-medium text-secondary">
+                    <p className="text-sm font-medium text-foreground sm:text-base">{user?.name}</p>
+                    <span className="mt-1 inline-block rounded-full bg-secondary/10 px-3 py-1 text-[10px] font-medium text-secondary sm:text-xs">
                       {user?.role === "admin" ? "Administrador" : "Usuario"}
                     </span>
-                    <div className="mt-4 flex flex-col gap-3">
+                    <div className="mt-3 flex flex-col gap-2 sm:mt-4 sm:gap-3">
                       <Link
                         href="/mi-cuenta"
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary"
+                        className="flex items-center justify-center gap-2 text-xs text-muted-foreground hover:text-primary sm:text-sm"
                       >
-                        <User className="h-4 w-4" />
+                        <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                         Mi cuenta
                       </Link>
                       {user?.role === "admin" && (
                         <Link
                           href="/admin"
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary"
+                          className="flex items-center justify-center gap-2 text-xs text-muted-foreground hover:text-primary sm:text-sm"
                         >
-                          <Settings className="h-4 w-4" />
+                          <Settings className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           Panel de administración
                         </Link>
                       )}
@@ -339,9 +339,9 @@ export function Navbar() {
                           setIsMobileMenuOpen(false)
                           logout()
                         }}
-                        className="flex items-center justify-center gap-2 text-sm text-destructive hover:text-destructive/80"
+                        className="flex items-center justify-center gap-2 text-xs text-destructive hover:text-destructive/80 sm:text-sm"
                       >
-                        <LogOut className="h-4 w-4" />
+                        <LogOut className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                         Cerrar sesión
                       </button>
                     </div>
@@ -350,9 +350,9 @@ export function Navbar() {
                   <Link
                     href="/auth/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 font-serif text-2xl text-primary transition-colors hover:text-primary/80"
+                    className="flex items-center gap-2 font-serif text-xl text-primary transition-colors hover:text-primary/80 sm:gap-3 sm:text-2xl"
                   >
-                    <User className="h-8 w-8" />
+                    <User className="h-6 w-6 sm:h-8 sm:w-8" />
                     <span>Iniciar sesión</span>
                   </Link>
                 )}
@@ -363,12 +363,12 @@ export function Navbar() {
                     setIsMobileMenuOpen(false)
                     toggleCart()
                   }}
-                  className="relative flex items-center gap-3 font-serif text-2xl text-foreground transition-colors hover:text-primary"
+                  className="relative flex items-center gap-2 font-serif text-xl text-foreground transition-colors hover:text-primary sm:gap-3 sm:text-2xl"
                 >
                   <div className="relative">
-                    <ShoppingBag className="h-8 w-8" />
+                    <ShoppingBag className="h-6 w-6 sm:h-8 sm:w-8" />
                     {itemCount > 0 && (
-                      <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-secondary-foreground">
+                      <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-[8px] font-bold text-secondary-foreground sm:-right-2 sm:-top-2 sm:h-5 sm:w-5 sm:text-[10px]">
                         {itemCount > 9 ? "9+" : itemCount}
                       </span>
                     )}
