@@ -56,13 +56,13 @@ export default function RootLayout({
   return (
     <html lang="es" className="bg-background" data-scroll-behavior="smooth">
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${inter.variable} ${playfair.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <CartProvider>
           <AuthProvider>
             <CheckoutProvider>
               <Navbar />
-              <main>{children}</main>
+              <main className="flex-grow">{children}</main>
               <Footer />
               <CartDrawer />
               <Toaster />

@@ -33,7 +33,7 @@ const navLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-primary sticky bottom-0 z-50 backdrop-blur-sm bg-primary/95">
+    <footer className="relative overflow-hidden bg-primary">
       {/* Decorative elements */}
       <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" />
       <div className="absolute -left-20 -bottom-20 h-48 w-48 rounded-full bg-accent/10 blur-3xl" />
