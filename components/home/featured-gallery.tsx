@@ -153,14 +153,14 @@ export function FeaturedGallery() {
             <>
               <button
                 onClick={prev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-background/90 shadow-lg ring-1 ring-border backdrop-blur-sm transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary md:-left-6"
+                className="absolute left-2 top-1/2 -translate-y-1/2 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-background/90 shadow-lg ring-1 ring-border backdrop-blur-sm transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary md:-left-6 opacity-100 sm:opacity-0 group-hover/section:opacity-100"
                 aria-label="Anterior"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 onClick={next}
-                className="absolute right-2 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-background/90 shadow-lg ring-1 ring-border backdrop-blur-sm transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary md:-right-6"
+                className="absolute right-2 top-1/2 -translate-y-1/2 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-background/90 shadow-lg ring-1 ring-border backdrop-blur-sm transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary md:-right-6 opacity-100 sm:opacity-0 group-hover/section:opacity-100"
                 aria-label="Siguiente"
               >
                 <ChevronRight className="h-5 w-5" />

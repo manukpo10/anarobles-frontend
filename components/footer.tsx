@@ -33,7 +33,7 @@ const navLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-primary">
+    <footer className="relative overflow-hidden bg-primary sticky bottom-0 z-50 backdrop-blur-sm bg-primary/95">
       {/* Decorative elements */}
       <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" />
       <div className="absolute -left-20 -bottom-20 h-48 w-48 rounded-full bg-accent/10 blur-3xl" />
@@ -47,7 +47,7 @@ export function Footer() {
         <circle cx="50" cy="50" r="30" stroke="#B73E47" strokeWidth="2" fill="none" strokeDasharray="5,5"/>
       </svg>
       
-      <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
+      <div className="relative mx-auto max-w-7xl px-6 py-20 pb-24 lg:px-8 lg:py-24 lg:pb-28">
         <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand with Quote */}
           <div className="lg:col-span-2">

@@ -155,7 +155,7 @@ export function ShopPreview() {
               <button
                 onClick={() => goTo(page - 1)}
                 disabled={page === 0}
-                className="absolute -left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-background shadow-lg ring-1 ring-border opacity-0 transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary group-hover/section:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+                className="absolute -left-4 top-1/2 -translate-y-1/2 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-background shadow-lg ring-1 ring-border opacity-0 transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary group-hover/section:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
                 aria-label="Anterior"
               >
                 <ChevronLeft className="h-5 w-5" />
@@ -163,7 +163,7 @@ export function ShopPreview() {
               <button
                 onClick={() => goTo(page + 1)}
                 disabled={page >= totalPages - 1}
-                className="absolute -right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-background shadow-lg ring-1 ring-border opacity-0 transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary group-hover/section:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+                className="absolute -right-4 top-1/2 -translate-y-1/2 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-background shadow-lg ring-1 ring-border opacity-0 transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:ring-secondary group-hover/section:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
                 aria-label="Siguiente"
               >
                 <ChevronRight className="h-5 w-5" />
