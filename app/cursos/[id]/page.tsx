@@ -118,6 +118,7 @@ export default function CursoDetailPage({
   const modules = curso.modules || []
 
   const toggleLesson = (lessonId: string) => {
+    if (!user) return
     // Update local state
     setCompletedLessons(prev => {
       const next = new Set(prev)
@@ -603,7 +604,7 @@ export default function CursoDetailPage({
                               <div
                                 key={lesson.id}
                                 className={`flex items-center gap-4 border-b border-border/20 p-5 last:border-b-0 transition-colors hover:bg-muted/30 ${
-                                  currentLesson === lesson.id ? "bg-primary/5" : ""
+                                  currentLesson?.id === lesson.id ? "bg-primary/5" : ""
                                 }`}
                               >
                                 <button

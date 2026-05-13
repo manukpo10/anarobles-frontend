@@ -652,7 +652,7 @@ export default function NuevoCursoPage() {
 
                       <Button
                         type="button"
-                        variant="dashed"
+                        variant="outline"
                         onClick={() => addLesson(module.id)}
                         className="w-full border-dashed"
                       >
