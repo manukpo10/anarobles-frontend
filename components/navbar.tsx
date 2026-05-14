@@ -384,7 +384,7 @@ export function Navbar() {
             
             {/* Artistic brush stroke decoration */}
             <svg className="absolute bottom-20 left-1/2 -translate-x-1/2 w-48 h-4 opacity-20" viewBox="0 0 200 16">
-              <path d="M0 8 Q50 4 100 8 T200 8" stroke="#D9622C" strokeWidth="2" fill="none" strokeLinecap="round"/>
+              <path d="M0 8 Q50 4 100 8 T200 8" stroke="#FA7A35" strokeWidth="2" fill="none" strokeLinecap="round"/>
             </svg>
           </motion.div>
         )}

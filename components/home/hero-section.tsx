@@ -46,7 +46,7 @@ export function HeroSection() {
       {/* Artistic brush stroke decoration */}
       <svg className="absolute right-20 top-1/4 w-40 h-40 opacity-10" viewBox="0 0 100 100">
         <path d="M10 50 Q30 20 50 50 T90 50" stroke="#194052" strokeWidth="2" fill="none"/>
-        <path d="M10 60 Q40 30 60 60 T100 60" stroke="#D9622C" strokeWidth="3" fill="none" strokeLinecap="round"/>
+        <path d="M10 60 Q40 30 60 60 T100 60" stroke="#FA7A35" strokeWidth="3" fill="none" strokeLinecap="round"/>
       </svg>
 
       {/* Content */}

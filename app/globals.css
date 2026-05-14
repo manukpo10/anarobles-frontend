@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Anacecilia Art Gallery Design System - Refined Warm Palette */
-/* BRAND PALETTE: Naranja #D9622C (primary CTAs, hero), Azul #194052 (secondary, nav), Coral #B73E47 (accent, hovers) */
+/* BRAND PALETTE: Naranja #FA7A35 (primary CTAs, hero), Azul #194052 (secondary, nav), Coral #B73E47 (accent, hovers) */
 /* Neutros: Cream #FAF6F0 (bg), Charcoal #2A2A2A (text) */
 
 :root {
@@ -14,7 +14,7 @@
   --card-foreground: oklch(0.22 0.01 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.22 0.01 0);
-  --primary: oklch(0.58 0.16 45);
+  --primary: oklch(0.718 0.176 41);
   --primary-foreground: oklch(0.98 0.005 80);
   --secondary: oklch(0.30 0.05 220);
   --secondary-foreground: oklch(0.98 0.005 80);
@@ -26,21 +26,21 @@
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.88 0.01 80);
   --input: oklch(0.92 0.01 80);
-  --ring: oklch(0.58 0.16 45);
-  --chart-1: oklch(0.58 0.16 45);
+  --ring: oklch(0.718 0.176 41);
+  --chart-1: oklch(0.718 0.176 41);
   --chart-2: oklch(0.30 0.05 220);
   --chart-3: oklch(0.48 0.16 20);
   --chart-4: oklch(0.45 0.02 0);
-  --chart-5: oklch(0.65 0.12 45);
+  --chart-5: oklch(0.788 0.132 41);
   --radius: 0.625rem;
   --sidebar: oklch(0.97 0.01 80);
   --sidebar-foreground: oklch(0.22 0.01 0);
-  --sidebar-primary: oklch(0.58 0.16 45);
+  --sidebar-primary: oklch(0.718 0.176 41);
   --sidebar-primary-foreground: oklch(0.98 0.005 80);
   --sidebar-accent: oklch(0.94 0.01 80);
   --sidebar-accent-foreground: oklch(0.22 0.01 0);
   --sidebar-border: oklch(0.88 0.01 80);
-  --sidebar-ring: oklch(0.58 0.16 45);
+  --sidebar-ring: oklch(0.718 0.176 41);
 }
 
 .dark {
@@ -50,7 +50,7 @@
   --card-foreground: oklch(0.95 0.005 80);
   --popover: oklch(0.22 0.02 45);
   --popover-foreground: oklch(0.95 0.005 80);
-  --primary: oklch(0.62 0.16 45);
+  --primary: oklch(0.758 0.176 41);
   --primary-foreground: oklch(0.18 0.02 45);
   --secondary: oklch(0.40 0.06 220);
   --secondary-foreground: oklch(0.95 0.005 80);
@@ -62,20 +62,20 @@
   --destructive-foreground: oklch(0.95 0 0);
   --border: oklch(0.30 0.02 45);
   --input: oklch(0.28 0.02 45);
-  --ring: oklch(0.62 0.16 45);
-  --chart-1: oklch(0.62 0.16 45);
+  --ring: oklch(0.758 0.176 41);
+  --chart-1: oklch(0.758 0.176 41);
   --chart-2: oklch(0.40 0.06 220);
   --chart-3: oklch(0.52 0.14 20);
-  --chart-4: oklch(0.75 0.12 45);
+  --chart-4: oklch(0.888 0.132 41);
   --chart-5: oklch(0.55 0.14 20);
   --sidebar: oklch(0.22 0.02 45);
   --sidebar-foreground: oklch(0.95 0.005 80);
-  --sidebar-primary: oklch(0.62 0.16 45);
+  --sidebar-primary: oklch(0.758 0.176 41);
   --sidebar-primary-foreground: oklch(0.95 0.005 80);
   --sidebar-accent: oklch(0.28 0.02 45);
   --sidebar-accent-foreground: oklch(0.95 0.005 80);
   --sidebar-border: oklch(0.30 0.02 45);
-  --sidebar-ring: oklch(0.62 0.16 45);
+  --sidebar-ring: oklch(0.758 0.176 41);
 }
 
 @theme inline {
@@ -189,7 +189,7 @@ html {
 
 /* Gradient text utility */
 .text-gradient {
-  background: linear-gradient(135deg, oklch(0.58 0.16 45), oklch(0.48 0.16 20));
+  background: linear-gradient(135deg, oklch(0.718 0.176 41), oklch(0.48 0.16 20));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
