@@ -17,3 +17,23 @@ node_modules
 .DS_Store
 # Engram AI agent memory
 .engram/
+
+# Agent / AI tooling
+.atl/
+.claude/
+AGENTS.md
+
+# IDE / JetBrains
+.idea/
+
+# Build artifacts
+**/target/
+*.log
+start.log
+
+# Duplicate / temp directories
+anarobles-backend/anarobles-backend/
+anarobles-frontend/anarobles-backend/
+
+# Images / assets not in public
+imagenes/
