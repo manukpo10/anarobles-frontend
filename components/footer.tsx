@@ -16,8 +16,9 @@ const socialLinks = [
     icon: Mail,
     label: "Email",
   },
+  // TODO: reemplazar con número real de Ana
   {
-    href: "tel:+1234567890",
+    href: "tel:+541100000000",
     icon: Phone,
     label: "Teléfono",
   },

@@ -61,7 +61,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="inline-flex items-center gap-4"
           >
             <span className="h-px w-16 bg-secondary" />
@@ -134,7 +134,7 @@ export function HeroSection() {
               href="/sobre-mi"
               className="group inline-flex items-center gap-4 rounded-full border-2 border-primary-foreground/30 px-10 py-5 text-sm font-medium uppercase tracking-wider text-primary-foreground transition-all duration-400 hover:border-secondary hover:bg-secondary/20"
             >
-              <span>Conocer más</span>
+              <span>Conocé a Ana</span>
             </Link>
           </motion.div>
 

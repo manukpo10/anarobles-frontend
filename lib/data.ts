@@ -1,3 +1,163 @@
+// ============= NEW HOME REDESIGN INTERFACES =============
+
+export interface AboutIntroData {
+  headline: string
+  eyebrow: string
+  paragraphs: string[]
+  image: string
+  ctaLabel: string
+  ctaHref: string
+}
+
+export interface BlogPost {
+  id: string
+  title: string
+  excerpt: string
+  date: string
+  image: string
+  slug: string
+  category: string
+}
+
+export interface Testimonial {
+  id: string
+  quote: string
+  author: string
+  context: string
+  avatar?: string
+}
+
+export interface ProcessPhase {
+  id: string
+  phaseNumber: number
+  title: string
+  description: string
+  icon: string
+}
+
+// ============= NEW HOME REDESIGN DATA =============
+
+// TODO: reemplazar con datos reales de Ana
+export const aboutIntroData: AboutIntroData = {
+  headline: "Sobre Ana",
+  eyebrow: "Artista Plástica",
+  paragraphs: [
+    "Ana Cecilia Robles es una artista plástica argentina cuyo trabajo explora la relación entre emoción y color, creando obras que invitan a la introspección.",
+    "Con más de 15 años de trayectoria, ha desarrollado un lenguaje visual propio que fusiona técnicas tradicionales con expresiones contemporáneas, siempre manteniendo ese diálogo silencioso entre el alma y el lienzo.",
+    "Más allá de la creación, su pasión es enseñar — transmitir la técnica y la sensibilidad artística a quienes quieren descubrir su propia voz visual.",
+  ],
+  image: "/artista1.jpeg", // TODO: verificar que exista en /public
+  ctaLabel: "Conocé mi historia",
+  ctaHref: "/sobre-mi",
+}
+
+// TODO: integrar blog API - estos son datos mock
+export const blogPosts: BlogPost[] = [
+  {
+    id: "1",
+    title: "El lenguaje secreto del color en la pintura contemporánea",
+    excerpt:
+      "Cómo los artistas usamos el color para transmitir emociones que las palabras no pueden capturar.",
+    date: "2026-03-15",
+    image: "/artwork-1.jpg",
+    slug: "lenguaje-del-color",
+    category: "Arte y Técnica",
+  },
+  {
+    id: "2",
+    title: "5 consejos para principiantes en óleo",
+    excerpt:
+      "Errores comunes y cómo evitarlos cuando estás empezando tu camino en la pintura al óleo.",
+    date: "2026-02-28",
+    image: "/artwork-2.jpg",
+    slug: "consejos-principiantes-oleo",
+    category: "Tutoriales",
+  },
+  {
+    id: "3",
+    title: "Inspiración mediterránea: del lienzo a la realidad",
+    excerpt:
+      "Explorando cómo los paisajes del Mediterráneo influyen en mi obra reciente.",
+    date: "2026-01-10",
+    image: "/artwork-3.jpg",
+    slug: "inspiracion-mediterranea",
+    category: "Proceso Creativo",
+  },
+]
+
+// TODO: confirmar con Ana, estas citas necesitan verificación
+export const testimonials: Testimonial[] = [
+  {
+    id: "1",
+    quote:
+      "Ana tiene una forma única de enseñar que hace que cada clase se sienta como un descubrimiento. Su paciencia y dedicación me ayudaron a superar bloqueos creativos que tenía hace años.",
+    author: "María Fernanda López",
+    context: "Taller de Óleo para Principiantes, 2025",
+    avatar: "/artwork-1.jpg", // TODO: verificar que existan avatars reales
+  },
+  {
+    id: "2",
+    quote:
+      "Las técnicas que aprendí en su taller de técnicas mixtas transformaron completamente mi forma de trabajar. Ahora tengo un lenguaje visual propio que antes no sabía que existía.",
+    author: "Carlos Rodríguez",
+    context: "Curso de Técnicas Mixtas, 2024",
+    avatar: "/artwork-2.jpg",
+  },
+  {
+    id: "3",
+    quote:
+      "Recomiendo completamente los cursos de Ana. La calidad de la enseñanza y el ambiente de clase son excepcionales. Es una artista y docente extraordinaria.",
+    author: "Sofía Martínez",
+    context: "Taller de Acuarela, 2024",
+    avatar: "/artwork-3.jpg",
+  },
+]
+
+// TODO: reemplazar con fases reales del proceso de Ana
+export const processPhases: ProcessPhase[] = [
+  {
+    id: "1",
+    phaseNumber: 1,
+    title: "Inspiración",
+    description:
+      "Todo comienza con una emoción, un recuerdo o un momento que pide ser traducido al lienzo. Esta fase es la más personal y la que define la esencia de cada obra.",
+    icon: "Sparkles",
+  },
+  {
+    id: "2",
+    phaseNumber: 2,
+    title: "Boceto",
+    description:
+      "El carboncillo traza los trazos esenciales, capturando la esencia antes de los detalles. Es el mapa que guía toda la creación posterior.",
+    icon: "Pencil",
+  },
+  {
+    id: "3",
+    phaseNumber: 3,
+    title: "Capas y Color",
+    description:
+      "Las veladuras generan profundidad, mientras los colores interactúan y se transforman. Cada capa agrega una nueva dimensión a la obra.",
+    icon: "Palette",
+  },
+  {
+    id: "4",
+    phaseNumber: 4,
+    title: "Obra Terminada",
+    description:
+      "El toque final revela la pieza completa, lista para contar su historia. A veces se necesita un paso atrás para ver el todo.",
+    icon: "Check",
+  },
+]
+
+export const getRecentPosts = (limit: number = 3): BlogPost[] =>
+  blogPosts.slice(0, limit)
+
+export const getTestimonials = (): Testimonial[] => testimonials
+
+export const getProcessPhases = (): ProcessPhase[] => processPhases
+
+// ============= EXISTING STATIC DATA =============
+
 export interface QuizQuestion {
   question: string
   options: string[]

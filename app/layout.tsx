@@ -38,6 +38,10 @@ export const metadata: Metadata = {
     "artista",
     "galería",
     "arte contemporáneo",
+    "cursos de arte",
+    "talleres de pintura",
+    "Buenos Aires",
+    "arte argentino",
   ],
   authors: [{ name: "Ana Cecilia Robles" }],
   creator: "Ana Cecilia Robles",
@@ -87,7 +91,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#194052",
+  themeColor: "#D9622C",
   width: "device-width",
   initialScale: 1,
 }
