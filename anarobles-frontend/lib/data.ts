@@ -184,6 +184,7 @@ export interface Module {
 export interface Curso {
   id: string
   title: string
+  subtitle?: string
   category: string
   modalidad: "Presencial" | "Online" | "Híbrido" | "Virtual"
   duracion: string
@@ -830,269 +831,138 @@ export const getProducts = (): Product[] => {
 
 export const cursos: Curso[] = [
   {
-    id: "1",
-    title: "Pintura al Óleo: Iniciación",
-    category: "Oil Painting",
-    modalidad: "Presencial",
-    duracion: "8 semanas · 2 hs por clase",
+    id: "iniciacion-acuarela",
+    title: "Iniciación a la Acuarela",
+    subtitle: "Descubrí la magia de la mancha y el agua",
+    category: "Watercolor",
+    modalidad: "Online",
+    duracion: "8 clases",
     nivel: "Inicial",
-    precio: 12000,
+    precio: 45000,
     description:
-      "Un recorrido por los fundamentos de la pintura al óleo: preparación de la paleta, mezcla de colores, capas y veladuras. Trabajaremos sobre tres obras propias durante el cursado.",
-    image: "/artwork-1.jpg",
+      "Un primer encuentro con la acuarela: cómo soltar el control, dejar que el agua haga su parte, y construir desde la mancha.",
+    image: "/galeria/naturaleza-1.jpeg",
     featured: true,
     modules: [
       {
         id: "m1",
-        title: "Módulo 1: Fundamentos del Óleo",
+        title: "Módulo 1: Soltar el Control",
         lessons: [
-          { id: "l1", title: "Bienvenida e introducción al curso", duration: "5 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", resources: [{ name: "Guía de inicio PDF", url: "/guia-inicio.pdf" }] },
-          { id: "l2", title: "Materiales necesarios", duration: "12 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l3", title: "Preparación de la paleta", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l4", title: "Guía de colores y mezclas", duration: "PDF", type: "pdf", pdfUrl: "/guia-colores.pdf", resources: [{ name: "Guía de colores PDF", url: "/guia-colores.pdf" }] },
-          { id: "l5", title: "Quiz: Fundamentos", duration: "5 min", type: "quiz", quizQuestions: [
-            { question: "¿Cuál es el orden correcto de las capas en óleo?", options: ["Graso sobre magro", "Magro sobre grasa", "Todas a la vez", "No importa"], correctAnswer: 0 },
-            { question: "¿Qué pigmento se obtiene del óxido de hierro?", options: ["Azul ultramar", "Tierra siena", "Blanco de titanio", "Carmín"], correctAnswer: 1 }
-          ] },
+          { id: "l1", title: "Bienvenida e introducción", duration: "10 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l2", title: "Materiales y preparación", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l3", title: "El agua como aliada", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
         ]
       },
       {
         id: "m2",
-        title: "Módulo 2: Técnicas Básicas",
+        title: "Módulo 2: Construir desde la Mancha",
         lessons: [
-          { id: "l6", title: "Pinceladas y trazos", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l7", title: "Capas y veladuras", duration: "18 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l8", title: "Práctica: primer ejercicio", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l9", title: "Quiz: Técnicas básicas", duration: "5 min", type: "quiz", quizQuestions: [
-            { question: "¿Qué es una veladura?", options: ["Capa transparente", "Capa sólida", "Textura rugosa", "Fondo blanco"], correctAnswer: 0 }
-          ] },
-        ]
-      },
-      {
-        id: "m3",
-        title: "Módulo 3: Composición",
-        lessons: [
-          { id: "l10", title: "Reglas de composición", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l11", title: "Ejercicio: bodegón simple", duration: "45 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          { id: "l12", title: "Apuntes de composición", duration: "PDF", type: "pdf", pdfUrl: "/apuntes-composicion.pdf" },
+          { id: "l4", title: "Técnicas de lavado", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l5", title: "Capas transparentes", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l6", title: "Ejercicio: primera obra", duration: "45 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
         ]
       }
     ]
   },
-    {
-      id: "2",
-      title: "Acrílico y Color",
-      category: "Oil Painting",
-      modalidad: "Presencial",
-      duracion: "6 semanas · 2 hs por clase",
-      nivel: "Intermedio",
-      precio: 10000,
-      description:
-        "Profundizaremos en la teoría del color y la composición a través del acrílico, con foco en paisajes contemporáneos y abstracciones inspiradas en el Mediterráneo.",
-      image: "/artwork-2.jpg",
-      featured: true,
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Teoría del Color",
-          lessons: [
-            { id: "l1", title: "Introducción al color", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Rueda de colores", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l3", title: "Ejercicio práctico", duration: "40 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        },
-        {
-          id: "m2",
-          title: "Módulo 2: Acrílico Avanzado",
-          lessons: [
-            { id: "l4", title: "Técnicas de veladura", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l5", title: "Paisajes contemporáneos", duration: "35 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "3",
-      title: "Ilustración con Acuarela",
-      category: "Watercolor",
-      modalidad: "Híbrido",
-      duracion: "5 semanas · 1.5 hs por clase",
-      nivel: "Todos los niveles",
-      precio: 8500,
-      description:
-        "Aprenderás a ilustrar con tinta y acuarela, explorando la composición, el trazo expresivo y la creación de pequeñas series narrativas.",
-      image: "/artwork-3.jpg",
-      featured: true,
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Introducción a la Acuarela",
-          lessons: [
-            { id: "l1", title: "Materiales y preparación", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Técnicas básicas", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l3", title: "Ejercicio: primera acuarela", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "4",
-      title: "Arte Digital desde Cero",
-      category: "Digital Art",
-      modalidad: "Online",
-      duracion: "10 clases en vivo + material",
-      nivel: "Inicial",
-      precio: 9500,
-      description:
-        "Una introducción a las herramientas digitales (Procreate / Photoshop) para llevar tu arte al mundo digital sin perder identidad personal.",
-      image: "/artwork-4.jpg",
-      featured: true,
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Herramientas Digitales",
-          lessons: [
-            { id: "l1", title: "Configuración inicial", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Interfaz y atajos", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l3", title: "Primer dibujo digital", duration: "40 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "5",
-      title: "Técnicas Mixtas",
-      category: "Mixed Media",
-      modalidad: "Presencial",
-      duracion: "8 semanas · 2 hs por clase",
-      nivel: "Avanzado",
-      precio: 14000,
-      description:
-        "Combinaremos óleo, acrílico, tinta y collage para construir obras de gran impacto. Pensado para quienes ya tienen una práctica regular.",
-      image: "/artwork-5.jpg",
-      featured: true,
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Introducción a Técnicas Mixtas",
-          lessons: [
-            { id: "l1", title: "¿Qué son las técnicas mixtas?", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Materiales combinados", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "6",
-      title: "Dibujo y Sombras",
-      category: "Drawing",
-      modalidad: "Presencial",
-      duracion: "4 semanas · 2 hs por clase",
-      nivel: "Inicial",
-      precio: 7000,
-      description:
-        "Un curso intensivo de dibujo a grafito centrado en el estudio de la luz, la sombra y el volumen sobre papel.",
-      image: "/artwork-6.jpg",
-      featured: true,
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Luz y Sombra",
-          lessons: [
-            { id: "l1", title: "Teoría del claroscuro", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Ejercicio práctico", duration: "45 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "7",
-      title: "Paisajes al Óleo",
-      category: "Oil Painting",
-      modalidad: "Presencial",
-      duracion: "6 semanas · 2 hs por clase",
-      nivel: "Intermedio",
-      precio: 11500,
-      description:
-        "Llevaremos al lienzo paisajes desde el boceto hasta la obra terminada, trabajando atmósferas, profundidad y luz natural.",
-      image: "/artwork-7.jpg",
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Bocetos de Paisaje",
-          lessons: [
-            { id: "l1", title: "Teoría del paisaje", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Bocetaje rápido", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "8",
-      title: "Arte Generativo",
-      category: "Digital Art",
-      modalidad: "Online",
-      duracion: "6 clases en vivo",
-      nivel: "Avanzado",
-      precio: 13000,
-      description:
-        "Introducción al arte generativo con código creativo. Pensado para artistas con curiosidad técnica que quieran explorar nuevos lenguajes.",
-      image: "/artwork-8.jpg",
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Conceptos Básicos",
-          lessons: [
-            { id: "l1", title: "¿Qué es el arte generativo?", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Primer algoritmo", duration: "40 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "9",
-      title: "Taller de Niños y Niñas",
-      category: "Mixed Media",
-      modalidad: "Presencial",
-      duracion: "Clases sueltas · 1.5 hs",
-      nivel: "Todos los niveles",
-      precio: 4500,
-      description:
-        "Un espacio creativo para chicos y chicas de 6 a 12 años donde experimentar con materiales, color y juego. Inscripción mensual.",
-      image: "/artwork-9.jpg",
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Exploración",
-          lessons: [
-            { id: "l1", title: "Bienvenidos al taller", duration: "10 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Jugando con colores", duration: "45 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
-    {
-      id: "10",
-      title: "Bocetaje Urbano",
-      category: "Drawing",
-      modalidad: "Presencial",
-      duracion: "Workshop intensivo de fin de semana",
-      nivel: "Todos los niveles",
-      precio: 6000,
-      description:
-        "Salidas de campo para retratar la ciudad con técnicas mixtas sobre cuaderno. Incluye materiales básicos.",
-      image: "/artwork-10.jpg",
-      modules: [
-        {
-          id: "m1",
-          title: "Módulo 1: Bocetaje en Exterior",
-          lessons: [
-            { id: "l1", title: "Materiales para exteriores", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-            { id: "l2", title: "Técnicas rápidas", duration: "35 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
-          ]
-        }
-      ]
-    },
+  {
+    id: "retrato-busqueda",
+    title: "El Retrato como Búsqueda",
+    subtitle: "Captar el interior más allá de lo visible",
+    category: "Drawing",
+    modalidad: "Híbrido",
+    duracion: "10 clases",
+    nivel: "Intermedio",
+    precio: 65000,
+    description:
+      "Aprendé a dibujar rostros como una forma de explorar el mundo interior de las personas. Más allá de la técnica, una mirada.",
+    image: "/galeria/retrato-1.jpeg",
+    featured: true,
+    modules: [
+      {
+        id: "m1",
+        title: "Módulo 1: El Rostro como Mapa",
+        lessons: [
+          { id: "l1", title: "Anatomía y proporciones", duration: "20 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l2", title: "Luz y sombra en el retrato", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l3", title: "Ejercicio: primer retrato", duration: "40 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+        ]
+      },
+      {
+        id: "m2",
+        title: "Módulo 2: Mirar más Allá",
+        lessons: [
+          { id: "l4", title: "Expresión y emoción", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l5", title: "Retrato desde la memoria", duration: "35 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "bordado-imagen",
+    title: "Bordado e Imagen",
+    subtitle: "Cruces entre hilos, telas y dibujo",
+    category: "Mixed Media",
+    modalidad: "Presencial",
+    duracion: "6 clases",
+    nivel: "Todos los niveles",
+    precio: 55000,
+    description:
+      "Una exploración entre lo textil y lo visual. Donde los hilos completan lo que la línea no termina de decir.",
+    image: "/galeria/naturaleza-5.jpeg",
+    featured: true,
+    modules: [
+      {
+        id: "m1",
+        title: "Módulo 1: Cruce de Lenguajes",
+        lessons: [
+          { id: "l1", title: "Materiales textiles", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l2", title: "Del dibujo al bordado", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l3", title: "Puntadas básicas", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+        ]
+      },
+      {
+        id: "m2",
+        title: "Módulo 2: Composición Textil",
+        lessons: [
+          { id: "l4", title: "Textura y relieve", duration: "35 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l5", title: "Pieza final", duration: "50 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+        ]
+      }
+    ]
+  },
+  {
+    id: "mancha-color",
+    title: "Pintura desde la Mancha",
+    subtitle: "Abrazá la imprevisibilidad",
+    category: "Watercolor",
+    modalidad: "Online",
+    duracion: "8 clases",
+    nivel: "Todos los niveles",
+    precio: 50000,
+    description:
+      "Pintar empezando por lo que aparece, no por lo que se planea. Un curso para soltar y descubrir.",
+    image: "/galeria/naturaleza-3.jpeg",
+    featured: true,
+    modules: [
+      {
+        id: "m1",
+        title: "Módulo 1: Soltar la Planificación",
+        lessons: [
+          { id: "l1", title: "El lienzo en blanco", duration: "15 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l2", title: "Primera mancha", duration: "25 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l3", title: "Escuchar lo que emerge", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+        ]
+      },
+      {
+        id: "m2",
+        title: "Módulo 2: Construcción Orgánica",
+        lessons: [
+          { id: "l4", title: "Capas que respiran", duration: "30 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+          { id: "l5", title: "Obra final", duration: "45 min", type: "video", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4" },
+        ]
+      }
+    ]
+  },
 ]
 
 export const products: Product[] = [
@@ -1155,8 +1025,17 @@ export const products: Product[] = [
   },
 ]
 
-export const getFeaturedCursos = () => getCursos().filter((c) => c.featured)
-export const getFeaturedProducts = () => getProducts().filter((p) => p.featured)
+export const getFeaturedCursos = () => {
+  const featured = getCursos().filter((c) => c.featured)
+  // Fallback to static data if localStorage has no featured courses
+  return featured.length > 0 ? featured : cursos.filter((c) => c.featured)
+}
+
+export const getFeaturedProducts = () => {
+  const featured = getProducts().filter((p) => p.featured)
+  // Fallback to static data if localStorage has no featured products
+  return featured.length > 0 ? featured : products.filter((p) => p.featured)
+}
 export const getCursoById = (id: string) => getCursos().find((c) => c.id === id)
 export const getProductById = (id: string) => getProducts().find((p) => p.id === id)
 

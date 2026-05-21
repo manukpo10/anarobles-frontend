@@ -27,16 +27,14 @@ const defaultImages: InstagramImage[] = [
 
 const defaultInstagramUrl = "https://www.instagram.com/anaroblesartedibujo/"
 
-const staggerContainer = {
+const stagger = {
   hidden: {},
-  show: {
-    transition: { staggerChildren: 0.05, delayChildren: 0.1 },
-  },
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
 }
 
-const itemVariant = {
-  hidden: { opacity: 0, scale: 0.9 },
-  show: { opacity: 1, scale: 1 },
+const itemAnim = {
+  hidden: { opacity: 0, scale: 0.94 },
+  show:   { opacity: 1, scale: 1 },
 }
 
 export function InstagramFeed({
@@ -44,31 +42,34 @@ export function InstagramFeed({
   instagramUrl = defaultInstagramUrl,
 }: InstagramFeedProps) {
   return (
-    <section className="bg-background py-20 lg:py-28">
+    <section className="section-sm bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section header */}
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 text-center"
+          className="mb-10 text-center"
         >
-          <span className="text-sm font-medium uppercase tracking-widest text-secondary">
-            Instagram
-          </span>
-          <h2 className="mt-4 font-serif text-4xl md:text-5xl text-foreground">
-            Seguime en @anaroblesartedibujo
+          <span className="kicker">Instagram</span>
+          <h2
+            className="mt-6 font-serif font-light text-foreground"
+            style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)" }}
+          >
+            Seguime en{" "}
+            <span className="font-semibold">@anaroblesartedibujo</span>
           </h2>
         </motion.div>
 
-        {/* Instagram grid */}
+        {/* Grid */}
         <motion.div
-          variants={staggerContainer}
+          variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3"
         >
           {images.map((img) => (
             <motion.a
@@ -76,43 +77,43 @@ export function InstagramFeed({
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              variants={itemVariant}
-              initial="hidden"
-              animate="show"
-              className="group relative aspect-square overflow-hidden rounded-xl"
+              variants={itemAnim}
+              className="group relative aspect-square overflow-hidden rounded-xl bg-muted"
             >
               <Image
                 src={img.src}
                 alt={img.alt}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 33vw, 16vw"
               />
               {/* Hover overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors duration-300 group-hover:bg-primary/60">
-                <Instagram className="h-8 w-8 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-0 flex items-center justify-center bg-secondary/0 transition-colors duration-300 group-hover:bg-secondary/70">
+                <Instagram className="h-7 w-7 text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110" />
               </div>
             </motion.a>
           ))}
         </motion.div>
 
-        {/* CTA button */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 text-center"
+          className="mt-10 text-center"
         >
           <a
             href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 rounded-full border-2 border-primary px-10 py-4 text-sm font-semibold uppercase tracking-wider text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+            className="group btn-ghost"
           >
-            <Instagram className="h-5 w-5" />
+            <Instagram className="h-4 w-4" />
             <span>Seguime en Instagram</span>
           </a>
         </motion.div>
+
       </div>
     </section>
   )

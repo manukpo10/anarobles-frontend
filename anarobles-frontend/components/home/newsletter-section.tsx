@@ -14,52 +14,52 @@ interface NewsletterSectionProps {
 
 const defaultData: NewsletterData = {
   headline: "Unirme a la comunidad",
-  subtext:
-    "Recibí novedades, avances de cursos y contenido exclusivo directo a tu correo.",
+  subtext: "Recibí novedades, avances de cursos y contenido exclusivo directo a tu correo.",
 }
 
-export function NewsletterSection({
-  data = defaultData,
-}: NewsletterSectionProps) {
+export function NewsletterSection({ data = defaultData }: NewsletterSectionProps) {
   return (
-    <section className="relative overflow-hidden bg-secondary py-20 lg:py-28">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-primary/50 blur-3xl" />
-        <div className="absolute -right-20 -bottom-20 h-48 w-48 rounded-full bg-accent/50 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-3xl" />
-      </div>
+    <section className="section-sm relative overflow-hidden bg-secondary">
+      {/* Ambient blobs */}
+      <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-accent/15 blur-3xl" aria-hidden="true" />
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-xl px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h2 className="font-serif text-4xl font-semibold text-secondary-foreground md:text-5xl">
+          {/* Kicker on dark */}
+          <span className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-secondary-foreground/50">
+            <span className="h-px w-8 bg-secondary-foreground/25" />
+            Comunidad
+            <span className="h-px w-8 bg-secondary-foreground/25" />
+          </span>
+
+          <h2
+            className="mt-6 font-serif font-light text-secondary-foreground"
+            style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)" }}
+          >
             {data.headline}
           </h2>
-          <p className="mt-4 text-lg text-secondary-foreground/80">
+
+          <p className="mt-4 text-base leading-relaxed text-secondary-foreground/65">
             {data.subtext}
           </p>
 
-          {/* Newsletter form */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10"
+            className="mt-8"
           >
             <NewsletterForm />
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Bottom decorative wave */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background/20 to-transparent" />
     </section>
   )
 }

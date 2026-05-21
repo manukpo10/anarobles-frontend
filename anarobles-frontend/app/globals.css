@@ -208,3 +208,99 @@ html {
 .border-glow:hover {
   box-shadow: 0 0 12px oklch(0.30 0.05 220 / 0.2);
 }
+
+/* ─── Home Design System ───────────────────────────────────────────── */
+
+/* Section spacing scale */
+.section-sm  { padding-top: 4rem;  padding-bottom: 4rem;  }
+.section-md  { padding-top: 5rem;  padding-bottom: 5rem;  }
+.section-lg  { padding-top: 6rem;  padding-bottom: 6rem;  }
+
+@media (min-width: 1024px) {
+  .section-sm  { padding-top: 6rem;  padding-bottom: 6rem;  }
+  .section-md  { padding-top: 8rem;  padding-bottom: 8rem;  }
+  .section-lg  { padding-top: 10rem; padding-bottom: 10rem; }
+}
+
+/* Kicker / eyebrow — unified style */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: oklch(0.30 0.05 220);
+}
+
+.kicker::before,
+.kicker::after {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background-color: oklch(0.30 0.05 220 / 0.45);
+  flex-shrink: 0;
+}
+
+/* Card shadows — 3 levels, neutral (no color tint) */
+.shadow-card  { box-shadow: 0 1px 3px oklch(0.22 0.01 0 / 0.07), 0 4px 12px oklch(0.22 0.01 0 / 0.05); }
+.shadow-hover { box-shadow: 0 4px 16px oklch(0.22 0.01 0 / 0.09), 0 12px 32px oklch(0.22 0.01 0 / 0.07); }
+.shadow-float { box-shadow: 0 8px 32px oklch(0.22 0.01 0 / 0.11), 0 24px 48px oklch(0.22 0.01 0 / 0.09); }
+
+/* Pill button — primary action (navy bg) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  background-color: oklch(0.30 0.05 220);
+  color: oklch(0.98 0.005 80);
+  padding: 1rem 2.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: background-color 300ms ease, box-shadow 300ms ease;
+}
+
+.btn-primary:hover {
+  background-color: oklch(0.48 0.16 20);
+  box-shadow: 0 4px 16px oklch(0.48 0.16 20 / 0.30);
+}
+
+/* Pill button — ghost outline */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  border: 1.5px solid oklch(0.22 0.01 0 / 0.20);
+  color: oklch(0.22 0.01 0);
+  padding: 1rem 2.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: border-color 300ms ease, background-color 300ms ease, color 300ms ease;
+}
+
+.btn-ghost:hover {
+  border-color: oklch(0.30 0.05 220);
+  background-color: oklch(0.30 0.05 220);
+  color: oklch(0.98 0.005 80);
+}
+
+/* Scroll indicator line */
+.scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, oklch(0.98 0.005 80 / 0.5), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 0.9; transform: scaleY(1.15); }
+}
