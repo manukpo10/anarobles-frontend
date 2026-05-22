@@ -13,7 +13,6 @@ export function HeroSection() {
           className="h-full w-full bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/fondo1.jpeg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/40 via-secondary/20 to-secondary/50" />
       </div>
 
       {/* Grain texture overlay */}
@@ -50,11 +49,11 @@ export function HeroSection() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center justify-center gap-4 mb-10"
         >
-          <span className="h-px w-12 bg-primary/60" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-primary">
-            Artista Plástica · Buenos Aires
+          <span className="h-px w-12 bg-white/50" />
+          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-white/90">
+            Artista Plástica · La Plata
           </span>
-          <span className="h-px w-12 bg-primary/60" />
+          <span className="h-px w-12 bg-white/50" />
         </motion.div>
 
         {/* Name — centered and dramatic */}
