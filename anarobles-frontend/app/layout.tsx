@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next"
 import { Cormorant_Garamond, Playfair_Display } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { CartProvider } from "@/contexts/cart-context"
@@ -160,7 +159,6 @@ export default function RootLayout({
               <Footer />
               <CartDrawer />
               <Toaster />
-              {process.env.NODE_ENV === "production" && <Analytics />}
             </CheckoutProvider>
           </AuthProvider>
         </CartProvider>
