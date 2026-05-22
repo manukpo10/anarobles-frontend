@@ -265,7 +265,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center justify-center gap-5 pt-20 sm:gap-6 sm:pt-24"
+              className="h-full overflow-y-auto flex flex-col items-center justify-center gap-5 pt-20 pb-10 sm:gap-6 sm:pt-24"
             >
               {navLinks.map((link, index) => (
                 <motion.div
@@ -381,11 +381,11 @@ export function Navbar() {
             </motion.nav>
 
             {/* Decorative elements */}
-            <div className="absolute left-1/4 top-1/3 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
-            <div className="absolute bottom-1/3 right-1/4 h-56 w-56 rounded-full bg-secondary/5 blur-3xl" />
-            
+            <div className="pointer-events-none absolute left-1/4 top-1/3 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
+            <div className="pointer-events-none absolute bottom-1/3 right-1/4 h-56 w-56 rounded-full bg-secondary/5 blur-3xl" />
+
             {/* Artistic brush stroke decoration */}
-            <svg className="absolute bottom-20 left-1/2 -translate-x-1/2 w-48 h-4 opacity-20" viewBox="0 0 200 16">
+            <svg className="pointer-events-none absolute bottom-20 left-1/2 -translate-x-1/2 w-48 h-4 opacity-20" viewBox="0 0 200 16">
               <path d="M0 8 Q50 4 100 8 T200 8" stroke="#FA7A35" strokeWidth="2" fill="none" strokeLinecap="round"/>
             </svg>
           </motion.div>
