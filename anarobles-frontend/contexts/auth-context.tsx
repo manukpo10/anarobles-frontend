@@ -104,8 +104,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             role: data.role === "ADMIN" ? "admin" : "user",
             avatar: data.avatar
           })
-        } else if (res.status === 401) {
-          // Token rejected - clear session and redirect to login
+        } else if (res.status === 400 || res.status === 401 || res.status === 403) {
+          // Token invalid/expired/rejected — clear session
           localStorage.removeItem(STORAGE_KEY)
           setUser(null)
           setToken(null)
