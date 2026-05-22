@@ -63,7 +63,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
             <motion.div key={curso.id} variants={cardAnim} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}>
               <Link
                 href={`/cursos/${curso.id}`}
-                className="group flex flex-col overflow-hidden rounded-2xl bg-card border border-border shadow-md transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border/70 shadow-sm ring-1 ring-black/[0.02] transition-all duration-500 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1.5"
               >
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
@@ -71,51 +71,59 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
                     src={curso.image}
                     alt={curso.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 23vw"
                   />
+                  {/* Subtle gradient for depth and badge legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/10" aria-hidden="true" />
+
+                  {/* Floating level badge */}
+                  <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md ring-1 ring-black/[0.04]">
+                    {curso.nivel}
+                  </span>
                 </div>
 
                 {/* Content */}
                 <div className="flex flex-1 flex-col p-5">
 
-                  {/* Level kicker */}
-                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
-                    {curso.nivel}
-                  </span>
-
                   {/* Title */}
-                  <h3 className="mt-2 font-serif text-xl font-semibold leading-snug text-foreground">
+                  <h3 className="font-serif text-xl font-semibold leading-snug text-foreground transition-colors duration-300 group-hover:text-primary">
                     {curso.title}
                   </h3>
                   {curso.subtitle && (
-                    <p className="mt-1 text-sm italic leading-snug text-muted-foreground">
+                    <p className="mt-1.5 line-clamp-2 text-sm italic leading-snug text-muted-foreground">
                       {curso.subtitle}
                     </p>
                   )}
 
-                  {/* Divider */}
-                  <div className="my-4 h-px w-full bg-border" />
-
                   {/* Meta row */}
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1.5">
-                      <Monitor className="h-3.5 w-3.5 shrink-0" />
+                      <Monitor className="h-3.5 w-3.5 shrink-0 text-primary/70" />
                       {curso.modalidad}
                     </span>
+                    <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
                     <span className="flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5 shrink-0" />
+                      <Clock className="h-3.5 w-3.5 shrink-0 text-primary/70" />
                       {curso.duracion}
                     </span>
                   </div>
 
+                  {/* Divider — pushes price to the bottom */}
+                  <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+
                   {/* Price */}
                   <div className="mt-4 flex items-end justify-between">
-                    <span className="font-serif text-2xl font-bold text-foreground">
-                      ${curso.precio.toLocaleString("es-AR")}
-                    </span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                      <ArrowRight className="h-4 w-4" />
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                        Desde
+                      </span>
+                      <span className="font-serif text-2xl font-bold leading-tight text-foreground">
+                        ${curso.precio.toLocaleString("es-AR")}
+                      </span>
+                    </div>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-md group-hover:shadow-primary/20">
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                     </span>
                   </div>
 
