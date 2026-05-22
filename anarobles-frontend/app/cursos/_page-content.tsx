@@ -17,6 +17,7 @@ import {
   Star
 } from "lucide-react"
 import { getCursos, fetchCursosFromAPI, type Curso } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 const categories = [
   { id: "all", label: "Todos" },
@@ -355,7 +356,7 @@ export default function CursosPage() {
                           
                           <div className="flex items-center gap-3">
                             <span className="font-serif text-2xl font-semibold text-primary">
-                              ${curso.precio.toLocaleString("es-AR")}
+                              ${formatPrice(curso.precio)}
                             </span>
                           </div>
                         </div>

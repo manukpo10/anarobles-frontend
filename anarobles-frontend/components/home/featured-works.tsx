@@ -7,6 +7,7 @@ import Image from "next/image"
 import { ArrowRight, Clock, Sparkles } from "lucide-react"
 import { getFeaturedCursos, type Curso } from "@/lib/data"
 import { Carousel } from "@/components/ui/carousel"
+import { formatPrice } from "@/lib/utils"
 
 export function FeaturedWorks() {
   const [featuredCursos, setFeaturedCursos] = useState<Curso[]>([])
@@ -62,7 +63,7 @@ export function FeaturedWorks() {
               {curso.duracion}
             </span>
             <span className="ml-auto font-serif text-2xl font-bold text-primary-foreground drop-shadow-md">
-              ${curso.precio.toLocaleString("es-AR")}
+              ${formatPrice(curso.precio)}
             </span>
           </div>
         </div>

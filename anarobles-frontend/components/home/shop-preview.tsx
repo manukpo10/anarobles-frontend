@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react"
 import { getFeaturedProducts, type Product } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 export function ShopPreview() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
@@ -117,7 +118,7 @@ export function ShopPreview() {
                           Edición limitada
                         </span>
                         <span className="font-serif text-xl font-bold text-white">
-                          ${product.price.toLocaleString("es-AR")}
+                          ${formatPrice(product.price)}
                         </span>
                       </div>
                     </div>

@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { useCheckout, CheckoutItem } from "@/contexts/checkout-context"
 import { useCart } from "@/contexts/cart-context"
 import { confirmarCheckoutDemo, crearPreferenciaCheckout } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 const MERCADO_PAGO_PUBLIC_KEY = process.env.NEXT_PUBLIC_MP_PUBLIC_KEY || "TEST-xxxxx"
 
@@ -260,7 +261,7 @@ function CheckoutContent() {
                         </div>
                         <div className="text-right shrink-0">
                           <p className="font-semibold text-foreground">
-                            ${item.price.toLocaleString("es-AR")}
+                            ${formatPrice(item.price)}
                           </p>
                           {item.quantity > 1 && (
                             <p className="text-xs text-muted-foreground">
@@ -374,7 +375,7 @@ function CheckoutContent() {
                 <div className="space-y-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span className="text-foreground">${total.toLocaleString("es-AR")}</span>
+                    <span className="text-foreground">${formatPrice(total)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Descuento</span>
@@ -390,7 +391,7 @@ function CheckoutContent() {
                   <div className="flex justify-between">
                     <span className="font-medium text-foreground">Total</span>
                     <span className="font-serif text-2xl font-bold text-primary">
-                      ${total.toLocaleString("es-AR")}
+                      ${formatPrice(total)}
                     </span>
                   </div>
                 </div>

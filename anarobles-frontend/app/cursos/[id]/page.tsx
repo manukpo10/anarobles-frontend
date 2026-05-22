@@ -42,6 +42,7 @@ import {
 import { getCursoById, getCourseProgress, updateLessonProgress, getLessonProgress, isUserEnrolled, getCursos, fetchCursoByIdFromAPI, fetchMisCursos, estoyInscripto, inscribirEnCursoAPI, completarLeccion, type Curso, type Lesson, type QuizQuestion } from "@/lib/data"
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
+import { formatPrice } from "@/lib/utils"
 
 function getYouTubeEmbedUrl(url: string): string | null {
   if (!url) return null
@@ -748,7 +749,7 @@ export default function CursoDetailPage({
                 >
                   <div className="mb-6 text-center">
                     <span className="font-serif text-5xl font-bold text-primary">
-                      ${curso.precio.toLocaleString("es-AR")}
+                      ${formatPrice(curso.precio)}
                     </span>
                     <p className="mt-2 text-sm text-muted-foreground">Acceso de por vida</p>
                   </div>
@@ -902,7 +903,7 @@ export default function CursoDetailPage({
                       {related.title}
                     </h3>
                     <p className="mt-2 font-semibold text-primary">
-                      ${related.precio.toLocaleString("es-AR")}
+                      ${formatPrice(related.precio)}
                     </p>
                   </div>
                 </Link>

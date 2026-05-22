@@ -16,6 +16,7 @@ import {
   Sparkles,
   Package
 } from "lucide-react"
+import { formatPrice } from "@/lib/utils"
 
 export default function CarritoPage() {
   const { items, removeItem, updateQuantity, clearCart, itemCount, subtotal } = useCart()
@@ -209,7 +210,7 @@ export default function CarritoPage() {
                           <div className="flex items-center gap-6">
                             <div className="text-right">
                               <p className="font-serif text-xl font-semibold text-primary md:text-2xl">
-                                ${(item.price * item.quantity).toLocaleString("es-AR")}
+                                ${formatPrice(item.price * item.quantity)}
                               </p>
                               {item.quantity > 1 && (
                                 <p className="text-sm text-muted-foreground">
@@ -269,7 +270,7 @@ export default function CarritoPage() {
                 <div className="mt-8 space-y-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-medium">${subtotal.toLocaleString("es-AR")}</span>
+                    <span className="font-medium">${formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="flex items-center gap-2 text-muted-foreground">
@@ -286,7 +287,7 @@ export default function CarritoPage() {
                   </div>
                   {subtotal < 150 && (
                     <p className="text-xs text-muted-foreground">
-                      ¡Agregá ${(150 - subtotal).toLocaleString("es-AR")} más para obtener envío gratis!
+                      ¡Agregá ${formatPrice(150 - subtotal)} más para obtener envío gratis!
                     </p>
                   )}
                 </div>
@@ -295,7 +296,7 @@ export default function CarritoPage() {
                   <div className="flex justify-between">
                     <span className="font-medium text-foreground">Total</span>
                     <span className="font-serif text-2xl font-semibold text-primary">
-                      ${total.toLocaleString("es-AR")}
+                      ${formatPrice(total)}
                     </span>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ArrowRight, Clock, Monitor } from "lucide-react"
 import { cursos as staticCursos } from "@/lib/data"
 import type { Curso } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 interface CoursesPreviewProps {
   cursos?: Curso[]
@@ -119,7 +120,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
                         Desde
                       </span>
                       <span className="font-serif text-2xl font-bold leading-tight text-foreground">
-                        ${curso.precio.toLocaleString("es-AR")}
+                        ${formatPrice(curso.precio)}
                       </span>
                     </div>
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-md group-hover:shadow-primary/20">

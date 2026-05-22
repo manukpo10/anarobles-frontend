@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useCart } from "@/contexts/cart-context"
 import { X, Minus, Plus, Trash2, ArrowRight, ShoppingBag } from "lucide-react"
+import { formatPrice } from "@/lib/utils"
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, itemCount, subtotal } = useCart()
@@ -137,7 +138,7 @@ export function CartDrawer() {
 
                             {/* Price */}
                             <span className="font-semibold text-primary">
-                              ${(item.price * item.quantity).toLocaleString("es-AR")}
+                              ${formatPrice(item.price * item.quantity)}
                             </span>
                           </div>
                         </div>
@@ -151,7 +152,7 @@ export function CartDrawer() {
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span className="font-medium">${subtotal.toLocaleString("es-AR")}</span>
+                      <span className="font-medium">${formatPrice(subtotal)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Envío</span>
@@ -166,7 +167,7 @@ export function CartDrawer() {
                     <div className="flex justify-between border-t border-border/30 pt-3">
                       <span className="font-medium text-foreground">Total</span>
                       <span className="font-serif text-xl font-semibold text-primary">
-                        ${total.toLocaleString("es-AR")}
+                        ${formatPrice(total)}
                       </span>
                     </div>
                   </div>

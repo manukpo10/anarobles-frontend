@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
 import ProtectedRoute from "@/components/protected-route"
 import { getUserEnrollments, getCursoById, getCourseProgress, getUserPurchases, fetchMisCursos, fetchMisOrdenes, type Inscripcion, type Orden } from "@/lib/data"
+import { formatPrice } from "@/lib/utils"
 
 const tabs = [
   { id: "profile", label: "Perfil", icon: User },
@@ -353,7 +354,7 @@ function MiCuentaContent() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className="font-medium text-foreground">${(purchase.price * purchase.quantity).toLocaleString("es-AR")}</p>
+                              <p className="font-medium text-foreground">${formatPrice(purchase.price * purchase.quantity)}</p>
                               <span className="inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
                                 Completado
                               </span>
