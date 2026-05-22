@@ -21,6 +21,9 @@ node_modules
 # Agent / AI tooling
 .atl/
 .claude/
+.agents/
+.mcp.json
+skills-lock.json
 AGENTS.md
 
 # IDE / JetBrains
@@ -30,6 +33,7 @@ AGENTS.md
 **/target/
 *.log
 start.log
+*.tsbuildinfo
 
 # Duplicate / temp directories
 anarobles-backend/anarobles-backend/
