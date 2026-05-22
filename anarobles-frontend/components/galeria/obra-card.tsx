@@ -23,10 +23,7 @@ export function ObraCard({
 }: ObraCardProps) {
   const [loaded, setLoaded] = useState(false)
 
-  // For masonry: derive aspect ratio from real image dimensions
-  const naturalAspect = !aspectRatio
-    ? `${obra.imgW} / ${obra.imgH}`
-    : undefined
+  const naturalAspect = !aspectRatio ? `${obra.imgW} / ${obra.imgH}` : undefined
 
   return (
     <div
@@ -40,16 +37,14 @@ export function ObraCard({
       {/* ── Image + overlay ── */}
       <div
         className="relative w-full overflow-hidden bg-muted"
-        style={{
-          aspectRatio: aspectRatio ?? naturalAspect,
-        }}
+        style={{ aspectRatio: aspectRatio ?? naturalAspect }}
       >
         {/* Skeleton */}
         {!loaded && (
           <div className="absolute inset-0 animate-pulse bg-muted" aria-hidden="true" />
         )}
 
-        {/* Image — always fill so aspect ratio controls the shape */}
+        {/* Image */}
         <Image
           src={obra.imagen}
           alt={`${obra.titulo} — ${obra.tecnica} — ${obra.año}`}
@@ -63,22 +58,42 @@ export function ObraCard({
           priority={priority}
         />
 
-        {/* ── Lupa icon — always visible, subtle ── */}
-        <div className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/25 text-white/70 backdrop-blur-sm transition-all duration-300 group-hover:bg-black/0 group-hover:opacity-0">
+        {/* ── Lupa icon — desktop only, fades on hover ── */}
+        <div className="absolute right-2.5 top-2.5 hidden h-7 w-7 items-center justify-center rounded-full bg-black/25 text-white/70 backdrop-blur-sm transition-all duration-300 group-hover:opacity-0 md:flex">
           <Search className="h-3.5 w-3.5" strokeWidth={1.5} />
         </div>
 
-        {/* ── Hover overlay — navy fill + centered metadata ── */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-secondary/82 p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <p className="text-center text-[9px] font-semibold uppercase tracking-[0.22em] text-white/55">
+        {/*
+          ── Hover overlay — DESKTOP ONLY ──────────────────────────────────
+          Uses hidden/md:flex so it is NEVER in the render tree on mobile.
+          Double protection: invisible + opacity-0 as base state on desktop,
+          reversed to visible + opacity-100 on group-hover.
+          This prevents any stuck-overlay bug on touch devices.
+        */}
+        <div
+          aria-hidden="true"
+          className={[
+            "absolute inset-0 hidden flex-col items-center justify-center p-5",
+            "bg-foreground/82",
+            "transition-opacity duration-300",
+            // Desktop: invisible + transparent by default, shown on hover
+            "md:flex md:invisible md:opacity-0",
+            "md:group-hover:visible md:group-hover:opacity-100",
+          ].join(" ")}
+        >
+          {/* Técnica · Año */}
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
             {obra.tecnica}&nbsp;·&nbsp;{obra.año}
           </p>
-          <h3
-            className="mt-2.5 text-center font-serif font-semibold leading-snug text-white"
-            style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.4rem)" }}
-          >
+
+          {/* Title */}
+          <h3 className="mt-3 text-center font-serif text-2xl font-semibold leading-tight text-white">
             {obra.titulo}
           </h3>
+
+          {/* Thin orange rule */}
+          <div className="mt-3 h-px w-8 bg-primary/70" />
+
           {/* Disponibilidad badge */}
           {obra.disponibilidad === "disponible" && (
             <span className="mt-3 rounded-full border border-emerald-400/40 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-emerald-300">
@@ -98,8 +113,8 @@ export function ObraCard({
         </div>
       </div>
 
-      {/* ── Mobile metadata — title + year, no hover ── */}
-      <div className="px-0.5 pt-2 pb-1 lg:hidden">
+      {/* ── Mobile metadata — title + year, always visible below image ── */}
+      <div className="px-0.5 pt-2 pb-1 md:hidden">
         <p className="text-sm text-muted-foreground">
           {obra.titulo}
           <span className="mx-1.5 text-muted-foreground/35">·</span>

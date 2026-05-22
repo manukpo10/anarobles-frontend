@@ -12,11 +12,11 @@ interface AboutIntroProps {
 
 export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
   return (
-    <section className="section-md bg-background overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-0 lg:grid-cols-[55%_45%]">
+    <section className="section-md overflow-hidden noise-texture bg-background">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-0 lg:grid-cols-[52%_48%]">
 
-          {/* ── Image block — editorial left column ── */}
+          {/* ── Image block ── */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -24,7 +24,7 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="relative mb-12 lg:mb-0 lg:pr-16"
           >
-            {/* Orange L-bracket offset — decorative */}
+            {/* Orange L-bracket — now pops on dark */}
             <div
               className="absolute -bottom-4 -left-4 z-0 hidden lg:block"
               aria-hidden="true"
@@ -37,38 +37,37 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
             />
 
             {/* Photo */}
-            <div className="relative z-10 aspect-[3/4] w-full overflow-hidden bg-muted" style={{ borderRadius: 0 }}>
+            <div className="relative z-10 aspect-[3/4] w-full overflow-hidden bg-secondary/50" style={{ borderRadius: 0 }}>
               <Image
                 src={data.image}
                 alt={`Foto de ${data.eyebrow}`}
                 fill
                 className="object-cover object-top"
-                sizes="(max-width: 1024px) 90vw, 55vw"
+                sizes="(max-width: 1024px) 90vw, 52vw"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement
                   target.style.display = "none"
                 }}
               />
-              {/* Fallback gradient if no image */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-muted to-muted/60 flex items-center justify-center">
-                <span className="font-serif text-5xl text-muted-foreground/20">Ana</span>
+              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-secondary/80 to-secondary/40 flex items-center justify-center">
+                <span className="font-serif text-5xl text-foreground/10">Ana</span>
               </div>
             </div>
 
-            {/* Floating label bottom-right of photo */}
+            {/* Floating label */}
             <div className="absolute bottom-8 right-0 z-20 hidden lg:block">
-              <div className="bg-secondary px-5 py-3 shadow-float">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-secondary-foreground/70">
+              <div className="bg-primary px-5 py-3 shadow-float">
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary-foreground/70">
                   Artista Plástica
                 </p>
-                <p className="mt-0.5 font-serif text-base font-semibold text-secondary-foreground">
+                <p className="mt-0.5 font-serif text-base font-semibold text-primary-foreground">
                   Buenos Aires, Argentina
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* ── Text block — right column ── */}
+          {/* ── Text block ── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -94,18 +93,18 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="mt-6 font-serif font-light text-foreground leading-tight"
-              style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)" }}
             >
               {data.headline}
             </motion.h2>
 
-            {/* Thin orange rule */}
+            {/* Orange rule */}
             <motion.div
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 h-px w-12 origin-left bg-primary"
+              className="mt-6 h-0.5 w-12 origin-left bg-primary"
             />
 
             {/* Body */}
@@ -121,7 +120,7 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
                     duration: 0.6,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="text-base leading-relaxed text-muted-foreground lg:text-lg"
+                  className="text-lg leading-relaxed text-foreground/65 lg:text-xl"
                 >
                   {paragraph}
                 </motion.p>

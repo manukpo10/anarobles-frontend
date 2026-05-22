@@ -139,12 +139,12 @@ export default function GaleriaPage() {
                       <div>
                         <h2
                           className="font-serif font-light text-foreground"
-                          style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)" }}
+                          style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
                         >
                           {sec?.label ?? cat}
                         </h2>
                         {sec?.desc && (
-                          <p className="mt-1.5 text-sm text-muted-foreground">
+                          <p className="mt-2 text-lg text-muted-foreground">
                             {sec.desc}
                           </p>
                         )}

@@ -42,7 +42,7 @@ export function InstagramFeed({
   instagramUrl = defaultInstagramUrl,
 }: InstagramFeedProps) {
   return (
-    <section className="section-sm bg-background">
+    <section className="section-sm bg-background overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
         {/* Header */}
@@ -56,10 +56,10 @@ export function InstagramFeed({
           <span className="kicker">Instagram</span>
           <h2
             className="mt-6 font-serif font-light text-foreground"
-            style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)" }}
+            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
           >
             Seguime en{" "}
-            <span className="font-semibold">@anaroblesartedibujo</span>
+            <span className="font-bold text-primary">@anaroblesartedibujo</span>
           </h2>
         </motion.div>
 
@@ -69,7 +69,7 @@ export function InstagramFeed({
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3"
+          className="grid grid-cols-3 gap-1 sm:grid-cols-6 sm:gap-1.5"
         >
           {images.map((img) => (
             <motion.a
@@ -78,7 +78,7 @@ export function InstagramFeed({
               target="_blank"
               rel="noopener noreferrer"
               variants={itemAnim}
-              className="group relative aspect-square overflow-hidden rounded-xl bg-muted"
+              className="group relative aspect-square overflow-hidden rounded-none bg-muted"
             >
               <Image
                 src={img.src}
@@ -88,7 +88,7 @@ export function InstagramFeed({
                 sizes="(max-width: 640px) 33vw, 16vw"
               />
               {/* Hover overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-secondary/0 transition-colors duration-300 group-hover:bg-secondary/70">
+              <div className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors duration-300 group-hover:bg-primary/75">
                 <Instagram className="h-7 w-7 text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110" />
               </div>
             </motion.a>

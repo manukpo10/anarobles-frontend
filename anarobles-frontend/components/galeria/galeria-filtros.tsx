@@ -42,8 +42,8 @@ export function GaleriaFiltros({
                   className={[
                     "shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-200",
                     active
-                      ? "bg-secondary text-secondary-foreground shadow-sm"
-                      : "bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground",
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-muted",
                   ].join(" ")}
                 >
                   {LABEL[cat] ?? cat}

@@ -1,10 +1,10 @@
 import Link from "next/link"
-import { ArrowRight, MessageCircle, BookOpen } from "lucide-react"
+import { ArrowRight, BookOpen, ImageIcon } from "lucide-react"
 
-export function GaleriaCTA() {
+export function BlogCTA() {
   return (
     <section className="section-sm relative overflow-hidden border-t border-border/40 bg-background">
-      {/* Subtle orange accent blob — crema bg so it doesn't merge with navy footer */}
+      {/* Subtle orange accent blob */}
       <div
         className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/8 blur-3xl"
         aria-hidden="true"
@@ -12,39 +12,37 @@ export function GaleriaCTA() {
 
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
         {/* Kicker */}
-        <span className="kicker">
-          ¿Te interesa una obra?
-        </span>
+        <span className="kicker">¿Querés aprender estas técnicas?</span>
 
         <h2
           className="mt-6 font-serif font-light text-foreground"
           style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
         >
-          Cada pieza tiene{" "}
-          <span className="font-semibold italic text-primary">su historia</span>
+          Del blog al{" "}
+          <span className="font-semibold italic text-primary">taller real</span>
         </h2>
 
         <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-muted-foreground">
-          Si alguna obra te habló, podés escribirme para consultar disponibilidad,
-          precio o encargar una pieza original. También podés aprender las técnicas en mis cursos.
+          Los conceptos que exploramos en el blog los trabajamos en profundidad en los cursos.
+          Con ejercicios, feedback personalizado y materiales paso a paso.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
-            href="/contacto"
+            href="/cursos"
             className="group inline-flex items-center gap-3 rounded-full bg-primary px-9 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-accent hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5"
           >
-            <MessageCircle className="h-4 w-4" />
-            <span>Contactar a Ana</span>
+            <BookOpen className="h-4 w-4" />
+            <span>Ver cursos</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
 
           <Link
-            href="/cursos"
+            href="/galeria"
             className="group inline-flex items-center gap-3 rounded-full border border-border px-9 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-foreground/70 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground"
           >
-            <BookOpen className="h-4 w-4" />
-            <span>Conocé mis cursos</span>
+            <ImageIcon className="h-4 w-4" />
+            <span>Ver galería</span>
           </Link>
         </div>
       </div>

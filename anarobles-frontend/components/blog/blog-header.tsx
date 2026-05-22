@@ -1,24 +1,24 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { obras } from "@/lib/obras"
 
-export function GaleriaHeader() {
-  const total      = obras.length
-  const tecnicas   = Array.from(new Set(obras.map((o) => o.tecnica.split("—")[0].trim())))
-  const tecSummary = tecnicas.slice(0, 3).join(" · ")
+interface BlogHeaderProps {
+  totalArticulos: number
+}
 
+export function BlogHeader({ totalArticulos }: BlogHeaderProps) {
   return (
     <header className="relative overflow-hidden bg-secondary noise-texture pb-16 pt-36 lg:pt-44 lg:pb-20">
-      {/* Warm orange gradient overlay — softens the cold navy */}
+      {/* Warm orange gradient overlay */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent" />
-      {/* Large decorative number watermark */}
+
+      {/* Large decorative letter watermark */}
       <span
         className="pointer-events-none absolute -right-8 top-1/2 -translate-y-1/2 font-serif font-bold text-secondary-foreground/5 select-none leading-none"
         style={{ fontSize: "30rem", lineHeight: 1 }}
         aria-hidden="true"
       >
-        G
+        B
       </span>
 
       {/* Ambient blob */}
@@ -37,7 +37,7 @@ export function GaleriaHeader() {
               className="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.3em] text-primary"
             >
               <span className="h-px w-8 bg-primary/50" />
-              {tecSummary}
+              Reflexiones &amp; Técnicas
             </motion.span>
 
             {/* Main title */}
@@ -48,7 +48,7 @@ export function GaleriaHeader() {
               className="mt-4 font-serif font-light leading-none tracking-tight text-secondary-foreground"
               style={{ fontSize: "clamp(4rem, 10vw, 8rem)" }}
             >
-              Galería
+              Blog
             </motion.h1>
 
             {/* Orange accent rule */}
@@ -66,11 +66,11 @@ export function GaleriaHeader() {
               transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mt-4 font-serif text-xl italic text-secondary-foreground/55 lg:text-2xl"
             >
-              Explorando formas, colores y emociones
+              Proceso creativo, técnicas y reflexiones sobre el arte
             </motion.p>
           </div>
 
-          {/* Right — obra count */}
+          {/* Right — article count */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -82,10 +82,10 @@ export function GaleriaHeader() {
               style={{ fontSize: "6rem", lineHeight: 1 }}
               aria-hidden="true"
             >
-              {String(total).padStart(2, "0")}
+              {String(totalArticulos).padStart(2, "0")}
             </span>
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary-foreground/40">
-              obras
+              artículos
             </span>
           </motion.div>
 

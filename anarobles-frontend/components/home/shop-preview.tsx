@@ -39,7 +39,7 @@ export function ShopPreview() {
   const visible = featuredProducts.slice(page * perPage, (page + 1) * perPage)
 
   return (
-    <section className="section-lg relative bg-muted/40">
+    <section className="section-lg relative bg-muted/25">
       {/* fixed: section now has relative so the decorative blob doesn't escape */}
       <div
         className="pointer-events-none absolute -left-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-secondary/5 blur-3xl"
@@ -59,9 +59,9 @@ export function ShopPreview() {
           <span className="kicker">Productos</span>
           <h2
             className="mt-6 font-serif font-light tracking-tight text-foreground"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
-            Productos <span className="font-semibold text-gradient">Destacados</span>
+            Productos <span className="font-bold text-gradient">Destacados</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
             Piezas exclusivas que transforman cualquier espacio en una galería.

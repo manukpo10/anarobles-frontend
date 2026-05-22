@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Inter, Playfair_Display } from "next/font/google"
+import { Cormorant_Garamond, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -10,9 +10,11 @@ import { CartDrawer } from "@/components/cart-drawer"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
-const inter = Inter({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
 })
 
 const playfair = Playfair_Display({
@@ -148,7 +150,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased min-h-screen flex flex-col`}
+        className={`${cormorant.variable} ${playfair.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <CartProvider>
           <AuthProvider>

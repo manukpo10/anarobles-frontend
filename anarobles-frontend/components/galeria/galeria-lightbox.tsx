@@ -181,7 +181,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 24 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute bottom-0 right-0 top-0 z-20 flex w-full flex-col justify-between overflow-y-auto border-l border-white/8 bg-background p-6 md:w-80 lg:w-96 lg:p-8"
+            className="absolute bottom-0 right-0 top-0 z-20 flex w-full flex-col justify-between overflow-y-auto border-l border-white/8 bg-[oklch(0.98_0.012_60)] p-6 md:w-80 lg:w-96 lg:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             {/* top spacer for the topbar */}
@@ -234,7 +234,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
               <Link
                 href={`/contacto?obra=${obra.slug}`}
                 onClick={onClose}
-                className="group mt-6 flex w-full items-center justify-center gap-2.5 rounded-full bg-secondary px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-secondary-foreground transition-all duration-300 hover:bg-accent hover:shadow-lg hover:shadow-accent/20"
+                className="group mt-6 flex w-full items-center justify-center gap-2.5 rounded-full bg-primary px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground shadow-md shadow-primary/25 transition-all duration-300 hover:bg-accent hover:shadow-lg hover:shadow-accent/20"
               >
                 <MessageCircle className="h-3.5 w-3.5 shrink-0" />
                 <span>Consultar esta obra</span>

@@ -26,7 +26,7 @@ export function BlogPreview({ posts = getRecentPosts(3), limit = 3 }: BlogPrevie
   if (!featured) return null
 
   return (
-    <section className="section-md bg-background">
+    <section className="section-md bg-muted/20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
         {/* Header */}
@@ -40,9 +40,9 @@ export function BlogPreview({ posts = getRecentPosts(3), limit = 3 }: BlogPrevie
           <span className="kicker">Blog</span>
           <h2
             className="mt-6 font-serif font-light text-foreground"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
-            Últimas <span className="font-semibold">Historias</span>
+            Últimas <span className="font-bold">Historias</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground">
             Artículos sobre técnicas, proceso creativo y el mundo del arte

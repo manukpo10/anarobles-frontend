@@ -27,25 +27,27 @@ const socialLinks = [
 const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/sobre-mi", label: "Sobre Mí" },
+  { href: "/galeria", label: "Galería" },
   { href: "/cursos", label: "Cursos" },
+  { href: "/blog", label: "Blog" },
   { href: "/productos", label: "Productos" },
   { href: "/contacto", label: "Contacto" },
 ]
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-primary">
+    <footer className="relative overflow-hidden bg-secondary">
       {/* Decorative elements */}
-      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" />
-      <div className="absolute -left-20 -bottom-20 h-48 w-48 rounded-full bg-accent/10 blur-3xl" />
-      
+      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/12 blur-3xl" />
+      <div className="absolute -left-20 -bottom-20 h-48 w-48 rounded-full bg-primary/8 blur-3xl" />
+
       {/* Artistic brush stroke decoration */}
-      <svg className="absolute right-10 top-10 w-32 h-32 opacity-10" viewBox="0 0 100 100">
-        <path d="M10 50 Q30 20 50 50 T90 50" stroke="#194052" strokeWidth="2" fill="none"/>
-        <path d="M10 60 Q40 30 60 60 T100 60" stroke="#194052" strokeWidth="3" fill="none" strokeLinecap="round"/>
+      <svg className="absolute right-10 top-10 w-32 h-32 opacity-8" viewBox="0 0 100 100">
+        <path d="M10 50 Q30 20 50 50 T90 50" stroke="currentColor" strokeWidth="2" fill="none" className="text-secondary-foreground"/>
+        <path d="M10 60 Q40 30 60 60 T100 60" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" className="text-secondary-foreground"/>
       </svg>
       <svg className="absolute bottom-10 left-10 w-24 h-24 opacity-10" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="30" stroke="#B73E47" strokeWidth="2" fill="none" strokeDasharray="5,5"/>
+        <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5,5" className="text-primary"/>
       </svg>
       
       <div className="relative mx-auto max-w-7xl px-6 py-20 pb-24 lg:px-8 lg:py-24 lg:pb-28">
@@ -63,19 +65,20 @@ export function Footer() {
                 />
               </div>
             </Link>
-            <p className="mt-6 max-w-md font-serif text-lg italic leading-relaxed text-primary-foreground/60">
+            <p className="mt-8 max-w-md font-serif text-2xl italic leading-relaxed text-secondary-foreground/75 lg:text-3xl">
               "El arte es el diálogo silencioso entre el alma y el lienzo"
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-primary-foreground/70">
+            <div className="mt-4 h-px w-12 bg-primary/60" />
+            <p className="mt-5 text-base leading-relaxed text-secondary-foreground/60">
               Arte que transforma emociones en colores, y colores en historias
-              que perduran. Cada obra es un diálogo entre el alma y el lienzo.
+              que perduran.
             </p>
             
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-secondary">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-primary">
               Navegación
             </h3>
             <ul className="mt-6 space-y-4">
@@ -89,9 +92,9 @@ export function Footer() {
                   >
                     <Link
                       href={link.href}
-                      className="group inline-flex items-center gap-2 text-sm text-primary-foreground/70 transition-colors hover:text-secondary"
+                      className="group inline-flex items-center gap-2 text-sm text-secondary-foreground/70 transition-colors hover:text-primary"
                     >
-                      <span className="h-0.5 w-0 bg-secondary transition-all duration-300 group-hover:w-4" />
+                      <span className="h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-4" />
                       {link.label}
                     </Link>
                   </motion.div>
@@ -102,10 +105,10 @@ export function Footer() {
 
           {/* Social & Contact */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-secondary">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-primary">
               Conecta
             </h3>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -119,17 +122,17 @@ export function Footer() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex h-12 w-12 items-center justify-center rounded-xl bg-primary-foreground/10 text-primary-foreground transition-colors duration-300 hover:bg-secondary hover:text-secondary-foreground hover:shadow-lg hover:shadow-secondary/30"
+                  className="group flex h-12 w-12 items-center justify-center rounded-xl bg-secondary-foreground/10 text-secondary-foreground transition-colors duration-300 hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/30"
                   aria-label={link.label}
                 >
                   <link.icon className="h-5 w-5" />
                 </motion.a>
               ))}
             </motion.div>
-            <p className="mt-6 text-sm text-primary-foreground/70">
+            <p className="mt-6 text-sm text-secondary-foreground/70">
               contacto@anacecilia.art
             </p>
-            
+
             {/* Quick link */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -140,7 +143,7 @@ export function Footer() {
             >
               <Link
                 href="/contacto"
-                className="group inline-flex items-center gap-2 text-sm font-medium text-secondary transition-colors hover:text-secondary/80"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
               >
                 <span>¿Tienes un proyecto?</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -155,14 +158,14 @@ export function Footer() {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-16 h-px bg-gradient-to-r from-transparent via-primary-foreground/20 to-transparent"
+          className="mt-16 h-px bg-gradient-to-r from-transparent via-secondary-foreground/20 to-transparent"
         />
-        
+
         <div className="mt-12 flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-sm text-primary-foreground/50">
+          <p className="text-sm text-secondary-foreground/50">
             &copy; {new Date().getFullYear()} Ana Cecilia Robles. Todos los derechos reservados.
           </p>
-          <div className="flex items-center gap-2 text-sm text-primary-foreground/40">
+          <div className="flex items-center gap-2 text-sm text-secondary-foreground/40">
             <span>Hecho con</span>
             <span className="text-accent animate-pulse">&#10084;</span>
             <span>y muchos colores</span>

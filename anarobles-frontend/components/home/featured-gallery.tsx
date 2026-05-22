@@ -37,7 +37,7 @@ export function FeaturedGallery() {
 
   return (
     <section
-      className="section-lg bg-muted/30"
+      className="section-lg bg-background"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -54,9 +54,9 @@ export function FeaturedGallery() {
           <span className="kicker">Galería</span>
           <h2
             className="mt-6 font-serif font-light tracking-tight text-foreground"
-            style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 5.5vw, 4.5rem)" }}
           >
-            Obras <span className="font-semibold text-gradient">Destacadas</span>
+            Obras <span className="font-bold text-gradient">Destacadas</span>
           </h2>
         </motion.div>
 
@@ -74,7 +74,7 @@ export function FeaturedGallery() {
               {/* Prev thumbnail — desktop only */}
               <div
                 className="hidden lg:block shrink-0"
-                style={{ width: "clamp(120px, 13vw, 180px)" }}
+                style={{ width: "clamp(150px, 15vw, 220px)" }}
               >
                 <button
                   onClick={prev}
@@ -82,7 +82,7 @@ export function FeaturedGallery() {
                   className="group w-full focus-visible:outline-none"
                 >
                   <div
-                    className="relative w-full overflow-hidden rounded-xl opacity-40 transition-opacity duration-400 group-hover:opacity-65"
+                    className="relative w-full overflow-hidden rounded-xl opacity-60 transition-opacity duration-400 group-hover:opacity-80"
                     style={{ aspectRatio: "4/5" }}
                   >
                     <Image
@@ -100,7 +100,7 @@ export function FeaturedGallery() {
               {/* Active image — dominates */}
               <div
                 className="shrink-0 w-[88vw] sm:w-[72vw]"
-                style={{ maxWidth: "640px" }}
+                style={{ maxWidth: "780px" }}
               >
                 <div
                   className="relative w-full overflow-hidden rounded-2xl bg-muted shadow-float"
@@ -136,7 +136,7 @@ export function FeaturedGallery() {
               {/* Next thumbnail — desktop only */}
               <div
                 className="hidden lg:block shrink-0"
-                style={{ width: "clamp(120px, 13vw, 180px)" }}
+                style={{ width: "clamp(150px, 15vw, 220px)" }}
               >
                 <button
                   onClick={next}
@@ -144,7 +144,7 @@ export function FeaturedGallery() {
                   className="group w-full focus-visible:outline-none"
                 >
                   <div
-                    className="relative w-full overflow-hidden rounded-xl opacity-40 transition-opacity duration-400 group-hover:opacity-65"
+                    className="relative w-full overflow-hidden rounded-xl opacity-60 transition-opacity duration-400 group-hover:opacity-80"
                     style={{ aspectRatio: "4/5" }}
                   >
                     <Image

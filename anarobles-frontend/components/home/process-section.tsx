@@ -43,9 +43,9 @@ export function ProcessSection({ phases = getProcessPhases() }: ProcessSectionPr
           </span>
           <h2
             className="mt-6 font-serif font-light tracking-tight text-secondary-foreground"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
-            Del Idea <span className="font-semibold">a la Obra</span>
+            Del Idea <span className="font-bold">a la Obra</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-secondary-foreground/65">
             Cada pieza pasa por un viaje creativo que transforma emociones en arte tangible
@@ -97,7 +97,7 @@ export function ProcessSection({ phases = getProcessPhases() }: ProcessSectionPr
                   </div>
 
                   {/* Phase title */}
-                  <h3 className="font-serif text-xl font-semibold text-secondary-foreground">
+                  <h3 className="font-serif text-2xl font-semibold text-secondary-foreground">
                     {phase.title}
                   </h3>
 

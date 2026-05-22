@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next"
 import { getProducts, getCursos } from "@/lib/data"
+import { getArticulos } from "@/lib/articulos"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://anaceciliarobles.com"
@@ -62,5 +63,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticRoutes, ...productRoutes, ...cursoRoutes]
+  // Blog article routes
+  const articulos = getArticulos()
+  const blogRoutes: MetadataRoute.Sitemap = articulos.map((a) => ({
+    url: `${baseUrl}/blog/${a.slug}`,
+    lastModified: new Date(a.fechaPublicacion),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }))
+
+  // Blog index
+  const blogIndex: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    },
+  ]
+
+  return [...staticRoutes, ...productRoutes, ...cursoRoutes, ...blogIndex, ...blogRoutes]
 }

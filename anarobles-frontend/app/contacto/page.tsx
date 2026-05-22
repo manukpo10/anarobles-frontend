@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Instagram, Mail, Phone, MapPin, Send, Check, Palette, MessageCircle, Clock, Heart, Facebook, ArrowRight, Sparkles, Loader2 } from "lucide-react"
+import { Instagram, Mail, Phone, MapPin, Send, Check, Palette, MessageCircle, Clock, Heart, Facebook, ArrowRight, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const consultationTypes = [
@@ -176,17 +176,18 @@ function ContactPageContent() {
         }}
       />
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-primary pt-24">
-        {/* Decorative elements */}
+      <section className="relative overflow-hidden bg-secondary noise-texture pt-24">
+        {/* Grain overlay */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -right-20 -top-20 h-[400px] w-[400px] rounded-full bg-secondary/10 blur-3xl" />
+          <div className="absolute -right-20 top-0 h-[400px] w-[400px] rounded-full bg-primary/10 blur-3xl" />
           <div className="absolute -left-20 bottom-0 h-[300px] w-[300px] rounded-full bg-accent/10 blur-3xl" />
-          <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 120" fill="none">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H0Z" className="fill-background" />
+          {/* Wave to background */}
+          <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 100" fill="none">
+            <path d="M0 100L60 87.5C120 75 240 50 360 37.5C480 25 600 25 720 31.25C840 37.5 960 50 1080 56.25C1200 62.5 1320 62.5 1380 62.5L1440 62.5V100H0Z" fill="#FAF6F0" />
           </svg>
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 py-20 lg:py-32 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:py-32 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -194,23 +195,24 @@ function ContactPageContent() {
             className="text-center"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="mb-8 inline-flex items-center gap-4"
             >
-              <Sparkles className="h-5 w-5 text-secondary" />
-              <span className="text-sm font-medium uppercase tracking-[0.3em] text-secondary">
+              <span className="h-px w-12 bg-primary/60" />
+              <span className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
                 Conectemos a través del arte
               </span>
-              <Sparkles className="h-5 w-5 text-secondary" />
+              <span className="h-px w-12 bg-primary/60" />
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="font-serif text-5xl font-light text-primary-foreground md:text-6xl lg:text-7xl"
+              transition={{ delay: 0.25, duration: 0.8 }}
+              className="font-serif font-light text-secondary-foreground"
+              style={{ fontSize: "clamp(4rem, 10vw, 8rem)", lineHeight: 0.9 }}
             >
               Contacto
             </motion.h1>
@@ -219,11 +221,10 @@ function ContactPageContent() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="mx-auto mt-6 max-w-2xl text-lg text-primary-foreground/70"
+              className="mx-auto mt-8 max-w-2xl text-xl text-secondary-foreground/65"
             >
-              ¿Tenés una consulta, querés encargar una obra o proponerme una colaboración? 
-              <br className="hidden md:block" />
-              <span className="text-secondary">Me encantaría escucharte.</span>
+              ¿Tenés una consulta, querés encargar una obra o proponerme una colaboración?{" "}
+              <span className="text-primary font-semibold">Me encantaría escucharte.</span>
             </motion.p>
 
             {/* Quick contact badges */}
@@ -231,7 +232,7 @@ function ContactPageContent() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              className="mt-10 flex flex-wrap items-center justify-center gap-3"
             >
               {["Consultas", "Compras", "Encargos", "Colaboraciones"].map((item, index) => (
                 <motion.span
@@ -239,7 +240,7 @@ function ContactPageContent() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
-                  className="rounded-full border border-primary-foreground/20 bg-primary-foreground/5 px-5 py-2 text-sm font-medium text-primary-foreground/80 backdrop-blur-sm"
+                  className="rounded-full border border-secondary-foreground/15 bg-secondary-foreground/5 px-5 py-2 text-sm font-semibold text-secondary-foreground/70"
                 >
                   {item}
                 </motion.span>
@@ -262,12 +263,9 @@ function ContactPageContent() {
             <motion.div variants={itemVariants} className="lg:col-span-3">
               <div className="rounded-3xl bg-background p-8 shadow-xl shadow-foreground/5 ring-1 ring-border lg:p-10">
                 <div className="mb-8">
-                  <span className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.2em] text-secondary">
-                    <span className="h-px w-8 bg-secondary/60" />
-                    Formulario de contacto
-                  </span>
-                  <h2 className="mt-4 font-serif text-3xl font-light text-foreground md:text-4xl">
-                    Escribime un <span className="italic">mensaje</span>
+                  <span className="kicker">Formulario de contacto</span>
+                  <h2 className="mt-6 font-serif font-light text-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
+                    Escribime un <span className="italic font-bold">mensaje</span>
                   </h2>
                   <p className="mt-4 text-muted-foreground">
                     Completá el formulario y te responderé dentro de las 24-48 horas hábiles.
@@ -402,7 +400,7 @@ function ContactPageContent() {
                     disabled={isSubmitting}
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                    className="group flex w-full items-center justify-center gap-3 rounded-full bg-secondary py-5 text-sm font-semibold uppercase tracking-wider text-secondary-foreground shadow-lg shadow-secondary/30 transition-all duration-300 hover:bg-accent hover:shadow-xl disabled:opacity-50 disabled:hover:scale-100"
+                    className="group flex w-full items-center justify-center gap-3 rounded-full bg-primary py-5 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-accent hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
                   >
                     {isSubmitting ? (
                       <>
@@ -594,8 +592,8 @@ function ContactPageContent() {
                   <Heart className="h-4 w-4" />
                   Encargos personalizados
                 </div>
-                <h2 className="mt-6 font-serif text-3xl font-light text-primary-foreground md:text-4xl">
-                  ¿Buscás una obra <span className="italic">única</span>?
+                <h2 className="mt-6 font-serif font-light text-primary-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
+                  ¿Buscás una obra <span className="italic font-bold">única</span>?
                 </h2>
                 <p className="mt-4 text-primary-foreground/70">
                   Acepto encargos personalizados para retratos, paisajes, arte abstracto 

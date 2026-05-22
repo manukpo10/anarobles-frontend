@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Quote, Calendar, Award, Palette, Sparkles } from "lucide-react"
+import { ArrowRight, Award, Palette, Sparkles } from "lucide-react"
 
 const timeline = [
   {
@@ -45,9 +45,9 @@ const timeline = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background pt-28">
+    <div className="min-h-screen bg-background pt-24">
       {/* Hero Section */}
-      <section className="bg-primary py-24 lg:py-40">
+      <section className="bg-secondary noise-texture py-24 lg:py-40 overflow-hidden relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
             {/* Image */}
@@ -57,7 +57,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
-              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl shadow-primary/30">
+              <div className="relative aspect-[4/5] overflow-hidden shadow-2xl shadow-secondary/50" style={{ borderRadius: 0 }}>
                 <Image
                   src="/artista1.jpeg"
                   alt="Ana Cecilia Robles - Artista Plástica"
@@ -65,21 +65,30 @@ export default function AboutPage() {
                   className="object-cover"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/40 via-transparent to-transparent" />
               </div>
-              
-              {/* Decorative frame effect */}
-              <div className="absolute -bottom-6 -right-6 h-full w-full rounded-3xl border-2 border-secondary/30 -z-10" />
-              
+
+              {/* Orange L-bracket accent */}
+              <div
+                className="absolute -bottom-3 -right-3 hidden lg:block"
+                aria-hidden="true"
+                style={{
+                  width: "35%",
+                  height: "40%",
+                  borderBottom: "3px solid oklch(0.718 0.176 41)",
+                  borderRight: "3px solid oklch(0.718 0.176 41)",
+                }}
+              />
+
               {/* Floating badge */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="absolute -top-4 -right-4 rounded-2xl bg-card p-6 shadow-2xl"
+                className="absolute -top-4 -left-4 bg-primary p-6 shadow-2xl"
               >
-                <p className="font-serif text-4xl font-bold text-secondary">10+</p>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">años creando</p>
+                <p className="font-serif text-4xl font-bold text-primary-foreground">10+</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-primary-foreground/70">años creando</p>
               </motion.div>
             </motion.div>
 
@@ -89,32 +98,34 @@ export default function AboutPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="inline-flex items-center gap-3 text-sm font-medium uppercase tracking-[0.3em] text-secondary">
-                <span className="h-px w-10 bg-secondary/60" />
+              <span className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.3em] text-primary">
+                <span className="h-px w-10 bg-primary/60" />
                 La Artista
               </span>
-              <h1 className="mt-8 font-serif text-6xl font-light tracking-tight text-primary-foreground md:text-7xl lg:text-8xl">
-                Ana Cecilia <span className="font-semibold">Robles</span>
+              <h1 className="mt-8 font-serif font-light tracking-tight text-secondary-foreground" style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", lineHeight: 0.9 }}>
+                Ana Cecilia
+                <span className="block font-bold"> Robles</span>
               </h1>
-               <p className="mt-10 text-xl leading-relaxed text-primary-foreground/80">
+               <div className="mt-8 h-0.5 w-12 bg-primary" />
+               <p className="mt-8 text-xl leading-relaxed text-secondary-foreground/75">
                  Dibujo, pinto y trabajo con materiales.
                </p>
-               <p className="mt-6 text-xl leading-relaxed text-primary-foreground/80">
+               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
                  Soy artista visual, enfocada en la acuarela y la exploración de la mancha, el color y lo que surge en el proceso.
                </p>
-               <p className="mt-6 text-xl leading-relaxed text-primary-foreground/80">
+               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
                  También investigo lo textil: hilos, bordados y cruces entre imagen y materia.
                </p>
-               <p className="mt-6 text-xl leading-relaxed text-primary-foreground/80">
+               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
                  Mi trabajo se nutre de lo floral, la naturaleza y el entorno.
                </p>
-               <p className="mt-6 text-xl leading-relaxed text-primary-foreground/80">
+               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
                  En dibujo, el retrato aparece como una forma de búsqueda: entender algo del interior de las personas más allá de lo visible.
                </p>
-               <p className="mt-6 text-xl leading-relaxed text-primary-foreground/80">
+               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
                  Además, doy clases y acompaño procesos creativos.
                </p>
-               <p className="mt-6 text-xl leading-relaxed text-primary-foreground/80 font-semibold">
+               <p className="mt-5 text-xl font-semibold leading-relaxed text-secondary-foreground">
                  Este sitio es un registro de ese recorrido.
                </p>
               
@@ -127,7 +138,7 @@ export default function AboutPage() {
               >
                 <Link
                   href="/contacto"
-                  className="group inline-flex items-center gap-4 rounded-full bg-secondary px-10 py-5 text-sm font-semibold uppercase tracking-wider text-secondary-foreground shadow-xl shadow-secondary/30 transition-all duration-400 hover:bg-accent hover:shadow-2xl"
+                  className="group inline-flex items-center gap-4 rounded-full bg-primary px-10 py-5 text-sm font-bold uppercase tracking-wider text-primary-foreground shadow-xl shadow-primary/30 transition-all duration-300 hover:bg-accent hover:shadow-2xl hover:-translate-y-0.5"
                 >
                   <span>Contactar</span>
                   <ArrowRight className="h-5 w-5 transition-transform duration-400 group-hover:translate-x-2" />
@@ -139,33 +150,40 @@ export default function AboutPage() {
       </section>
 
       {/* Quote Section */}
-      <section className="relative py-28 lg:py-40">
-        {/* Background decoration */}
-        <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-secondary/5 blur-3xl" />
-        
-        <div className="relative mx-auto max-w-5xl px-6 text-center lg:px-8">
+      <section className="relative py-28 lg:py-40 bg-background overflow-hidden">
+        {/* Large background quote mark */}
+        <span
+          className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 font-serif font-bold text-secondary/5 select-none leading-none"
+          style={{ fontSize: "30rem", lineHeight: 1 }}
+          aria-hidden="true"
+        >
+          &ldquo;
+        </span>
+
+        <div className="relative z-10 mx-auto max-w-5xl px-6 text-center lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Quote className="mx-auto h-20 w-20 text-secondary/20" />
-            <p className="mt-12 font-serif text-4xl font-light leading-relaxed tracking-tight text-foreground md:text-5xl lg:text-5xl">
+            <div className="mx-auto h-0.5 w-16 bg-primary mb-12" />
+            <p className="font-serif font-light leading-tight tracking-tight text-foreground" style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)" }}>
               El arte no es lo que ves, sino lo que haces ver a los demás. Mi
               misión es transformar emociones invisibles en colores que cuentan
               historias.
             </p>
-            <footer className="mt-12 inline-flex items-center gap-4 text-sm font-medium uppercase tracking-[0.3em] text-muted-foreground">
-              <span className="h-px w-12 bg-muted-foreground/30" />
+            <footer className="mt-12 inline-flex items-center gap-4 text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground">
+              <span className="h-px w-12 bg-primary/40" />
               Ana Cecilia Robles
+              <span className="h-px w-12 bg-primary/40" />
             </footer>
           </motion.div>
         </div>
       </section>
 
       {/* Timeline Section */}
-      <section className="bg-muted/40 py-28 lg:py-40">
+      <section className="bg-muted/20 py-28 lg:py-40">
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -174,13 +192,9 @@ export default function AboutPage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-20 text-center"
           >
-            <span className="inline-flex items-center gap-3 text-sm font-medium uppercase tracking-[0.3em] text-secondary">
-              <span className="h-px w-12 bg-secondary/60" />
-              Recorrido
-              <span className="h-px w-12 bg-secondary/60" />
-            </span>
-            <h2 className="mt-8 font-serif text-6xl font-light tracking-tight text-foreground md:text-7xl">
-              Trayectoria <span className="font-semibold">Artística</span>
+            <span className="kicker">Recorrido</span>
+            <h2 className="mt-8 font-serif font-light tracking-tight text-foreground" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
+              Trayectoria <span className="font-bold">Artística</span>
             </h2>
           </motion.div>
 
@@ -205,13 +219,13 @@ export default function AboutPage() {
                   <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary/10 shadow-lg">
                     <item.icon className="h-6 w-6 text-secondary" />
                   </div>
-                  <span className="font-serif text-4xl font-bold text-secondary/60">
+                  <span className="font-serif text-5xl font-bold text-primary/50">
                     {item.year}
                   </span>
                   <h3 className="mt-3 font-serif text-2xl font-semibold text-foreground">
                     {item.title}
                   </h3>
-                  <p className="mt-4 leading-relaxed text-muted-foreground">
+                  <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
                 </div>
@@ -231,20 +245,17 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="inline-flex items-center gap-3 text-sm font-medium uppercase tracking-[0.3em] text-secondary">
-                <span className="h-px w-10 bg-secondary/60" />
-                Proceso Creativo
-              </span>
-              <h2 className="mt-8 font-serif text-5xl font-light tracking-tight text-foreground md:text-6xl">
-                Fuentes de <span className="font-semibold">Inspiración</span>
+              <span className="kicker">Proceso Creativo</span>
+              <h2 className="mt-8 font-serif font-light tracking-tight text-foreground" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
+                Fuentes de <span className="font-bold">Inspiración</span>
               </h2>
-              <p className="mt-10 leading-relaxed text-muted-foreground">
+              <p className="mt-10 text-xl leading-relaxed text-muted-foreground">
                 Mi inspiración surge de los momentos cotidianos que a menudo
                 pasan desapercibidos: la luz del amanecer filtrándose por una
                 ventana, las conversaciones silenciosas entre desconocidos, el
                 ritmo de las ciudades y la calma de la naturaleza.
               </p>
-              <p className="mt-6 leading-relaxed text-muted-foreground">
+              <p className="mt-6 text-xl leading-relaxed text-muted-foreground">
                 Creo en el arte como un puente entre lo visible y lo invisible,
                 entre lo que sentimos y lo que podemos expresar. Cada pincelada
                 es una palabra en un idioma universal que trasciende fronteras y

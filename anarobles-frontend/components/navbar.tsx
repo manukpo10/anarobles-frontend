@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/sobre-mi", label: "Sobre Mí" },
   { href: "/galeria", label: "Galería" },
   { href: "/cursos", label: "Cursos" },
+  { href: "/blog", label: "Blog" },
   { href: "/productos", label: "Productos" },
   { href: "/contacto", label: "Contacto" },
 ]
@@ -23,6 +24,7 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const userMenuRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const { itemCount, toggleCart } = useCart()
@@ -30,6 +32,12 @@ export function Navbar() {
 
   useEffect(() => {
     setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   useEffect(() => {
@@ -63,18 +71,21 @@ export function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-background shadow-sm"
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 bg-background border-b border-border/60 transition-shadow duration-300",
+          scrolled ? "shadow-sm" : "shadow-none"
+        )}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <Link
             href="/"
-            className="relative flex h-20 w-auto items-center transition-all duration-300 hover:opacity-80"
+            className="relative flex h-16 w-auto items-center transition-all duration-300 hover:opacity-80"
           >
             <Image
               src="/logo_transparente.png"
               alt="Ana Cecilia Robles - Logo"
-              width={300}
-              height={94}
+              width={260}
+              height={82}
               className="h-full w-auto object-contain"
               priority
             />
@@ -87,30 +98,21 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "group relative text-sm font-medium uppercase tracking-widest transition-all duration-300",
+                    "group relative text-sm font-semibold uppercase tracking-widest transition-all duration-300",
                     mounted && pathname === link.href
                       ? "text-primary"
-                      : "text-foreground/70 hover:text-primary"
+                      : "text-foreground/65 hover:text-primary"
                   )}
                 >
                   <span className="relative z-10">{link.label}</span>
-                  <span 
+                  <span
                     className={cn(
                       "absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-400",
-                      mounted && pathname === link.href 
-                        ? "w-full" 
+                      mounted && pathname === link.href
+                        ? "w-full"
                         : "w-0 group-hover:w-full"
-                    )} 
+                    )}
                   />
-                  {mounted && pathname === link.href && (
-                    <motion.span
-                      layoutId="nav-indicator"
-                      className="absolute inset-0 -z-10 rounded-lg bg-primary/10"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                  )}
                 </Link>
               </li>
             ))}
@@ -121,7 +123,7 @@ export function Navbar() {
             {isAuthenticated && (
               <Link
                 href={user?.role === "admin" ? "/admin" : "/mi-cuenta"}
-                className="flex h-10 items-center gap-2 rounded-full bg-secondary/10 px-4 text-sm font-medium text-secondary transition-all hover:bg-secondary/20"
+                className="flex h-10 items-center gap-2 rounded-full bg-foreground/8 px-4 text-sm font-medium text-foreground/70 transition-all hover:bg-foreground/12 hover:text-primary"
               >
                 <LayoutDashboard className="h-4 w-4" />
                 <span className="hidden lg:inline">{user?.role === "admin" ? "Panel" : "Mi cuenta"}</span>
@@ -129,7 +131,7 @@ export function Navbar() {
             )}
             <button
               onClick={toggleCart}
-              className="relative flex h-12 w-12 items-center justify-center rounded-2xl text-foreground transition-all duration-300 hover:bg-muted"
+              className="relative flex h-12 w-12 items-center justify-center rounded-2xl text-foreground/60 transition-all duration-300 hover:bg-foreground/8 hover:text-primary"
               aria-label="Abrir carrito"
             >
               <ShoppingBag className="h-6 w-6" />
@@ -137,7 +139,7 @@ export function Navbar() {
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-secondary-foreground"
+                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
                 >
                   {itemCount > 9 ? "9+" : itemCount}
                 </motion.span>
@@ -149,7 +151,7 @@ export function Navbar() {
               <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary/10 text-secondary transition-all hover:bg-secondary/20"
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl border border-foreground/20 text-foreground/60 transition-all hover:border-primary hover:text-primary"
                   aria-label="Menú de usuario"
                 >
                   <User className="h-5 w-5" />
@@ -207,7 +209,7 @@ export function Navbar() {
             ) : (
               <Link
                 href="/auth/login"
-                className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground transition-all hover:bg-primary/90"
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-foreground/20 text-foreground/60 transition-all hover:border-primary hover:text-primary"
                 aria-label="Iniciar sesión"
               >
                 <User className="h-5 w-5" />
@@ -218,7 +220,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="relative flex h-12 w-12 items-center justify-center rounded-2xl text-foreground transition-all duration-300 hover:bg-muted active:scale-95 md:hidden"
+            className="relative flex h-12 w-12 items-center justify-center rounded-2xl text-foreground/60 transition-all duration-300 hover:bg-foreground/8 hover:text-primary active:scale-95 md:hidden"
             aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
           >
             <AnimatePresence mode="wait">
@@ -256,7 +258,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background md:hidden"
+            className="fixed inset-0 z-40 bg-secondary md:hidden"
           >
             <motion.nav
               initial={{ opacity: 0, y: -30 }}
@@ -283,7 +285,7 @@ export function Navbar() {
                       "font-serif text-3xl transition-all duration-300 sm:text-4xl",
                       mounted && pathname === link.href
                         ? "text-primary"
-                        : "text-foreground hover:text-primary hover:scale-105"
+                        : "text-secondary-foreground/80 hover:text-primary hover:scale-105"
                     )}
                   >
                     {link.label}

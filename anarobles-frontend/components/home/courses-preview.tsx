@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Clock, Monitor } from "lucide-react"
-import { getFeaturedCursos } from "@/lib/data"
+import { cursos as staticCursos } from "@/lib/data"
 import type { Curso } from "@/lib/data"
 
 interface CoursesPreviewProps {
@@ -23,16 +22,14 @@ const cardAnim = {
 }
 
 export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
-  const [displayedCourses, setDisplayedCourses] = useState<Curso[]>([])
-
-  useEffect(() => {
-    const courses = propCursos || getFeaturedCursos()
-    setDisplayedCourses(courses.slice(0, 4))
-  }, [propCursos])
+  const displayedCourses = (propCursos ?? staticCursos.filter((c) => c.featured)).slice(0, 4)
 
   return (
-    <section className="section-md bg-background">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="section-md noise-texture overflow-hidden bg-background">
+      {/* Warm accent blob */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/8 blur-3xl" aria-hidden="true" />
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
 
         {/* Header */}
         <motion.div
@@ -45,11 +42,11 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
           <span className="kicker">Aprendé con Ana</span>
           <h2
             className="mt-6 font-serif font-light text-foreground"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
-            Cursos <span className="font-semibold">Destacados</span>
+            Cursos <span className="font-bold text-primary">Destacados</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground lg:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground lg:text-xl">
             Talleres pensados para acompañarte desde donde estés. Sin apuro, con materia.
           </p>
         </motion.div>
@@ -66,7 +63,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
             <motion.div key={curso.id} variants={cardAnim} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}>
               <Link
                 href={`/cursos/${curso.id}`}
-                className="group flex flex-col overflow-hidden rounded-2xl bg-card shadow-card transition-shadow duration-300 hover:shadow-hover"
+                className="group flex flex-col overflow-hidden rounded-2xl bg-card border border-border shadow-md transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1"
               >
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
@@ -83,12 +80,12 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
                 <div className="flex flex-1 flex-col p-5">
 
                   {/* Level kicker */}
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
                     {curso.nivel}
                   </span>
 
                   {/* Title */}
-                  <h3 className="mt-2 font-serif text-lg font-semibold leading-snug text-card-foreground">
+                  <h3 className="mt-2 font-serif text-xl font-semibold leading-snug text-foreground">
                     {curso.title}
                   </h3>
                   {curso.subtitle && (
@@ -117,7 +114,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
                     <span className="font-serif text-2xl font-bold text-foreground">
                       ${curso.precio.toLocaleString("es-AR")}
                     </span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary/10 text-secondary transition-all duration-300 group-hover:bg-secondary group-hover:text-secondary-foreground">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
                       <ArrowRight className="h-4 w-4" />
                     </span>
                   </div>
@@ -136,7 +133,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
           transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-12 text-center"
         >
-          <Link href="/cursos" className="group btn-primary">
+          <Link href="/cursos" className="group btn-ghost">
             <span>Ver todos los cursos</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
