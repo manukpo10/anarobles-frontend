@@ -3,42 +3,42 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Award, Palette, Sparkles } from "lucide-react"
+import { ArrowRight, Palette, Sparkles, PenLine } from "lucide-react"
 
 const timeline = [
   {
-    year: "2015",
-    title: "Primeros pasos",
+    year: "2010",
+    title: "Los inicios",
     description:
-      "Inicio de estudios formales en Bellas Artes, descubriendo la pasión por la pintura al óleo.",
+      "Primeros pasos en el dibujo y la acuarela, explorando el color y la mancha como lenguaje propio.",
     icon: Palette,
   },
   {
-    year: "2018",
-    title: "Primera exposición",
+    year: "2015",
+    title: "La acuarela como centro",
     description:
-      "Exposición individual en la Galería Contemporánea de Madrid, presentando la serie 'Fragmentos del Alma'.",
-    icon: Award,
+      "La acuarela se convierte en la técnica principal. Inicio de una investigación sostenida sobre lo floral y la naturaleza.",
+    icon: PenLine,
   },
   {
-    year: "2020",
-    title: "Expansión digital",
+    year: "2018",
+    title: "Retratos y búsqueda interior",
     description:
-      "Exploración del arte digital y técnicas mixtas, fusionando lo tradicional con lo contemporáneo.",
+      "El retrato aparece como práctica constante: una forma de entender algo del interior de las personas más allá de lo visible.",
     icon: Sparkles,
   },
   {
-    year: "2022",
-    title: "Reconocimiento internacional",
+    year: "2021",
+    title: "Lo textil entra en escena",
     description:
-      "Participación en ferias de arte en Barcelona, París y Miami. Premio Artista Emergente.",
-    icon: Award,
+      "Exploración de lo textil: hilos, bordados y el cruce entre imagen y materia. Una nueva dimensión en el trabajo.",
+    icon: PenLine,
   },
   {
     year: "2024",
     title: "Presente",
     description:
-      "Continúa creando desde su estudio, combinando pintura, ilustración y arte digital.",
+      "Creando, investigando y acompañando procesos creativos. Este sitio es un registro de ese recorrido.",
     icon: Palette,
   },
 ]
@@ -107,25 +107,19 @@ export default function AboutPage() {
                 <span className="block font-bold"> Robles</span>
               </h1>
                <div className="mt-8 h-0.5 w-12 bg-primary" />
-               <p className="mt-8 text-xl leading-relaxed text-secondary-foreground/75">
+               <p className="mt-8 font-serif text-2xl italic leading-snug text-secondary-foreground/90 lg:text-3xl">
                  Dibujo, pinto y trabajo con materiales.
                </p>
-               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
-                 Soy artista visual, enfocada en la acuarela y la exploración de la mancha, el color y lo que surge en el proceso.
+               <p className="mt-8 text-lg leading-relaxed text-secondary-foreground/70">
+                 Soy artista visual, enfocada en la acuarela y la exploración de la mancha, el color y lo que surge en el proceso. También investigo lo textil: hilos, bordados y cruces entre imagen y materia.
                </p>
-               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
-                 También investigo lo textil: hilos, bordados y cruces entre imagen y materia.
+               <p className="mt-5 text-lg leading-relaxed text-secondary-foreground/70">
+                 Mi trabajo se nutre de lo floral, la naturaleza y el entorno. En dibujo, el retrato aparece como una forma de búsqueda: entender algo del interior de las personas más allá de lo visible.
                </p>
-               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
-                 Mi trabajo se nutre de lo floral, la naturaleza y el entorno.
+               <p className="mt-5 text-lg leading-relaxed text-secondary-foreground/70">
+                 Doy clases y acompaño procesos creativos.
                </p>
-               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
-                 En dibujo, el retrato aparece como una forma de búsqueda: entender algo del interior de las personas más allá de lo visible.
-               </p>
-               <p className="mt-5 text-xl leading-relaxed text-secondary-foreground/70">
-                 Además, doy clases y acompaño procesos creativos.
-               </p>
-               <p className="mt-5 text-xl font-semibold leading-relaxed text-secondary-foreground">
+               <p className="mt-8 font-serif text-lg font-semibold text-primary">
                  Este sitio es un registro de ese recorrido.
                </p>
               
@@ -245,29 +239,26 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="kicker">Proceso Creativo</span>
+              <span className="kicker">El trabajo</span>
               <h2 className="mt-8 font-serif font-light tracking-tight text-foreground" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
-                Fuentes de <span className="font-bold">Inspiración</span>
+                Lo floral, lo humano,<span className="font-bold"> lo textil</span>
               </h2>
-              <p className="mt-10 text-xl leading-relaxed text-muted-foreground">
-                Mi inspiración surge de los momentos cotidianos que a menudo
-                pasan desapercibidos: la luz del amanecer filtrándose por una
-                ventana, las conversaciones silenciosas entre desconocidos, el
-                ritmo de las ciudades y la calma de la naturaleza.
+              <p className="mt-10 text-lg leading-relaxed text-muted-foreground">
+                El trabajo parte de la observación: una flor, una planta, la luz
+                sobre una superficie. Lo floral y la naturaleza aparecen como
+                punto de entrada al color y a la mancha.
               </p>
-              <p className="mt-6 text-xl leading-relaxed text-muted-foreground">
-                Creo en el arte como un puente entre lo visible y lo invisible,
-                entre lo que sentimos y lo que podemos expresar. Cada pincelada
-                es una palabra en un idioma universal que trasciende fronteras y
-                conecta almas.
+              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+                El retrato es otra búsqueda — más interior. Y lo textil, otra
+                dimensión: el hilo como trazo, el bordado como imagen.
               </p>
-              
+
               <div className="mt-12">
                 <Link
-                  href="/productos"
+                  href="/galeria"
                   className="group inline-flex items-center gap-4 rounded-full border-2 border-foreground/20 px-10 py-5 text-sm font-medium uppercase tracking-wider text-foreground transition-all duration-400 hover:border-secondary hover:bg-secondary hover:text-secondary-foreground hover:shadow-lg"
                 >
-                  Explorar obras
+                  Ver la galería
                   <ArrowRight className="h-5 w-5 transition-transform duration-400 group-hover:translate-x-2" />
                 </Link>
               </div>
@@ -280,46 +271,46 @@ export default function AboutPage() {
               transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-2 gap-6"
             >
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative aspect-square overflow-hidden rounded-2xl shadow-xl"
               >
                 <Image
-                  src="/artwork-1.jpg"
-                  alt="Obra de Ana Cecilia Robles"
+                  src="/galeria/flor-de-jacaranda.jpeg"
+                  alt="Flor de Jacaranda — acuarela"
                   fill
                   className="object-cover"
                 />
               </motion.div>
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative mt-12 aspect-square overflow-hidden rounded-2xl shadow-xl"
               >
                 <Image
-                  src="/artwork-2.jpg"
-                  alt="Obra de Ana Cecilia Robles"
+                  src="/galeria/retrato-1.jpeg"
+                  alt="Retrato — dibujo en grafito"
                   fill
                   className="object-cover"
                 />
               </motion.div>
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative aspect-square overflow-hidden rounded-2xl shadow-xl"
               >
                 <Image
-                  src="/artwork-5.jpg"
-                  alt="Obra de Ana Cecilia Robles"
+                  src="/galeria/acuarela-bordada-floral.jpeg"
+                  alt="Acuarela bordada floral — técnica mixta"
                   fill
                   className="object-cover"
                 />
               </motion.div>
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative mt-12 aspect-square overflow-hidden rounded-2xl shadow-xl"
               >
                 <Image
-                  src="/artwork-6.jpg"
-                  alt="Obra de Ana Cecilia Robles"
+                  src="/galeria/lavandas.jpg"
+                  alt="Lavandas — acuarela"
                   fill
                   className="object-cover"
                 />
