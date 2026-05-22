@@ -1,3 +1,5 @@
+import { formatDate as formatDateUtil } from "@/lib/utils"
+
 export type CategoriaSlug =
   | "arte-y-tecnica"
   | "tutoriales"
@@ -443,9 +445,5 @@ export function getArticulosDestacados(): Articulo[] {
 }
 
 export function formatFecha(iso: string): string {
-  return new Date(iso).toLocaleDateString("es-AR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })
+  return formatDateUtil(iso)
 }

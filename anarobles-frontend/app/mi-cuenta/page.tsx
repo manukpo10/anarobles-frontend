@@ -10,7 +10,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
 import ProtectedRoute from "@/components/protected-route"
 import { getUserEnrollments, getCursoById, getCourseProgress, getUserPurchases, fetchMisCursos, fetchMisOrdenes, type Inscripcion, type Orden } from "@/lib/data"
-import { formatPrice } from "@/lib/utils"
+import { formatPrice, formatDate } from "@/lib/utils"
 
 const tabs = [
   { id: "profile", label: "Perfil", icon: User },
@@ -348,7 +348,7 @@ function MiCuentaContent() {
                               <div>
                                 <p className="font-medium text-foreground">{purchase.productName}</p>
                                 <p className="text-sm text-muted-foreground">
-                                  {new Date(purchase.date).toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" })}
+                                  {formatDate(purchase.date)}
                                 </p>
                                 <p className="text-xs text-muted-foreground">Cantidad: {purchase.quantity}</p>
                               </div>

@@ -6,18 +6,11 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { getRecentPosts } from "@/lib/data"
 import type { BlogPost } from "@/lib/data"
+import { formatDate } from "@/lib/utils"
 
 interface BlogPreviewProps {
   posts?: BlogPost[]
   limit?: number
-}
-
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString("es-AR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })
 }
 
 export function BlogPreview({ posts = getRecentPosts(3), limit = 3 }: BlogPreviewProps) {

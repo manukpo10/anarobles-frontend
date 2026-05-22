@@ -163,7 +163,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-sm text-secondary-foreground/50">
-            &copy; {new Date().getFullYear()} Ana Cecilia Robles. Todos los derechos reservados.
+            &copy; 2026 Ana Cecilia Robles. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-2 text-sm text-secondary-foreground/40">
             <span>Hecho con</span>

@@ -13,3 +13,19 @@ export function formatPrice(value: number): string {
   const digits = Math.abs(rounded).toString()
   return negative + digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
+
+const MESES_ES = [
+  "enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+]
+
+// Deterministic Spanish long date formatter ("15 de marzo de 2026").
+// Avoids hydration mismatches from Intl.DateTimeFormat / toLocaleDateString.
+export function formatDate(input: string | Date): string {
+  const d = typeof input === "string" ? new Date(input) : input
+  if (isNaN(d.getTime())) return ""
+  const day = d.getUTCDate()
+  const month = MESES_ES[d.getUTCMonth()]
+  const year = d.getUTCFullYear()
+  return `${day} de ${month} de ${year}`
+}

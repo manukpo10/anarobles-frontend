@@ -127,7 +127,7 @@ export default function PrivacidadPage() {
             </motion.div>
 
             <p className="mt-12 text-center text-sm text-muted-foreground">
-              Última actualización: {new Date().toLocaleDateString("es-AR", { year: "numeric", month: "long", day: "numeric" })}
+              Última actualización: 22 de mayo de 2026
             </p>
           </motion.div>
         </div>
