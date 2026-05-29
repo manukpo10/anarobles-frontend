@@ -18,7 +18,7 @@ export function GaleriaGridMasonry({ obras, onObraClick }: GaleriaGridMasonryPro
   if (obras.length === 0) return null
 
   return (
-    <div className="columns-1 gap-3" style={{ columnFill: "balance" }}>
+    <div className="columns-1 gap-3 md:columns-2" style={{ columnFill: "balance" }}>
       {obras.map((obra, i) => (
         <motion.div
           key={obra.id}

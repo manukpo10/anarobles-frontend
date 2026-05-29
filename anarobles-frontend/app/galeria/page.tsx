@@ -154,11 +154,7 @@ export default function GaleriaPage() {
                       </span>
                     </div>
 
-                    {cat === "retratos" ? (
-                      <GaleriaGridRetratos obras={catObras} onObraClick={abrirLightbox} />
-                    ) : (
-                      <GaleriaGridMasonry obras={catObras} onObraClick={abrirLightbox} />
-                    )}
+                    <GaleriaGridRetratos obras={catObras} onObraClick={abrirLightbox} />
                   </section>
                 )
               })}
