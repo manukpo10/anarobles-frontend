@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Instagram, Facebook, MessageCircle, Mail, Heart, Check, Palette, ArrowRight, Loader2 } from "lucide-react"
 
 const WA_NUMBER = "5492215591366"
-const EMAIL     = "anacerobles@hotmail.com"
+const EMAIL     = "aroblessanguina@gmail.com"
 
 function buildWaHref(message?: string) {
   const text = message?.trim() || "Hola Ana! Me gustaría consultar sobre..."
@@ -24,13 +24,6 @@ const socialLinks = [
     label: "Instagram",
     username: "@anaroblesartedibujo",
     color: "from-purple-500 to-pink-500",
-  },
-  {
-    icon: Facebook,
-    href: "https://facebook.com/anacecilia.art",
-    label: "Facebook",
-    username: "Ana Cecilia Robles",
-    color: "from-blue-600 to-blue-500",
   },
 ]
 
