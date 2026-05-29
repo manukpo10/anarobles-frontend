@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   description:
     "Explora el universo artístico de Ana Cecilia Robles. Pinturas, ilustraciones y obras digitales que capturan la esencia de la creatividad contemporánea.",
-  generator: "v0.app",
+
   keywords: [
     "arte",
     "pintura",
@@ -82,9 +82,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: baseUrl,
-  },
+
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: "/logo_transparente.png",
