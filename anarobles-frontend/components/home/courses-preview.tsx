@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Clock, Monitor } from "lucide-react"
+import { ArrowRight, Clock, Monitor, Palette } from "lucide-react"
 import { cursos as staticCursos } from "@/lib/data"
 import type { Curso } from "@/lib/data"
 import { formatPrice } from "@/lib/utils"
@@ -23,10 +23,10 @@ const cardAnim = {
 }
 
 export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
-  const displayedCourses = (propCursos ?? staticCursos.filter((c) => c.featured)).slice(0, 4)
+  const displayedCourses = (propCursos ?? []).slice(0, 4)
 
   return (
-    <section className="section-md noise-texture overflow-hidden bg-background">
+    <section className="section-md noise-texture overflow-hidden bg-primary/10">
       {/* Warm accent blob */}
       <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/8 blur-3xl" aria-hidden="true" />
 
@@ -52,101 +52,123 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
           </p>
         </motion.div>
 
-        {/* Grid */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {displayedCourses.map((curso) => (
-            <motion.div key={curso.id} variants={cardAnim} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}>
+        {displayedCourses.length === 0 ? (
+          /* ── Próximamente ─────────────────────────────────────── */
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-2xl rounded-2xl bg-card border border-border shadow-sm p-10 text-center lg:p-14"
+          >
+            <p className="text-base leading-relaxed text-foreground">
+              Estamos preparando una experiencia de aprendizaje única para vos.
+              Cursos guiados por Ana Cecilia, con el mismo cariño y dedicación que ponemos en cada obra.
+            </p>
+            <p className="mt-4 text-base text-muted-foreground">
+              Mientras tanto, conocé mis obras en la galería o escribime para más información.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href={`/cursos/${curso.id}`}
-                className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border/70 shadow-sm ring-1 ring-black/[0.02] transition-all duration-500 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1.5"
+                href="/galeria"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3 font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                  <Image
-                    src={curso.image}
-                    alt={curso.title}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 23vw"
-                  />
-                  {/* Subtle gradient for depth and badge legibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/10" aria-hidden="true" />
-
-                  {/* Floating level badge */}
-                  <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md ring-1 ring-black/[0.04]">
-                    {curso.nivel}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-1 flex-col p-5">
-
-                  {/* Title */}
-                  <h3 className="font-serif text-xl font-semibold leading-snug text-foreground transition-colors duration-300 group-hover:text-primary">
-                    {curso.title}
-                  </h3>
-                  {curso.subtitle && (
-                    <p className="mt-1.5 line-clamp-2 text-sm italic leading-snug text-muted-foreground">
-                      {curso.subtitle}
-                    </p>
-                  )}
-
-                  {/* Meta row */}
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1.5">
-                      <Monitor className="h-3.5 w-3.5 shrink-0 text-primary/70" />
-                      {curso.modalidad}
-                    </span>
-                    <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5 shrink-0 text-primary/70" />
-                      {curso.duracion}
-                    </span>
-                  </div>
-
-                  {/* Divider — pushes price to the bottom */}
-                  <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
-
-                  {/* Price */}
-                  <div className="mt-4 flex items-end justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                        Desde
-                      </span>
-                      <span className="font-serif text-2xl font-bold leading-tight text-foreground">
-                        ${formatPrice(curso.precio)}
+                <Palette className="h-4 w-4" />
+                Ver la galería
+              </Link>
+              <Link
+                href="/contacto"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-3 font-medium text-foreground transition-colors hover:bg-muted"
+              >
+                Contactar
+              </Link>
+            </div>
+          </motion.div>
+        ) : (
+          <>
+            {/* Grid */}
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {displayedCourses.map((curso) => (
+                <motion.div key={curso.id} variants={cardAnim} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}>
+                  <Link
+                    href={`/cursos/${curso.id}`}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border/70 shadow-sm ring-1 ring-black/[0.02] transition-all duration-500 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1.5"
+                  >
+                    {/* Image */}
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                      <Image
+                        src={curso.image}
+                        alt={curso.title}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 23vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/10" aria-hidden="true" />
+                      <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md ring-1 ring-black/[0.04]">
+                        {curso.nivel}
                       </span>
                     </div>
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-md group-hover:shadow-primary/20">
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
 
-                </div>
+                    {/* Content */}
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="font-serif text-xl font-semibold leading-snug text-foreground transition-colors duration-300 group-hover:text-primary">
+                        {curso.title}
+                      </h3>
+                      {curso.subtitle && (
+                        <p className="mt-1.5 line-clamp-2 text-sm italic leading-snug text-muted-foreground">
+                          {curso.subtitle}
+                        </p>
+                      )}
+                      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1.5">
+                          <Monitor className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+                          {curso.modalidad}
+                        </span>
+                        <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
+                        <span className="flex items-center gap-1.5">
+                          <Clock className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+                          {curso.duracion}
+                        </span>
+                      </div>
+                      <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+                      <div className="mt-4 flex items-end justify-between">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">Desde</span>
+                          <span className="font-serif text-2xl font-bold leading-tight text-foreground">
+                            ${formatPrice(curso.precio)}
+                          </span>
+                        </div>
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-md group-hover:shadow-primary/20">
+                          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-12 text-center"
+            >
+              <Link href="/cursos" className="group btn-ghost">
+                <span>Ver todos los cursos</span>
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </motion.div>
-          ))}
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 text-center"
-        >
-          <Link href="/cursos" className="group btn-ghost">
-            <span>Ver todos los cursos</span>
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-        </motion.div>
+          </>
+        )}
 
       </div>
     </section>

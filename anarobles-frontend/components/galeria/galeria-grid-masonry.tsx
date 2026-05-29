@@ -18,11 +18,11 @@ export function GaleriaGridMasonry({ obras, onObraClick }: GaleriaGridMasonryPro
   if (obras.length === 0) return null
 
   return (
-    <div className="columns-2 gap-2 lg:columns-3" style={{ columnFill: "balance" }}>
+    <div className="columns-1 gap-3" style={{ columnFill: "balance" }}>
       {obras.map((obra, i) => (
         <motion.div
           key={obra.id}
-          className="mb-2 break-inside-avoid"
+          className="mb-3 break-inside-avoid"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}

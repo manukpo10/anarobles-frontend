@@ -13,8 +13,8 @@ interface NewsletterSectionProps {
 }
 
 const defaultData: NewsletterData = {
-  headline: "Unirme a la comunidad",
-  subtext: "Recibí novedades, avances de cursos y contenido exclusivo directo a tu correo.",
+  headline: "Sé el primero en enterarte",
+  subtext: "Los cursos y productos están en camino. Dejá tu mail y te aviso antes que a nadie cuando estén listos.",
 }
 
 export function NewsletterSection({ data = defaultData }: NewsletterSectionProps) {
@@ -52,7 +52,7 @@ export function NewsletterSection({ data = defaultData }: NewsletterSectionProps
           {/* Kicker on orange */}
           <span className="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.3em] text-primary-foreground/55">
             <span className="h-px w-8 bg-primary-foreground/30" />
-            Comunidad
+            Próximamente
             <span className="h-px w-8 bg-primary-foreground/30" />
           </span>
 

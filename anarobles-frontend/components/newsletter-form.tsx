@@ -19,7 +19,7 @@ export function NewsletterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <div className="flex gap-2">
+      <div className="flex justify-center gap-2">
         <input
           type="email"
           value={email}
