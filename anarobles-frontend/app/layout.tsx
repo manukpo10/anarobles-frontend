@@ -113,10 +113,7 @@ export default function RootLayout({
               name: "Ana Cecilia Robles",
               url: baseUrl,
               logo: `${baseUrl}/logo_transparente.png`,
-              sameAs: [
-                "https://www.instagram.com/anaroblesartedibujo/",
-                "https://www.facebook.com/anaroblesartedibujo/",
-              ],
+              sameAs: ["https://www.instagram.com/anaroblesartedibujo/"],
             }),
           }}
         />
@@ -139,7 +136,7 @@ export default function RootLayout({
               },
               contactPoint: {
                 "@type": "ContactPoint",
-                email: "contacto@anacecilia.art",
+                email: "aroblessanguina@gmail.com",
                 contactType: "customer service",
               },
             }),
