@@ -87,6 +87,9 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: "/logo_transparente.png",
   },
+  verification: {
+    google: "MHFAP33_xkr4vHsthFo6PDD-t0Y6Jb5Yy9N0xQP19rg",
+  },
 }
 
 export const viewport: Viewport = {
