@@ -2,7 +2,7 @@
 const nextConfig = {
   devIndicators: false,
   images: {
-    unoptimized: true,
+    formats: ["image/webp"],
   },
   async headers() {
     return [
