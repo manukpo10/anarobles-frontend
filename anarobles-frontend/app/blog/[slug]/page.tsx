@@ -20,12 +20,14 @@ export async function generateMetadata({
   if (!articulo) return {}
 
   return {
-    title: `${articulo.titulo} | Blog de Ana Cecilia Robles`,
+    title: articulo.titulo,
     description: articulo.metaDescripcion ?? articulo.resumen,
+    alternates: { canonical: `${BASE_URL}/blog/${articulo.slug}` },
     openGraph: {
       title: articulo.titulo,
       description: articulo.resumen,
-      images: [articulo.imagenDestacada],
+      url: `${BASE_URL}/blog/${articulo.slug}`,
+      images: [{ url: articulo.imagenDestacada, width: 1200, height: 630, alt: articulo.titulo }],
       type: "article",
       publishedTime: articulo.fechaPublicacion,
       authors: ["Ana Cecilia Robles"],

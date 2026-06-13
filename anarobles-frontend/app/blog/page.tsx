@@ -3,7 +3,7 @@ import { getArticulos } from "@/lib/articulos"
 import { BlogIndex } from "@/components/blog/blog-index"
 
 export const metadata: Metadata = {
-  title: "Blog | Ana Cecilia Robles",
+  title: "Blog",
   description:
     "Reflexiones sobre arte, técnicas de pintura y proceso creativo. Artículos sobre color, óleo, acuarela y el camino de crear.",
   alternates: { canonical: "https://anaceciliarobles.com/blog" },

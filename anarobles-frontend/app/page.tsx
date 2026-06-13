@@ -1,4 +1,9 @@
+import type { Metadata } from "next"
 import { HeroSection } from "@/components/home/hero-section"
+
+export const metadata: Metadata = {
+  alternates: { canonical: "https://anaceciliarobles.com" },
+}
 import { AboutIntro } from "@/components/home/about-intro"
 import { FeaturedGallery } from "@/components/home/featured-gallery"
 import { CoursesPreview } from "@/components/home/courses-preview"

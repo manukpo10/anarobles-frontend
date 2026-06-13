@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Ana Cecilia Robles",
   },
   description:
-    "Explora el universo artístico de Ana Cecilia Robles. Pinturas, ilustraciones y obras digitales que capturan la esencia de la creatividad contemporánea.",
+    "Artista visual de La Plata especializada en acuarela, dibujo y técnica textil. Explorá sus obras, cursos y el proceso creativo detrás de cada pieza.",
 
   keywords: [
     "arte",
@@ -54,13 +54,13 @@ export const metadata: Metadata = {
     siteName: "Ana Cecilia Robles",
     title: "Ana Cecilia Robles | Artista Plástica",
     description:
-      "Explora el universo artístico de Ana Cecilia Robles. Pinturas, ilustraciones y obras digitales que capturan la esencia de la creatividad contemporánea.",
+      "Artista visual de La Plata especializada en acuarela, dibujo y técnica textil. Explorá sus obras, cursos y el proceso creativo detrás de cada pieza.",
     images: [
       {
-        url: `${baseUrl}/logo_transparente.png`,
+        url: `${baseUrl}/sobremi.jpeg`,
         width: 1200,
         height: 630,
-        alt: "Ana Cecilia Robles - Artista Plástica",
+        alt: "Ana Cecilia Robles - Artista Plástica, La Plata",
       },
     ],
   },
@@ -68,8 +68,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ana Cecilia Robles | Artista Plástica",
     description:
-      "Explora el universo artístico de Ana Cecilia Robles. Pinturas, ilustraciones y obras digitales.",
-    images: [`${baseUrl}/logo_transparente.png`],
+      "Artista visual de La Plata especializada en acuarela, dibujo y técnica textil.",
+    images: [`${baseUrl}/sobremi.jpeg`],
   },
   robots: {
     index: true,
