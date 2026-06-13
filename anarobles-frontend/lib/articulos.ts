@@ -108,9 +108,7 @@ Eso es el color como lenguaje. No lo que representa la imagen — lo que **sent�
 - La temperatura de los colores secundarios (los grises, los apagados) importa tanto como los colores principales.
 - El ojo sigue la temperatura cálida. Usá eso para guiar la lectura de tu obra.
 - Antes de mezclar, preguntate: ¿qué emoción quiero que este área de la tela transmita?
-- El color no funciona solo — siempre en relación con lo que lo rodea.
-
-Si querés profundizar en esto con ejercicios prácticos, el curso [Iniciación a la Acuarela](/cursos/iniciacion-acuarela) incluye un módulo dedicado enteramente a la gestión del color dentro de la mancha húmeda.`,
+- El color no funciona solo — siempre en relación con lo que lo rodea.`,
   },
   {
     id: "2",
@@ -171,11 +169,7 @@ Este es el error más conceptual y probablemente el más dañino: tratar de trab
 
 El óleo tiene su propio ritmo, y ese ritmo no es defecto — es una característica. Permite revisitar, corregir, trabajar una área mientras otra seca, y construir capas de profundidad que otros medios no permiten.
 
-Cuando aceptás la lentitud como parte del proceso, el óleo deja de ser frustrante y se convierte en el medio más generoso que existe.
-
----
-
-Si querés aprender a usar el óleo con paciencia y técnica, el curso [El Retrato como Búsqueda](/cursos/retrato-busqueda) incluye módulos completos de manejo de óleo, desde la preparación de la paleta hasta el trabajo por capas.`,
+Cuando aceptás la lentitud como parte del proceso, el óleo deja de ser frustrante y se convierte en el medio más generoso que existe.`,
   },
   {
     id: "3",
