@@ -282,7 +282,7 @@ export default function AboutPage() {
                 className="relative mt-12 aspect-square overflow-hidden rounded-2xl shadow-xl"
               >
                 <Image
-                  src="/galeria/retrato-1.jpeg"
+                  src="/galeria/ella.jpeg"
                   alt="Retrato — dibujo en grafito"
                   fill
                   className="object-cover"
