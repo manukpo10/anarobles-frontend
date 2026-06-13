@@ -45,7 +45,7 @@ export function ProcessSection({ phases = getProcessPhases() }: ProcessSectionPr
             className="mt-6 font-serif font-light tracking-tight text-secondary-foreground"
             style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
-            Del Idea <span className="font-bold">a la Obra</span>
+            De la Idea <span className="font-bold">a la Obra</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base italic text-secondary-foreground/65">
             "He aprendido que nunca he visto realmente lo que no he dibujado, y que cuando empiezo a dibujar una cosa corriente me doy cuenta de lo extraordinaria que es, un auténtico milagro."
