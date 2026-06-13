@@ -132,7 +132,7 @@ export const obras: Obra[] = [
     id: "nido", slug: "nido", titulo: "Nido",
     categoria: "naturaleza", año: 2024,
     tecnica: "Acuarela", dimensiones: "30 × 40 cm",
-    disponibilidad: "disponible", destacada: true,
+    disponibilidad: "vendida", destacada: true,
     imagen: "/galeria/nido.jpg", imgW: 1536, imgH: 2048,
   },
   {

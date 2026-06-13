@@ -14,7 +14,7 @@ import { GaleriaCTA }          from "@/components/galeria/galeria-cta"
 // Descripción corta por sección — reemplazar con texto real de Ana
 const SECCION: Record<string, { label: string; desc: string }> = {
   retratos:   { label: "Retratos",   desc: "Estudios del rostro en grafito, pastel y acuarela" },
-  naturaleza: { label: "Naturaleza", desc: "Botanica, acuarelas bordadas y estudios de flora" },
+  naturaleza: { label: "Naturaleza", desc: "Botánica, acuarelas bordadas y estudios de flora" },
 }
 
 export default function GaleriaPage() {
