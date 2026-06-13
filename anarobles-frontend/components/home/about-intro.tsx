@@ -82,7 +82,7 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
                   Artista Plástica
                 </p>
                 <p className="mt-0.5 font-serif text-base font-semibold text-primary-foreground">
-                  Buenos Aires, Argentina
+                  La Plata, Argentina
                 </p>
               </div>
             </div>
