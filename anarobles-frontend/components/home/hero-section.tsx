@@ -70,7 +70,7 @@ export function HeroSection() {
           }}
         >
           Ana Cecilia
-          <span className="block" style={{ fontSize: "clamp(4rem, 12vw, 9rem)", color: "#1A5276" }}>
+          <span className="block text-secondary" style={{ fontSize: "clamp(4rem, 12vw, 9rem)" }}>
             Robles
           </span>
         </motion.h1>
