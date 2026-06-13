@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "arte contemporáneo",
     "cursos de arte",
     "talleres de pintura",
-    "Buenos Aires",
+    "La Plata",
     "arte argentino",
   ],
   authors: [{ name: "Ana Cecilia Robles" }],
@@ -134,7 +134,7 @@ export default function RootLayout({
               image: `${baseUrl}/logo_transparente.png`,
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Buenos Aires",
+                addressLocality: "La Plata",
                 addressCountry: "AR",
               },
               contactPoint: {
