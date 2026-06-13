@@ -44,7 +44,7 @@ const articulos: Articulo[] = [
     categoria: "arte-y-tecnica",
     fechaPublicacion: "2026-03-15",
     tiempoLectura: 8,
-    imagenDestacada: "/artwork-1.jpg",
+    imagenDestacada: "/blog1.jpeg",
     imagenDestacadaAlt: "Paleta de colores vibrantes sobre lienzo texturado",
     destacado: true,
     relacionados: ["teoria-del-color-temperatura", "consejos-principiantes-oleo"],
@@ -53,7 +53,7 @@ const articulos: Articulo[] = [
     palabrasClave: ["color", "pintura", "teoría del color", "arte contemporáneo"],
     contenido: `## El color antes de que sea color
 
-Cuando paro frente a un lienzo en blanco, lo primero que decido no es qué voy a pintar — es en qué *tono emocional* voy a trabajar.
+Cuando paro frente a una superficie en blanco, lo primero que decido no es qué voy a pintar — es en qué *tono emocional* voy a trabajar.
 
 Antes de elegir un pincel, me pregunto: ¿esta obra va a pesar o va a flotar? ¿Va a contener o va a expandir? Esas preguntas tienen respuesta en el color.
 
