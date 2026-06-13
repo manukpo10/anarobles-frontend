@@ -106,8 +106,7 @@ export function HeroSection() {
         >
           <Link
             href="/galeria"
-            className="group inline-flex items-center gap-3 rounded-full px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-            style={{ backgroundColor: "#1A5276" }}
+            className="group inline-flex items-center gap-3 rounded-full bg-secondary px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5"
           >
             <span>Ver obras</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
