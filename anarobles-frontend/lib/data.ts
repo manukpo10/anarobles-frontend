@@ -60,7 +60,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Cómo los artistas usamos el color para transmitir emociones que las palabras no pueden capturar.",
     date: "2026-03-15",
-    image: "/artwork-1.jpg",
+    image: "/blog1.jpeg",
     slug: "lenguaje-del-color",
     category: "Arte y Técnica",
   },
