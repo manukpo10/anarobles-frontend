@@ -12,7 +12,7 @@ const socialLinks = [
     label: "Instagram",
   },
   {
-    href: "mailto:contacto@anacecilia.art",
+    href: "mailto:aroblessanguina@gmail.com",
     icon: Mail,
     label: "Email",
   },
@@ -66,12 +66,11 @@ export function Footer() {
               </div>
             </Link>
             <p className="mt-8 max-w-md font-serif text-2xl italic leading-relaxed text-secondary-foreground/75 lg:text-3xl">
-              "El arte es el diálogo silencioso entre el alma y el lienzo"
+              "El dibujo, la acuarela y el bordado son formas de observar, registrar y transformar aquello que me rodea."
             </p>
             <div className="mt-4 h-px w-12 bg-primary/60" />
             <p className="mt-5 text-base leading-relaxed text-secondary-foreground/60">
-              Arte que transforma emociones en colores, y colores en historias
-              que perduran.
+              Trabajo entre la imagen y el hilo, dejando que cada material participe del proceso y deje su huella.
             </p>
             
           </div>
@@ -130,7 +129,7 @@ export function Footer() {
               ))}
             </motion.div>
             <p className="mt-6 text-sm text-secondary-foreground/70">
-              contacto@anacecilia.art
+              aroblessanguina@gmail.com
             </p>
 
             {/* Quick link */}

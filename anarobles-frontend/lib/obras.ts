@@ -87,14 +87,6 @@ export const obras: Obra[] = [
     imagen: "/galeria/amistad-2.jpg", imgW: 578, imgH: 876,
   },
   {
-    id: "bordando-acuarela-en-flor", slug: "bordando-acuarela-en-flor",
-    titulo: "Bordando acuarela en flor",
-    categoria: "naturaleza", año: 2024,
-    tecnica: "Acuarela bordada",
-    disponibilidad: "disponible", destacada: true,
-    imagen: "/galeria/bordando-acuarela-en-flor.jpg", imgW: 1280, imgH: 1280,
-  },
-  {
     id: "flor-de-jacaranda", slug: "flor-de-jacaranda", titulo: "Flor de Jacarandá",
     categoria: "naturaleza", año: 2024,
     tecnica: "Acuarela bordada", dimensiones: "14 × 21 cm",

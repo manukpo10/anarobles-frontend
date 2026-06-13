@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Anacecilia Art Gallery Design System - Refined Warm Palette */
-/* BRAND PALETTE: Naranja #FA7A35 (primary CTAs, hero), Azul #194052 (secondary, nav), Coral #B73E47 (accent, hovers) */
+/* BRAND PALETTE: Naranja #FA7A35 (primary CTAs, hero), Azul #1A5276 (secondary, nav), Coral #B73E47 (accent, hovers) */
 /* Neutros: Cream #FAF6F0 (bg), Charcoal #2A2A2A (text) */
 
 :root {
@@ -16,7 +16,7 @@
   --popover-foreground: oklch(0.22 0.01 0);
   --primary: oklch(0.718 0.176 41);
   --primary-foreground: oklch(0.98 0.005 80);
-  --secondary: oklch(0.30 0.05 220);
+  --secondary: oklch(0.40 0.12 248);
   --secondary-foreground: oklch(0.98 0.005 80);
   --muted: oklch(0.94 0.01 80);
   --muted-foreground: oklch(0.45 0.02 0);
@@ -28,7 +28,7 @@
   --input: oklch(0.92 0.01 80);
   --ring: oklch(0.718 0.176 41);
   --chart-1: oklch(0.718 0.176 41);
-  --chart-2: oklch(0.30 0.05 220);
+  --chart-2: oklch(0.40 0.12 248);
   --chart-3: oklch(0.48 0.16 20);
   --chart-4: oklch(0.45 0.02 0);
   --chart-5: oklch(0.788 0.132 41);
@@ -52,7 +52,7 @@
   --popover-foreground: oklch(0.95 0.005 80);
   --primary: oklch(0.758 0.176 41);
   --primary-foreground: oklch(0.18 0.02 45);
-  --secondary: oklch(0.40 0.06 220);
+  --secondary: oklch(0.50 0.13 248);
   --secondary-foreground: oklch(0.95 0.005 80);
   --muted: oklch(0.28 0.02 45);
   --muted-foreground: oklch(0.65 0.02 80);
@@ -64,7 +64,7 @@
   --input: oklch(0.28 0.02 45);
   --ring: oklch(0.758 0.176 41);
   --chart-1: oklch(0.758 0.176 41);
-  --chart-2: oklch(0.40 0.06 220);
+  --chart-2: oklch(0.50 0.13 248);
   --chart-3: oklch(0.52 0.14 20);
   --chart-4: oklch(0.888 0.132 41);
   --chart-5: oklch(0.55 0.14 20);
@@ -161,7 +161,7 @@ html {
 
 /* Focus styles */
 *:focus-visible {
-  outline: 2px solid oklch(0.30 0.05 220);
+  outline: 2px solid oklch(0.40 0.12 248);
   outline-offset: 2px;
 }
 
@@ -333,7 +333,7 @@ html {
 
 /* Dark section utility — navy bg with cream text */
 .section-dark {
-  background-color: oklch(0.30 0.05 220);
+  background-color: oklch(0.40 0.12 248);
   color: oklch(0.98 0.005 80);
 }
 

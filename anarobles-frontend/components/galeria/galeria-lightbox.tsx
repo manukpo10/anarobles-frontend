@@ -83,7 +83,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22 }}
           className="fixed inset-0 z-[100]"
-          style={{ background: "oklch(0.14 0.03 220 / 0.98)", backdropFilter: "blur(8px)" }}
+          style={{ background: "oklch(0.14 0.05 248 / 0.98)", backdropFilter: "blur(8px)" }}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >

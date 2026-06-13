@@ -89,6 +89,15 @@ The frontend `app/api/checkout/route.ts` and the backend `CheckoutController` +
 in `application.properties` are the redirect/callback targets. A `mercado-pago` skill is
 available — use it when working on this flow.
 
+## Deployment summary
+- **Frontend**: Vercel, auto-deploy from `main` → `anaceciliarobles.com`
+- **Backend**: Render free tier (spins down after inactivity; first request is slow)
+- **DNS**: Cloudflare → HostGator registrar. Flush with `ipconfig /flushdns` if stale.
+
+## Brand
+- Primary orange: `#D9622C` · Secondary blue: `#194052` · Accent coral: `#B73E47`
+- Background cream: `#FAF6F0` · Logo: `public/logo_transparente.png`
+
 ## Gotchas
 - `next.config.mjs` sets `typescript.ignoreBuildErrors: true` and `images.unoptimized: true`.
   **TS type errors do NOT fail the build** — run `npm run lint` / `tsc` deliberately; don't

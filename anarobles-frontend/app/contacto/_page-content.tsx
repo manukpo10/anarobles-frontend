@@ -53,7 +53,6 @@ function ContactPageContent() {
               { "@type": "Question", name: "¿Cómo funciona un encargo personalizado?", acceptedAnswer: { "@type": "Answer", text: "Primero contactame para discutir tu idea, tamaño y presupuesto. Luego te envío un boceto para aprobación antes de comenzar la obra final." } },
               { "@type": "Question", name: "¿Cuáles son los tiempos de entrega?", acceptedAnswer: { "@type": "Answer", text: "Dependen de la complejidad y el tamaño. Generalmente entre 2 y 6 semanas desde la aprobación del diseño." } },
               { "@type": "Question", name: "¿Enviás obras a todo el país?", acceptedAnswer: { "@type": "Answer", text: "Sí, trabajo con servicios de mensajería especializada en obras de arte para garantizar un transporte seguro." } },
-              { "@type": "Question", name: "¿Puedo visitar tu taller?", acceptedAnswer: { "@type": "Answer", text: "¡Por supuesto! Coordinemos una visita para que veas mi espacio de trabajo y charlemos sobre tu proyecto." } },
             ],
           }),
         }}
@@ -196,7 +195,7 @@ function ContactPageContent() {
                   Cada pieza es creada especialmente para vos, pensando en tus gustos y el espacio donde será exhibida.
                 </p>
                 <ul className="mt-6 space-y-3">
-                  {["Retratos personalizados", "Paisajes y naturalezas", "Arte abstracto", "Copias de obras existentes"].map((item) => (
+                  {["Retratos personalizados", "Paisajes y naturalezas", "Arte abstracto"].map((item) => (
                     <li key={item} className="flex items-center gap-3 text-primary-foreground/80">
                       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-secondary/20 text-secondary">
                         <Check className="h-3 w-3" />
@@ -252,7 +251,6 @@ function ContactPageContent() {
               { q: "¿Cómo funciona un encargo personalizado?", a: "Primero contactame por WhatsApp para discutir tu idea, tamaño y presupuesto. Luego te envío un boceto para aprobación antes de comenzar la obra final." },
               { q: "¿Cuáles son los tiempos de entrega?", a: "Dependen de la complejidad y el tamaño. Generalmente entre 2 y 6 semanas desde la aprobación del diseño." },
               { q: "¿Enviás obras a todo el país?", a: "Sí, trabajo con servicios de mensajería especializada en obras de arte para garantizar un transporte seguro." },
-              { q: "¿Puedo visitar tu taller?", a: "¡Por supuesto! Coordinemos una visita por WhatsApp para que veas mi espacio de trabajo y charlemos sobre tu proyecto." },
             ].map((faq, index) => (
               <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + index * 0.1 }} className="rounded-2xl bg-background p-6 shadow-lg shadow-foreground/5 ring-1 ring-border">
                 <h3 className="font-serif text-lg font-medium text-foreground">{faq.q}</h3>

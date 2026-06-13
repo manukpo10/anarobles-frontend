@@ -95,7 +95,7 @@ export default function ProductosPage() {
 
         {/* Artistic brush stroke */}
         <svg className="absolute bottom-0 left-0 w-full h-24 opacity-10" viewBox="0 0 1200 100" preserveAspectRatio="none">
-          <path d="M0 50 Q300 20 600 50 T1200 50 L1200 100 L0 100 Z" fill="#194052"/>
+          <path d="M0 50 Q300 20 600 50 T1200 50 L1200 100 L0 100 Z" fill="#1A5276"/>
         </svg>
         
         <div className="relative mx-auto max-w-7xl px-6 text-center lg:px-8">

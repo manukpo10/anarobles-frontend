@@ -51,7 +51,7 @@ export function HeroSection() {
         >
           <span className="h-px w-12 bg-white/50" />
           <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-white/90">
-            Artista Plástica · La Plata
+            Artista Plástica
           </span>
           <span className="h-px w-12 bg-white/50" />
         </motion.div>
@@ -70,7 +70,7 @@ export function HeroSection() {
           }}
         >
           Ana Cecilia
-          <span className="block text-primary" style={{ fontSize: "clamp(4rem, 12vw, 9rem)" }}>
+          <span className="block" style={{ fontSize: "clamp(4rem, 12vw, 9rem)", color: "#1A5276" }}>
             Robles
           </span>
         </motion.h1>
@@ -94,7 +94,7 @@ export function HeroSection() {
             textShadow: "1px 1px 6px rgba(0,0,0,0.85), 0px 0px 12px rgba(0,0,0,0.55)",
           }}
         >
-          Donde los colores cuentan historias y cada pincelada es un susurro del alma
+          Donde los colores cuentan historias y cada trazo es un susurro del alma
         </motion.p>
 
         {/* CTAs */}
@@ -106,14 +106,16 @@ export function HeroSection() {
         >
           <Link
             href="/galeria"
-            className="group inline-flex items-center gap-3 rounded-full bg-primary px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/40 transition-all duration-300 hover:bg-accent hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
+            className="group inline-flex items-center gap-3 rounded-full px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+            style={{ backgroundColor: "#1A5276" }}
           >
             <span>Ver obras</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
           <Link
             href="/cursos"
-            className="inline-flex items-center gap-3 rounded-full border border-white/25 px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white/75 transition-all duration-300 hover:border-primary hover:text-primary"
+            className="inline-flex items-center gap-3 rounded-full border-2 px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:-translate-y-0.5"
+            style={{ borderColor: "#1A5276" }}
           >
             Descubrí los cursos
           </Link>

@@ -42,9 +42,10 @@ export const aboutIntroData: AboutIntroData = {
   headline: "Sobre Ana",
   eyebrow: "Artista Plástica",
   paragraphs: [
-    "Ana Cecilia Robles es una artista plástica argentina cuyo trabajo explora la relación entre emoción y color, creando obras que invitan a la introspección.",
-    "Con más de 15 años de trayectoria, ha desarrollado un lenguaje visual propio que fusiona técnicas tradicionales con expresiones contemporáneas, siempre manteniendo ese diálogo silencioso entre el alma y el lienzo.",
-    "Más allá de la creación, su pasión es enseñar — transmitir la técnica y la sensibilidad artística a quienes quieren descubrir su propia voz visual.",
+    "Ana es una artista visual radicada en Argentina. Su trabajo se desarrolla entre el dibujo, la acuarela y la exploración textil, integrando bordados e intervenciones con hilos sobre sus obras.",
+    "Inspirada por la naturaleza, las formas orgánicas y la observación del entorno, explora la relación entre el color, la materia y la experiencia sensible. A través de manchas, transparencias y gestos delicados, construye imágenes que invitan a la contemplación.",
+    "El retrato ocupa un lugar central en su producción, entendido como una búsqueda de aquello que permanece más allá de la apariencia. En sus trabajos, el dibujo convive con la acuarela y el bordado, generando un diálogo entre imagen, superficie y textura.",
+    "Además de su producción artística, acompaña procesos creativos a través de la enseñanza, compartiendo herramientas de dibujo, acuarela y experimentación material en espacios de formación y exploración.",
   ],
   image: "/artista1.jpeg", // TODO: verificar que exista en /public
   ctaLabel: "Conocé mi historia",

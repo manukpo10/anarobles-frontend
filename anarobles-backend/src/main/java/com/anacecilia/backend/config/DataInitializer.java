@@ -51,7 +51,7 @@ public class DataInitializer implements CommandLineRunner {
         if (!usuarioRepository.existsByEmail("admin@anacecilia.art")) {
             Role adminRole = roleRepository.findByName(Role.RoleName.ADMIN)
                     .orElseThrow(() -> new RuntimeException("Rol ADMIN no encontrado"));
-            
+
             Usuario admin = Usuario.builder()
                     .nombre("Ana Cecilia Robles")
                     .email("admin@anacecilia.art")
@@ -60,7 +60,7 @@ public class DataInitializer implements CommandLineRunner {
                     .activo(true)
                     .avatar("/artist-portrait.jpg")
                     .build();
-            
+
             usuarioRepository.save(admin);
             log.info("Usuario admin creado: admin@anacecilia.art / admin123");
         }

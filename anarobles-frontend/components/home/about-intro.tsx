@@ -1,16 +1,33 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { aboutIntroData } from "@/lib/data"
 
+const ARTIST_IMAGES = [
+  "/artista1.jpeg",
+  "/artista2.jpeg",
+  "/artista3.jpeg",
+  "/artista4.jpg",
+]
+
 interface AboutIntroProps {
   data?: typeof aboutIntroData
 }
 
 export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % ARTIST_IMAGES.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section className="section-md overflow-hidden noise-texture bg-background">
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
@@ -38,17 +55,21 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
 
             {/* Photo */}
             <div className="relative z-10 aspect-[3/4] w-full overflow-hidden bg-secondary/50" style={{ borderRadius: 0 }}>
-              <Image
-                src={data.image}
-                alt={`Foto de ${data.eyebrow}`}
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 1024px) 90vw, 52vw"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                  target.style.display = "none"
-                }}
-              />
+              {ARTIST_IMAGES.map((src, i) => (
+                <div
+                  key={src}
+                  className="absolute inset-0 transition-opacity duration-[800ms] ease-in-out"
+                  style={{ opacity: i === currentIndex ? 1 : 0 }}
+                >
+                  <Image
+                    src={src}
+                    alt={`Foto de ${data.eyebrow}`}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 90vw, 52vw"
+                  />
+                </div>
+              ))}
               <div className="absolute inset-0 -z-10 bg-gradient-to-br from-secondary/80 to-secondary/40 flex items-center justify-center">
                 <span className="font-serif text-5xl text-foreground/10">Ana</span>
               </div>
