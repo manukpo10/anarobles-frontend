@@ -59,7 +59,7 @@ export default function AboutPage() {
             >
               <div className="relative aspect-[4/5] overflow-hidden shadow-2xl shadow-secondary/50" style={{ borderRadius: 0 }}>
                 <Image
-                  src="/artista3.jpeg"
+                  src="/sobremi.jpeg"
                   alt="Ana Cecilia Robles - Artista Plástica"
                   fill
                   className="object-cover"
