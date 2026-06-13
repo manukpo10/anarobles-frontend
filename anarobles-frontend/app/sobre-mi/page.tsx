@@ -10,7 +10,7 @@ const timeline = [
     year: "2010",
     title: "Los inicios",
     description:
-      "Primeros pasos en el dibujo y la acuarela, explorando el color y la mancha como lenguaje propio.",
+      "Primeros pasos en el dibujo y la exploración de texturas textiles en búsqueda de un lenguaje propio.",
     icon: Palette,
   },
   {
@@ -22,9 +22,9 @@ const timeline = [
   },
   {
     year: "2018",
-    title: "Retratos y búsqueda interior",
+    title: "Retratos y búsqueda",
     description:
-      "El retrato aparece como práctica constante: una forma de entender algo del interior de las personas más allá de lo visible.",
+      "El retrato aparece como una práctica constante, una forma de observar cómo la realidad se inscribe en los gestos, las miradas y las presencias que nos rodean.",
     icon: Sparkles,
   },
   {
@@ -59,7 +59,7 @@ export default function AboutPage() {
             >
               <div className="relative aspect-[4/5] overflow-hidden shadow-2xl shadow-secondary/50" style={{ borderRadius: 0 }}>
                 <Image
-                  src="/artista1.jpeg"
+                  src="/artista3.jpeg"
                   alt="Ana Cecilia Robles - Artista Plástica"
                   fill
                   className="object-cover"
@@ -163,13 +163,11 @@ export default function AboutPage() {
           >
             <div className="mx-auto h-0.5 w-16 bg-primary mb-12" />
             <p className="font-serif font-light leading-tight tracking-tight text-foreground" style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)" }}>
-              El arte no es lo que ves, sino lo que haces ver a los demás. Mi
-              misión es transformar emociones invisibles en colores que cuentan
-              historias.
+              "No soy capaz de copiar como un esclavo la naturaleza, sino que me siento apremiado a interpretarla y adaptarla al espíritu del cuadro. La totalidad de mis combinaciones cromáticas debe conducir hacia un acorde de color vivo, a una armonía similar a la música."
             </p>
             <footer className="mt-12 inline-flex items-center gap-4 text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground">
               <span className="h-px w-12 bg-primary/40" />
-              Ana Cecilia Robles
+              Henri Matisse
               <span className="h-px w-12 bg-primary/40" />
             </footer>
           </motion.div>
@@ -198,7 +196,7 @@ export default function AboutPage() {
 
             {timeline.map((item, index) => (
               <motion.div
-                key={item.year}
+                key={item.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -213,10 +211,7 @@ export default function AboutPage() {
                   <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary/10 shadow-lg">
                     <item.icon className="h-6 w-6 text-secondary" />
                   </div>
-                  <span className="font-serif text-5xl font-bold text-primary/50">
-                    {item.year}
-                  </span>
-                  <h3 className="mt-3 font-serif text-2xl font-semibold text-foreground">
+                  <h3 className="font-serif text-2xl font-semibold text-foreground">
                     {item.title}
                   </h3>
                   <p className="mt-4 text-lg leading-relaxed text-muted-foreground">

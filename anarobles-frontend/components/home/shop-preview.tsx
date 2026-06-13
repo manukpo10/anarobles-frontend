@@ -79,8 +79,7 @@ export function ShopPreview() {
             className="mx-auto max-w-2xl rounded-2xl bg-card border border-border shadow-sm p-10 text-center lg:p-14"
           >
             <p className="text-base leading-relaxed text-foreground">
-              Estamos preparando una selección especial de productos para vos.
-              Piezas únicas creadas por Ana Cecilia, con el mismo cariño que ponemos en cada obra.
+              Estamos preparando una selección especial de productos para vos. Piezas únicas creadas por mí con la misma dedicación que pongo en cada obra.
             </p>
             <p className="mt-4 text-base text-muted-foreground">
               Mientras tanto, conocé mis obras en la galería o escribime para más información.

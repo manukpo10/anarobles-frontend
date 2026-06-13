@@ -47,8 +47,9 @@ export function ProcessSection({ phases = getProcessPhases() }: ProcessSectionPr
           >
             Del Idea <span className="font-bold">a la Obra</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-secondary-foreground/65">
-            Cada pieza pasa por un viaje creativo que transforma emociones en arte tangible
+          <p className="mx-auto mt-4 max-w-2xl text-base italic text-secondary-foreground/65">
+            "He aprendido que nunca he visto realmente lo que no he dibujado, y que cuando empiezo a dibujar una cosa corriente me doy cuenta de lo extraordinaria que es, un auténtico milagro."
+            <span className="block mt-2 not-italic font-medium text-secondary-foreground/50 text-sm">— Frederick Franck</span>
           </p>
         </motion.div>
 

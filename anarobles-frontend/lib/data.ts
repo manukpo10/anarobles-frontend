@@ -121,7 +121,7 @@ export const processPhases: ProcessPhase[] = [
     phaseNumber: 1,
     title: "Inspiración",
     description:
-      "Todo comienza con una emoción, un recuerdo o un momento que pide ser traducido al lienzo. Esta fase es la más personal y la que define la esencia de cada obra.",
+      "Todo comienza en la observación, un recuerdo, un momento que pide ser traducido que se transforma en un tema. Esta fase es la más personal y la que define cada obra.",
     icon: "Sparkles",
   },
   {
@@ -129,7 +129,7 @@ export const processPhases: ProcessPhase[] = [
     phaseNumber: 2,
     title: "Boceto",
     description:
-      "El carboncillo traza los trazos esenciales, capturando la esencia antes de los detalles. Es el mapa que guía toda la creación posterior.",
+      "No suelo trabajar desde el boceto, casi siempre termino modificándolo. Creo que la primera impresión, el primer gesto percibido, eso que me llamó a ser dibujado es lo que cuenta. Después todo lo demás se va acomodando solo.",
     icon: "Pencil",
   },
   {
@@ -137,7 +137,7 @@ export const processPhases: ProcessPhase[] = [
     phaseNumber: 3,
     title: "Capas y Color",
     description:
-      "Las veladuras generan profundidad, mientras los colores interactúan y se transforman. Cada capa agrega una nueva dimensión a la obra.",
+      "En el proceso los materiales van tomando su lugar. Las capas son estos procesos en los que cada elemento, material o técnica se distribuyen en la exploración. En la acuarela muchas veces el agua determina el proceso y eso está bien. El color es una elección expresiva.",
     icon: "Palette",
   },
   {
