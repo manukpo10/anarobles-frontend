@@ -52,7 +52,6 @@ export const aboutIntroData: AboutIntroData = {
   ctaHref: "/sobre-mi",
 }
 
-// TODO: integrar blog API - estos son datos mock
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
@@ -66,23 +65,53 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: "2",
-    title: "5 consejos para principiantes en óleo",
+    title: "5 errores que todos cometemos al empezar con óleo (y cómo evitarlos)",
     excerpt:
-      "Errores comunes y cómo evitarlos cuando estás empezando tu camino en la pintura al óleo.",
+      "El óleo es un medio generoso, pero tiene su propio ritmo. Estos son los cinco errores más comunes en los primeros meses — y cómo superarlos.",
     date: "2026-02-28",
-    image: "/artwork-2.jpg",
+    image: "/blog/blog-oleo-principiantes.png",
     slug: "consejos-principiantes-oleo",
+    category: "Tutoriales",
+  },
+  {
+    id: "4",
+    title: "Cómo elegir pinceles para acuarela sin gastar de más",
+    excerpt:
+      "Con tres pinceles bien elegidos podés hacer el 90% de lo que necesitás en acuarela. Guía práctica para no caer en los sets que venden de todo pero sirven poco.",
+    date: "2026-01-28",
+    image: "/blog/blog-pinceles-acuarela.png",
+    slug: "elegir-pinceles-acuarela",
     category: "Tutoriales",
   },
   {
     id: "3",
     title: "Inspiración mediterránea: del lienzo a la realidad",
     excerpt:
-      "Explorando cómo los paisajes del Mediterráneo influyen en mi obra reciente.",
+      "En enero de 2026 pinté una serie inspirada en el Mediterráneo sin haber estado ahí. Un proceso sobre cómo transformar referencias en emoción real.",
     date: "2026-01-10",
-    image: "/artwork-3.jpg",
+    image: "/blog/blog-inspiracion-mediterranea.png",
     slug: "inspiracion-mediterranea",
     category: "Proceso Creativo",
+  },
+  {
+    id: "5",
+    title: "Por qué el boceto es la parte más honesta del proceso creativo",
+    excerpt:
+      "El boceto no es el borrador de la obra — es donde la obra existe en estado puro. Sin la presión de la permanencia, las decisiones reales aparecen.",
+    date: "2025-12-05",
+    image: "/blog/blog-boceto.png",
+    slug: "importancia-del-boceto",
+    category: "Proceso Creativo",
+  },
+  {
+    id: "6",
+    title: "Temperatura del color: la diferencia entre una obra fría y una obra viva",
+    excerpt:
+      "La temperatura es más sutil que la saturación — y por eso tiene más poder. Un mismo color puede sentirse cálido o frío dependiendo de lo que lo rodea.",
+    date: "2025-11-18",
+    image: "/blog/blog-temperatura-color.png",
+    slug: "teoria-del-color-temperatura",
+    category: "Arte y Técnica",
   },
 ]
 
