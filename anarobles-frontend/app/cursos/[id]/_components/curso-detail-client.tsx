@@ -745,8 +745,7 @@ export function CursoDetailClient({ id }: { id: string }) {
                     </div>
                   </div>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Más de 10 años de experiencia en pintura y técnicas mixtas. Ha expuesto en Madrid,
-                    Barcelona, París y Miami.
+                    Artista plástica especializada en acuarela, dibujo y técnica textil con más de 15 años de trayectoria.
                   </p>
                 </motion.div>
               </div>

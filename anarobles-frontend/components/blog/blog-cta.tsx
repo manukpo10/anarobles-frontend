@@ -1,5 +1,9 @@
 import Link from "next/link"
-import { ArrowRight, BookOpen, ImageIcon } from "lucide-react"
+import { ArrowRight, MessageCircle, ImageIcon } from "lucide-react"
+
+const WA_URL =
+  "https://wa.me/5492215591366?text=" +
+  encodeURIComponent("Hola Ana, leí tu blog y tengo una consulta.")
 
 export function BlogCTA() {
   return (
@@ -12,30 +16,32 @@ export function BlogCTA() {
 
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
         {/* Kicker */}
-        <span className="kicker">¿Querés aprender estas técnicas?</span>
+        <span className="kicker">¿Querés saber más?</span>
 
         <h2
           className="mt-6 font-serif font-light text-foreground"
           style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)" }}
         >
-          Del blog al{" "}
-          <span className="font-semibold italic text-primary">taller real</span>
+          Hablemos sobre{" "}
+          <span className="font-semibold italic text-primary">tu próxima obra</span>
         </h2>
 
         <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-muted-foreground">
-          Los conceptos que exploramos en el blog los trabajamos en profundidad en los cursos.
-          Con ejercicios, feedback personalizado y materiales paso a paso.
+          Si te surgió alguna duda sobre las técnicas o querés encargar una obra personalizada,
+          escribime directamente. Te respondo por WhatsApp.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link
-            href="/contacto"
+          <a
+            href={WA_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 rounded-full bg-primary px-9 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-accent hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5"
           >
-            <BookOpen className="h-4 w-4" />
-            <span>Anotate en los cursos</span>
+            <MessageCircle className="h-4 w-4" />
+            <span>Escribime por WhatsApp</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
+          </a>
 
           <Link
             href="/galeria"
