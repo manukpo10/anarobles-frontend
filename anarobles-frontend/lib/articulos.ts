@@ -80,7 +80,7 @@ Un gris con temperatura cálida (mezcla de tierras, ocres, blancos marfil) hace 
 
 Esto es la **simultaneidad de contraste** que describió Chevreul en 1839 y que sigue siendo igual de cierta hoy: los colores no existen solos, existen en relación.
 
-![Comparación de grises cálidos y fríos junto a un naranja](/artwork-2.jpg)
+![Comparación de grises cálidos y fríos junto a un naranja](/blog/blog-inline-grises-naranja.png)
 *Los mismos naranjes se perciben diferente según la temperatura del gris que los rodea*
 
 ## Armonías que funcionan más allá del tiempo
@@ -200,7 +200,7 @@ Acumulé referencias visuales: los azules de Capri, la textura de los muros viej
 
 La segunda semana hice bocetos. No bocetos de composición — bocetos de paleta. Probé combinaciones de colores en papeles pequeños, buscando la temperatura exacta del azul del mar según la hora del día.
 
-![Bocetos de paleta mediterránea](/artwork-4.jpg)
+![Bocetos de paleta mediterránea](/blog/blog-inline-paleta-mediterranea.png)
 *Pruebas de color antes de empezar las obras finales*
 
 ## Lo que no salió como esperaba
@@ -313,7 +313,7 @@ El carboncillo borra con facilidad. Esa facilidad te invita a probar sin comprom
 
 Cuando empezás a bocetar con algo que no borra fácil (un marcador permanente, una pluma), la mente se tensa. Cada línea carga el peso de la permanencia. Y ese peso mata la espontaneidad que necesitás en la fase de exploración.
 
-![Página de bocetos con carboncillo](/artwork-7.jpg)
+![Página de bocetos con carboncillo](/blog/blog-inline-bocetos-carboncillo.png)
 *Una página de bocetos típica: ideas que compiten, algunas que sobreviven*
 
 ## La pregunta que hago antes de cada boceto
