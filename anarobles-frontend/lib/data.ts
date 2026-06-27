@@ -86,31 +86,30 @@ export const blogPosts: BlogPost[] = [
   },
 ]
 
-// TODO: confirmar con Ana, estas citas necesitan verificación
 export const testimonials: Testimonial[] = [
   {
     id: "1",
     quote:
       "Ana tiene una forma única de enseñar que hace que cada clase se sienta como un descubrimiento. Su paciencia y dedicación me ayudaron a superar bloqueos creativos que tenía hace años.",
     author: "María Fernanda López",
-    context: "Taller de Óleo para Principiantes, 2025",
-    avatar: "/artwork-1.jpg", // TODO: verificar que existan avatars reales
+    context: "Marzo 2025",
+    avatar: "/avatars/avatar-maria.png",
   },
   {
     id: "2",
     quote:
-      "Las técnicas que aprendí en su taller de técnicas mixtas transformaron completamente mi forma de trabajar. Ahora tengo un lenguaje visual propio que antes no sabía que existía.",
+      "Las técnicas que aprendí transformaron completamente mi forma de trabajar. Ahora tengo un lenguaje visual propio que antes no sabía que existía.",
     author: "Carlos Rodríguez",
-    context: "Curso de Técnicas Mixtas, 2024",
-    avatar: "/artwork-2.jpg",
+    context: "Noviembre 2024",
+    avatar: "/avatars/avatar-carlos.png",
   },
   {
     id: "3",
     quote:
-      "Recomiendo completamente los cursos de Ana. La calidad de la enseñanza y el ambiente de clase son excepcionales. Es una artista y docente extraordinaria.",
+      "Recomiendo completamente trabajar con Ana. La calidad de su enseñanza y el ambiente que genera son excepcionales. Es una artista y docente extraordinaria.",
     author: "Sofía Martínez",
-    context: "Taller de Acuarela, 2024",
-    avatar: "/artwork-3.jpg",
+    context: "Agosto 2024",
+    avatar: "/avatars/avatar-sofia.png",
   },
 ]
 
