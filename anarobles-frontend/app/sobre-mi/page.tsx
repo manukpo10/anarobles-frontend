@@ -4,12 +4,12 @@ import SobreMiPage from "./_page-content"
 export const metadata: Metadata = {
   title: "Sobre Mí — La Artista",
   description:
-    "Conocé a Ana Cecilia Robles: artista visual de La Plata especializada en acuarela, dibujo y técnica textil. Más de 10 años explorando lo floral, el retrato y lo bordado.",
+    "Conocé a Ana Cecilia Robles: artista visual de La Plata especializada en acuarela, dibujo y técnica textil. Más de 15 años explorando lo floral, el retrato y lo bordado.",
   alternates: { canonical: "https://anaceciliarobles.com/sobre-mi" },
   openGraph: {
     title: "Sobre Mí | Ana Cecilia Robles",
     description:
-      "Conocé a Ana Cecilia Robles: artista visual de La Plata especializada en acuarela, dibujo y técnica textil. Más de 10 años explorando lo floral, el retrato y lo bordado.",
+      "Conocé a Ana Cecilia Robles: artista visual de La Plata especializada en acuarela, dibujo y técnica textil. Más de 15 años explorando lo floral, el retrato y lo bordado.",
     url: "https://anaceciliarobles.com/sobre-mi",
     images: [
       {

@@ -29,11 +29,11 @@ export function BlogCTA() {
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
-            href="/cursos"
+            href="/contacto"
             className="group inline-flex items-center gap-3 rounded-full bg-primary px-9 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:bg-accent hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5"
           >
             <BookOpen className="h-4 w-4" />
-            <span>Ver cursos</span>
+            <span>Anotate en los cursos</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
 

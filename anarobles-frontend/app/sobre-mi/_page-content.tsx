@@ -87,7 +87,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="absolute -top-4 -left-4 bg-primary p-6 shadow-2xl"
               >
-                <p className="font-serif text-4xl font-bold text-primary-foreground">10+</p>
+                <p className="font-serif text-4xl font-bold text-primary-foreground">15+</p>
                 <p className="text-xs font-bold uppercase tracking-wider text-primary-foreground/70">años creando</p>
               </motion.div>
             </motion.div>

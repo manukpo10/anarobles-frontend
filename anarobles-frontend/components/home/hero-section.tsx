@@ -112,11 +112,11 @@ export function HeroSection() {
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
           <Link
-            href="/cursos"
+            href="/contacto"
             className="inline-flex items-center gap-3 rounded-full border-2 px-9 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:-translate-y-0.5"
             style={{ borderColor: "#1A5276" }}
           >
-            Descubrí los cursos
+            Encargar una obra
           </Link>
         </motion.div>
       </div>

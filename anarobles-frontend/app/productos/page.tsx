@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     description: "Obras y productos originales de Ana Cecilia Robles.",
     images: ["/galeria/lavandas.jpg"],
   },
+  robots: { index: false, follow: false },
 }
 
 export default function ProductosPage() {

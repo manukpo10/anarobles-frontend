@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     description: "Cursos de pintura e ilustración desde cualquier nivel.",
     images: ["/artista3.jpeg"],
   },
+  robots: { index: false, follow: false },
 }
 
 export default function CursosPage() {
