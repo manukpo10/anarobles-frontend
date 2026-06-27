@@ -8,10 +8,14 @@ import { ArrowRight } from "lucide-react"
 export function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-foreground">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 flex">
         <div
-          className="h-full w-full bg-cover bg-center bg-no-repeat"
+          className="h-full w-1/2 bg-cover bg-top bg-no-repeat"
           style={{ backgroundImage: "url('/fondo1.jpeg')" }}
+        />
+        <div
+          className="h-full w-1/2 bg-cover bg-top bg-no-repeat"
+          style={{ backgroundImage: "url('/fondo-anterior.jpeg')" }}
         />
       </div>
 
@@ -51,7 +55,7 @@ export function HeroSection() {
         >
           <span className="h-px w-12 bg-white/50" />
           <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-white/90">
-            Artista Plástica
+            Acuarela · Dibujo · Bordado
           </span>
           <span className="h-px w-12 bg-white/50" />
         </motion.div>
@@ -94,7 +98,7 @@ export function HeroSection() {
             textShadow: "1px 1px 6px rgba(0,0,0,0.85), 0px 0px 12px rgba(0,0,0,0.55)",
           }}
         >
-          Donde los colores cuentan historias y cada trazo es un susurro del alma
+          Obras originales, retratos a medida y acuarela bordada — una técnica donde la pintura y el hilo crean una sola obra.
         </motion.p>
 
         {/* CTAs */}
