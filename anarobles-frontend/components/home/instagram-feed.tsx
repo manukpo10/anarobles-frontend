@@ -1,31 +1,18 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { Instagram } from "lucide-react"
 
-interface InstagramImage {
+interface Post {
   id: string
-  src: string
-  alt: string
+  permalink: string
+  mediaUrl: string
+  caption: string
 }
 
-interface InstagramFeedProps {
-  images?: InstagramImage[]
-  instagramUrl?: string
-}
-
-// TODO: integrar API de Instagram cuando esté disponible
-const defaultImages: InstagramImage[] = [
-  { id: "1", src: "/artwork-1.jpg", alt: "Pintura al óleo - obra 1" },
-  { id: "2", src: "/artwork-2.jpg", alt: "Acuarela - obra 2" },
-  { id: "3", src: "/artwork-3.jpg", alt: "Ilustración digital - obra 3" },
-  { id: "4", src: "/artwork-4.jpg", alt: "Técnicas mixtas - obra 4" },
-  { id: "5", src: "/artwork-5.jpg", alt: "Paisaje - obra 5" },
-  { id: "6", src: "/artwork-6.jpg", alt: "Bodegón - obra 6" },
-]
-
-const defaultInstagramUrl = "https://www.instagram.com/anaroblesartedibujo/"
+const INSTAGRAM_URL = "https://www.instagram.com/anaroblesartedibujo/"
 
 const stagger = {
   hidden: {},
@@ -34,13 +21,21 @@ const stagger = {
 
 const itemAnim = {
   hidden: { opacity: 0, scale: 0.94 },
-  show:   { opacity: 1, scale: 1 },
+  show: { opacity: 1, scale: 1 },
 }
 
-export function InstagramFeed({
-  images = defaultImages,
-  instagramUrl = defaultInstagramUrl,
-}: InstagramFeedProps) {
+export function InstagramFeed() {
+  const [posts, setPosts] = useState<Post[]>([])
+
+  useEffect(() => {
+    fetch("/api/instagram")
+      .then((r) => r.json())
+      .then((d) => setPosts(d.posts ?? []))
+      .catch(() => {})
+  }, [])
+
+  if (posts.length === 0) return null
+
   return (
     <section className="section-sm bg-background overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -71,23 +66,23 @@ export function InstagramFeed({
           viewport={{ once: true, margin: "-80px" }}
           className="grid grid-cols-3 gap-1 sm:grid-cols-6 sm:gap-1.5"
         >
-          {images.map((img) => (
+          {posts.map((post) => (
             <motion.a
-              key={img.id}
-              href={instagramUrl}
+              key={post.id}
+              href={post.permalink}
               target="_blank"
               rel="noopener noreferrer"
               variants={itemAnim}
               className="group relative aspect-square overflow-hidden rounded-none bg-muted"
             >
               <Image
-                src={img.src}
-                alt={img.alt}
+                src={post.mediaUrl}
+                alt={post.caption || "Post de Instagram"}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 640px) 33vw, 16vw"
+                unoptimized
               />
-              {/* Hover overlay */}
               <div className="absolute inset-0 flex items-center justify-center bg-primary/0 transition-colors duration-300 group-hover:bg-primary/75">
                 <Instagram className="h-7 w-7 text-white opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110" />
               </div>
@@ -104,7 +99,7 @@ export function InstagramFeed({
           className="mt-10 text-center"
         >
           <a
-            href={instagramUrl}
+            href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group btn-ghost"
