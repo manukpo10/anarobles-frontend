@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { JsonLd } from "@/components/seo/json-ld"
 import GaleriaPage from "./_page-content"
 
 export const metadata: Metadata = {
@@ -21,6 +22,44 @@ export const metadata: Metadata = {
   },
 }
 
+const BASE_URL = "https://anaceciliarobles.com"
+
 export default function Page() {
-  return <GaleriaPage />
+  return (
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ArtGallery",
+          name: "Galería de Obras — Ana Cecilia Robles",
+          url: `${BASE_URL}/galeria`,
+          image: `${BASE_URL}/galeria/abrazo.jpeg`,
+          description:
+            "Galería de obras originales de Ana Cecilia Robles: retratos en grafito, pastel y acuarela, botánica y acuarelas bordadas.",
+          artist: {
+            "@type": ["Person", "VisualArtist"],
+            name: "Ana Cecilia Robles",
+            url: BASE_URL,
+          },
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "La Plata",
+            addressRegion: "Buenos Aires",
+            addressCountry: "AR",
+          },
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Inicio", item: BASE_URL },
+            { "@type": "ListItem", position: 2, name: "Galería", item: `${BASE_URL}/galeria` },
+          ],
+        }}
+      />
+      <GaleriaPage />
+    </>
+  )
 }

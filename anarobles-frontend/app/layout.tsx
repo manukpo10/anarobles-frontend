@@ -106,42 +106,28 @@ export default function RootLayout({
   return (
     <html lang="es" className="bg-background" data-scroll-behavior="smooth">
       <head>
-        {/* Organization JSON-LD */}
+        {/* Person / VisualArtist JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
+              "@type": ["Person", "VisualArtist"],
               name: "Ana Cecilia Robles",
               url: baseUrl,
-              logo: `${baseUrl}/logo_transparente.png`,
-              sameAs: ["https://www.instagram.com/anaroblesartedibujo/"],
-            }),
-          }}
-        />
-        {/* LocalBusiness JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              name: "Ana Cecilia Robles",
+              image: `${baseUrl}/sobremi.jpeg`,
+              jobTitle: "Artista Visual",
               description:
-                "Artista plástica especializada en pinturas, ilustraciones y obras digitales.",
-              url: baseUrl,
-              image: `${baseUrl}/logo_transparente.png`,
+                "Artista visual de La Plata especializada en acuarela, dibujo y acuarela bordada — una técnica que combina pintura e hilo.",
+              knowsAbout: ["acuarela", "acuarela bordada", "dibujo", "bordado", "retrato", "botánica"],
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "La Plata",
+                addressRegion: "Buenos Aires",
                 addressCountry: "AR",
               },
-              contactPoint: {
-                "@type": "ContactPoint",
-                email: "aroblessanguina@gmail.com",
-                contactType: "customer service",
-              },
+              email: "aroblessanguina@gmail.com",
+              sameAs: ["https://www.instagram.com/anaroblesartedibujo/"],
             }),
           }}
         />
