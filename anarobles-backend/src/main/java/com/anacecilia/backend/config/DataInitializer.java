@@ -62,7 +62,7 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
 
             usuarioRepository.save(admin);
-            log.info("Usuario admin creado: admin@anacecilia.art / admin123");
+            log.info("Usuario admin creado: admin@anacecilia.art (contraseña inicial por defecto — cambiarla cuanto antes)");
         }
     }
     
@@ -80,7 +80,7 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
             
             usuarioRepository.save(testUser);
-            log.info("Usuario test creado: test@anacecilia.art / test123");
+            log.info("Usuario test creado: test@anacecilia.art (contraseña inicial por defecto)");
         }
     }
     

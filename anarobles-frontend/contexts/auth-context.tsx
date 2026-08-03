@@ -15,7 +15,7 @@ interface AuthContextType {
   token: string | null
   isLoading: boolean
   isAuthenticated: boolean
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string; role?: "admin" | "user" }>
   register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>
   logout: () => void
   updateUser: (data: Partial<User>) => void
@@ -24,25 +24,35 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 const STORAGE_KEY = "anacecilia-auth"
-const MOCK_ADMIN = {
-  id: "admin-1",
-  name: "Ana Cecilia Robles",
-  email: "admin@anacecilia.art",
-  password: "admin123",
-  role: "admin" as const,
-  avatar: "/artist-portrait.jpg"
-}
 
-const MOCK_USERS: Record<string, { password: string; user: Omit<User, "id"> }> = {
-  "usuario@test.com": {
-    password: "user123",
-    user: {
-      name: "María García",
-      email: "usuario@test.com",
-      role: "user"
+// Dev-only fallback so the frontend is usable without a running backend.
+// Gated on NODE_ENV so this — including any credential value — is dead-code-eliminated
+// from production bundles; it never ships to real visitors' browsers.
+const IS_DEV = process.env.NODE_ENV !== "production"
+
+const MOCK_ADMIN = IS_DEV
+  ? {
+      id: "admin-1",
+      name: "Ana Cecilia Robles (dev)",
+      email: "dev-admin@localhost.test",
+      password: "dev-only-local-admin",
+      role: "admin" as const,
+      avatar: "/artist-portrait.jpg"
     }
-  }
-}
+  : null
+
+const MOCK_USERS: Record<string, { password: string; user: Omit<User, "id"> }> = IS_DEV
+  ? {
+      "usuario@test.com": {
+        password: "user123",
+        user: {
+          name: "María García",
+          email: "usuario@test.com",
+          role: "user"
+        }
+      }
+    }
+  : {}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
@@ -121,7 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     validateSession()
   }, [])
 
-  const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string; role?: "admin" | "user" }> => {
     const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
     try {
@@ -144,7 +154,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(userData)
         setToken(data.token)
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...userData, token: data.token }))
-        return { success: true }
+        return { success: true, role: userData.role }
       }
 
       const errorData = await res.json().catch(() => ({}))
@@ -156,7 +166,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Fallback a auth localStorage si el backend no responde
     await new Promise(resolve => setTimeout(resolve, 800))
 
-    if (email === MOCK_ADMIN.email && password === MOCK_ADMIN.password) {
+    if (MOCK_ADMIN && email === MOCK_ADMIN.email && password === MOCK_ADMIN.password) {
       const userData: User = {
         id: MOCK_ADMIN.id,
         name: MOCK_ADMIN.name,
@@ -166,7 +176,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       setUser(userData)
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userData))
-      return { success: true }
+      return { success: true, role: userData.role }
     }
 
     if (MOCK_USERS[email]?.password === password) {
@@ -178,7 +188,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       setUser(userData)
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userData))
-      return { success: true }
+      return { success: true, role: userData.role }
     }
 
     return { success: false, error: "Email o contraseña incorrectos" }
@@ -219,7 +229,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Fallback local
     await new Promise(resolve => setTimeout(resolve, 800))
 
-    if (MOCK_USERS[email] || email === MOCK_ADMIN.email) {
+    if (MOCK_USERS[email] || (MOCK_ADMIN && email === MOCK_ADMIN.email)) {
       return { success: false, error: "Este email ya está registrado" }
     }
 

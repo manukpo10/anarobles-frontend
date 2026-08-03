@@ -28,7 +28,7 @@ export default function LoginPage() {
     setIsLoading(false)
     
     if (result.success) {
-      router.push("/")
+      router.push(result.role === "admin" ? "/admin" : "/")
     } else {
       setError(result.error || "Error al iniciar sesión")
     }
