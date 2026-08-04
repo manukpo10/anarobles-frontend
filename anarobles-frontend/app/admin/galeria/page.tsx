@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Plus, Search, Edit, Trash2, Eye, Filter, Star } from "lucide-react"
+import { Plus, Search, Edit, Trash2, Eye, Filter, Star, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
 import { fetchAdminObras, eliminarObraAPI, type Obra, type Disponibilidad } from "@/lib/obras"
 import { formatPrice } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -53,6 +53,29 @@ const DISP_BADGE: Record<Disponibilidad, string> = {
   vendida: "border-border bg-muted text-muted-foreground line-through",
 }
 
+type SortKey = "updatedAt" | "titulo" | "categoria" | "disponibilidad" | "precio"
+type SortDir = "asc" | "desc"
+
+// precio sorts with unset values always last, independent of direction — otherwise
+// "sin precio" would jump to the top when sorting descending, which reads as if it
+// were the highest price rather than simply not set yet.
+const compareObras = (a: Obra, b: Obra, sortBy: SortKey, sortDir: SortDir): number => {
+  if (sortBy === "precio") {
+    if (a.precio == null && b.precio == null) return 0
+    if (a.precio == null) return 1
+    if (b.precio == null) return -1
+    return sortDir === "asc" ? a.precio - b.precio : b.precio - a.precio
+  }
+  let cmp = 0
+  switch (sortBy) {
+    case "titulo": cmp = a.titulo.localeCompare(b.titulo, "es"); break
+    case "categoria": cmp = a.categoria.localeCompare(b.categoria, "es"); break
+    case "disponibilidad": cmp = a.disponibilidad.localeCompare(b.disponibilidad, "es"); break
+    case "updatedAt": cmp = (a.updatedAt ?? "").localeCompare(b.updatedAt ?? ""); break
+  }
+  return sortDir === "asc" ? cmp : -cmp
+}
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -71,6 +94,11 @@ export default function AdminGaleriaPage() {
   const [filterCategory, setFilterCategory] = useState("all")
   const [obrasList, setObrasList] = useState<Obra[]>([])
   const [currentPage, setCurrentPage] = useState(1)
+  // Default: most recently edited/created first — otherwise an edit lands the obra
+  // wherever the backend happens to return it (effectively its original creation
+  // order), which could be on the last page.
+  const [sortBy, setSortBy] = useState<SortKey>("updatedAt")
+  const [sortDir, setSortDir] = useState<SortDir>("desc")
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
   const [deletePending, setDeletePending] = useState(false)
   const { toast } = useToast()
@@ -93,9 +121,26 @@ export default function AdminGaleriaPage() {
     return matchesSearch && matchesCategory
   })
 
-  const totalPages = Math.ceil(filteredObras.length / ITEMS_PER_PAGE)
+  const sortedObras = [...filteredObras].sort((a, b) => compareObras(a, b, sortBy, sortDir))
+
+  const totalPages = Math.ceil(sortedObras.length / ITEMS_PER_PAGE)
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const paginatedObras = filteredObras.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+  const paginatedObras = sortedObras.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+
+  const handleSort = (column: SortKey) => {
+    if (sortBy === column) {
+      setSortDir(d => d === "asc" ? "desc" : "asc")
+    } else {
+      setSortBy(column)
+      setSortDir("asc")
+    }
+    setCurrentPage(1)
+  }
+
+  const SortIcon = ({ column }: { column: SortKey }) => {
+    if (sortBy !== column) return <ArrowUpDown className="h-3 w-3 opacity-30" />
+    return sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />
+  }
 
   const handleConfirmDelete = async () => {
     if (!deleteTargetId || !token) return
@@ -218,10 +263,30 @@ export default function AdminGaleriaPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border bg-muted/50">
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Obra</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Categoría</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Disponibilidad</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Precio</th>
+                <th
+                  onClick={() => handleSort("titulo")}
+                  className="cursor-pointer select-none px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="inline-flex items-center gap-1.5">Obra <SortIcon column="titulo" /></span>
+                </th>
+                <th
+                  onClick={() => handleSort("categoria")}
+                  className="cursor-pointer select-none px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="inline-flex items-center gap-1.5">Categoría <SortIcon column="categoria" /></span>
+                </th>
+                <th
+                  onClick={() => handleSort("disponibilidad")}
+                  className="cursor-pointer select-none px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="inline-flex items-center gap-1.5">Disponibilidad <SortIcon column="disponibilidad" /></span>
+                </th>
+                <th
+                  onClick={() => handleSort("precio")}
+                  className="cursor-pointer select-none px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="inline-flex items-center gap-1.5">Precio <SortIcon column="precio" /></span>
+                </th>
                 <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">Acciones</th>
               </tr>
             </thead>

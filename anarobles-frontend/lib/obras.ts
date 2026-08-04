@@ -16,6 +16,7 @@ export type Obra = {
   imgH:           number   // real pixel height
   descripcion?:   string
   precio?:        number
+  updatedAt?:     string  // API-sourced only — used to sort "recently edited/added" first in admin
 }
 
 export const obras: Obra[] = [
@@ -217,6 +218,7 @@ const mapObraFromAPI = (r: any): Obra => ({
   imgH: r.imgH,
   descripcion: r.descripcion,
   precio: r.precio ?? undefined,
+  updatedAt: r.updatedAt,
 })
 
 export const fetchObrasFromAPI = async (): Promise<Obra[]> => {
