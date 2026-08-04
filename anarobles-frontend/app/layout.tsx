@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Cormorant_Garamond, Playfair_Display } from "next/font/google"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { SiteChrome } from "@/components/site-chrome"
 import { CartProvider } from "@/contexts/cart-context"
 import { AuthProvider } from "@/contexts/auth-context"
 import { CheckoutProvider } from "@/contexts/checkout-context"
@@ -138,9 +137,7 @@ export default function RootLayout({
         <CartProvider>
           <AuthProvider>
             <CheckoutProvider>
-              <Navbar />
-              <main className="flex-grow">{children}</main>
-              <Footer />
+              <SiteChrome>{children}</SiteChrome>
               <CartDrawer />
               <Toaster />
             </CheckoutProvider>
