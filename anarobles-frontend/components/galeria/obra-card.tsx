@@ -4,6 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { Search } from "lucide-react"
 import type { Obra } from "@/lib/obras"
+import { formatPrice } from "@/lib/utils"
 
 interface ObraCardProps {
   obra: Obra
@@ -24,6 +25,11 @@ export function ObraCard({
   const [loaded, setLoaded] = useState(false)
 
   const naturalAspect = !aspectRatio ? `${obra.imgW} / ${obra.imgH}` : undefined
+
+  const precioLabel =
+    obra.disponibilidad === "consultar" || obra.precio === undefined
+      ? "Consultar"
+      : `$${formatPrice(obra.precio)}`
 
   return (
     <div
@@ -110,15 +116,26 @@ export function ObraCard({
               Vendida
             </span>
           )}
+
+          {/* Precio — omitted when disponibilidad is "consultar": the badge
+              above already reads "Consultar" with no label, so repeating it
+              as a second unlabeled line looks like a duplicate, not new info. */}
+          {obra.disponibilidad !== "consultar" && (
+            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+              {precioLabel}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* ── Mobile metadata — title + year, always visible below image ── */}
+      {/* ── Mobile metadata — title + year + precio, always visible below image ── */}
       <div className="px-0.5 pt-2 pb-1 md:hidden">
         <p className="text-sm text-muted-foreground">
           {obra.titulo}
           <span className="mx-1.5 text-muted-foreground/35">·</span>
           {obra.año}
+          <span className="mx-1.5 text-muted-foreground/35">·</span>
+          {precioLabel}
         </p>
       </div>
     </div>

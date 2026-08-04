@@ -1,9 +1,10 @@
 "use client"
 
-import { getCategorias, getAños } from "@/lib/obras"
 import type { Categoria } from "@/lib/obras"
 
 interface GaleriaFiltrosProps {
+  categorias: Categoria[]
+  años: number[]
   categoriaActiva: "todas" | Categoria
   añoActivo: number | null
   onCategoria: (c: "todas" | Categoria) => void
@@ -17,13 +18,14 @@ const LABEL: Record<string, string> = {
 }
 
 export function GaleriaFiltros({
+  categorias: categoriasProp,
+  años,
   categoriaActiva,
   añoActivo,
   onCategoria,
   onAño,
 }: GaleriaFiltrosProps) {
-  const categorias: Array<"todas" | Categoria> = ["todas", ...getCategorias()]
-  const años = getAños()
+  const categorias: Array<"todas" | Categoria> = ["todas", ...categoriasProp]
 
   return (
     <div className="sticky top-[4.5rem] z-30 border-b border-border/40 bg-background/90 backdrop-blur-md">

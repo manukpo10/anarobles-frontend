@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useCallback, useMemo } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { obras as todasLasObras, getCategorias } from "@/lib/obras"
+import { obras as obrasEstaticas, fetchObrasFromAPI } from "@/lib/obras"
 import type { Obra, Categoria } from "@/lib/obras"
 import { GaleriaHeader }       from "@/components/galeria/galeria-header"
 import { GaleriaFiltros }      from "@/components/galeria/galeria-filtros"
@@ -18,6 +18,31 @@ const SECCION: Record<string, { label: string; desc: string }> = {
 }
 
 export default function GaleriaPage() {
+  // ── Data source ──────────────────────────────────────────────────────
+  // Start with the static fallback so first paint never shows an empty
+  // gallery, then swap to the API result client-side if it succeeds and
+  // returns at least one obra.
+  const [todasLasObras, setTodasLasObras] = useState<Obra[]>(obrasEstaticas)
+
+  useEffect(() => {
+    let cancelled = false
+    const load = async () => {
+      const apiObras = await fetchObrasFromAPI()
+      if (!cancelled && apiObras.length > 0) {
+        setTodasLasObras(apiObras)
+        // If the lightbox is open on a statically-sourced obra when this swap
+        // happens, re-point it to its API-sourced counterpart by slug (the one
+        // identifier stable across both sources — static `id`s and API `id`s
+        // use different formats) so index math below doesn't desync.
+        setObraActiva((prev) => (prev ? apiObras.find((o) => o.slug === prev.slug) ?? prev : prev))
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   // ── Filters ──────────────────────────────────────────────────────────
   const [categoriaActiva, setCategoriaActiva] = useState<"todas" | Categoria>("todas")
   const [añoActivo, setAñoActivo]             = useState<number | null>(null)
@@ -31,17 +56,30 @@ export default function GaleriaPage() {
   const navegarLightbox = useCallback(
     (dir: "anterior" | "siguiente") => {
       if (!obraActiva) return
-      const idx  = todasLasObras.findIndex((o) => o.id === obraActiva.id)
+      const idx  = todasLasObras.findIndex((o) => o.slug === obraActiva.slug)
       const next = dir === "anterior"
         ? (idx - 1 + todasLasObras.length) % todasLasObras.length
         : (idx + 1) % todasLasObras.length
       setObraActiva(todasLasObras[next])
     },
-    [obraActiva],
+    [obraActiva, todasLasObras],
   )
 
   // ── Filtered obras ────────────────────────────────────────────────────
-  const categorias = useMemo(() => getCategorias(), [])
+  // Derived from the live obras state (not the static-only getCategorias()
+  // helper) so a brand-new categoría added from the admin panel still gets
+  // its own section instead of silently disappearing from the page.
+  const categorias = useMemo(
+    () => Array.from(new Set(todasLasObras.map((o) => o.categoria))),
+    [todasLasObras],
+  )
+
+  // Same reasoning as `categorias` above — derived from live data so a new
+  // año introduced by an admin-added obra still gets its own filter chip.
+  const años = useMemo(
+    () => Array.from(new Set(todasLasObras.map((o) => o.año))).sort((a, b) => b - a),
+    [todasLasObras],
+  )
 
   const obrasFiltradas = useMemo(() => {
     const activeCats: Categoria[] =
@@ -53,7 +91,7 @@ export default function GaleriaPage() {
       )
       return acc
     }, {} as Record<Categoria, Obra[]>)
-  }, [categoriaActiva, añoActivo, categorias])
+  }, [categoriaActiva, añoActivo, categorias, todasLasObras])
 
   const totalFiltradas   = Object.values(obrasFiltradas).reduce((s, a) => s + a.length, 0)
   const hayResultados    = totalFiltradas > 0
@@ -64,6 +102,8 @@ export default function GaleriaPage() {
       <GaleriaHeader />
 
       <GaleriaFiltros
+        categorias={categorias}
+        años={años}
         categoriaActiva={categoriaActiva}
         añoActivo={añoActivo}
         onCategoria={setCategoriaActiva}

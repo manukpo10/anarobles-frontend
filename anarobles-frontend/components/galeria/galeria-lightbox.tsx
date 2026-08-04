@@ -7,6 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { X, ChevronLeft, ChevronRight, ChevronUp, MessageCircle } from "lucide-react"
 import type { Obra } from "@/lib/obras"
+import { formatPrice } from "@/lib/utils"
 
 const DISP: Record<string, { label: string; cls: string }> = {
   disponible: { label: "Disponible", cls: "text-emerald-500" },
@@ -67,7 +68,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
 
   if (typeof window === "undefined") return null
 
-  const idx     = obra ? todasLasObras.findIndex((o) => o.id === obra.id) : 0
+  const idx     = obra ? todasLasObras.findIndex((o) => o.slug === obra.slug) : 0
   const total   = todasLasObras.length
   const disp    = obra ? DISP[obra.disponibilidad] : null
   const isFirst = idx === 0
@@ -238,6 +239,14 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
                 <div>
                   <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Disponibilidad</dt>
                   <dd className={`mt-0.5 text-sm font-semibold ${disp?.cls ?? ""}`}>{disp?.label}</dd>
+                </div>
+                <div>
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Precio</dt>
+                  <dd className="mt-0.5 text-sm text-foreground">
+                    {obra.disponibilidad === "consultar" || obra.precio === undefined
+                      ? "Consultar"
+                      : `$${formatPrice(obra.precio)}`}
+                  </dd>
                 </div>
               </dl>
 
