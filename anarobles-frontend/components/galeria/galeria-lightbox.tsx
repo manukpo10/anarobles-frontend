@@ -175,6 +175,10 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
               "absolute inset-0 flex items-center justify-center overflow-hidden",
               isZoomed ? (dragStart.current ? "cursor-grabbing" : "cursor-grab") : "cursor-pointer",
             ].join(" ")}
+            // While zoomed, the drag belongs to us for panning — without this
+            // the browser claims the touch for its own scroll/zoom first and
+            // pointermove never arrives.
+            style={{ touchAction: isZoomed ? "none" : undefined }}
             onClick={() => { if (!isZoomed && !didDrag.current) onClose() }}
             onWheel={onWheel}
             onDoubleClick={() => setZoomTo(isZoomed ? 1 : 2)}
@@ -261,21 +265,31 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
             <ChevronRight className="h-5 w-5 md:h-6 md:w-6" strokeWidth={1.5} />
           </button>
 
-          {/* ── Zoom controls — desktop only (touch devices pinch) ────────
-              Anchored to the image area, not the viewport: the metadata
-              sidebar owns the right 20/24rem, and anything placed over its
-              cream background in the site's white-on-dark control style is
-              invisible. Mirrors the offset the "siguiente" arrow already
-              uses so both stay clear of the sidebar at the same breakpoints. */}
+          {/* ── Zoom controls ─────────────────────────────────────────────
+              Shown on touch too, not just desktop: pinching is a gesture you
+              have to already know to discover, and the site's audience skews
+              older, so a visible control is the accessible path to the same
+              thing.
+
+              Horizontally: anchored to the image area, not the viewport. On
+              desktop the metadata sidebar owns the right 20/24rem, and a
+              white-on-dark control over its cream background is invisible —
+              same offsets the "siguiente" arrow already uses. On mobile the
+              sidebar is a bottom sheet, so plain centring is correct.
+
+              Vertically: state-dependent, hence inline. On mobile it has to
+              clear the "Ver info" pill sitting at bottom-6, and clear the
+              sheet itself (48vh) once that's open. */}
           <div
-            className="absolute bottom-6 z-30 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-black/50 px-2 py-1.5 backdrop-blur-sm md:left-[calc((100%-20rem)/2)] md:flex lg:left-[calc((100%-24rem)/2)]"
+            className="absolute left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-black/50 px-2 py-1.5 backdrop-blur-sm transition-[bottom] duration-300 md:left-[calc((100%-20rem)/2)] lg:left-[calc((100%-24rem)/2)]"
+            style={{ bottom: isMobile ? (panelOpen ? "calc(48vh + 1rem)" : "5rem") : "1.5rem" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => stepZoom(-ZOOM_STEP)}
               disabled={zoom <= ZOOM_MIN}
               aria-label="Alejar"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-all duration-200 enabled:hover:bg-white/10 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-white/70 transition-all duration-200 enabled:hover:bg-white/10 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-25 md:h-8 md:w-8"
             >
               <ZoomOut className="h-4 w-4" strokeWidth={1.5} />
             </button>
@@ -286,7 +300,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
               onClick={() => stepZoom(ZOOM_STEP)}
               disabled={zoom >= ZOOM_MAX}
               aria-label="Acercar"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-all duration-200 enabled:hover:bg-white/10 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-white/70 transition-all duration-200 enabled:hover:bg-white/10 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-25 md:h-8 md:w-8"
             >
               <ZoomIn className="h-4 w-4" strokeWidth={1.5} />
             </button>
