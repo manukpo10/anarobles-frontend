@@ -158,38 +158,15 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
               <span className="mx-1.5 text-white/30">/</span>
               {total}
             </span>
-            <div className="flex items-center gap-2">
-              {/* Desktop-only: touch devices already zoom by pinching. */}
-              <div className="hidden items-center gap-2 md:flex">
-                <button
-                  onClick={() => stepZoom(-ZOOM_STEP)}
-                  disabled={zoom <= ZOOM_MIN}
-                  aria-label="Alejar"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 enabled:hover:border-white/50 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ZoomOut className="h-4 w-4" strokeWidth={1.5} />
-                </button>
-                <span className="w-10 text-center font-sans text-xs tabular-nums text-white/40">
-                  {Math.round(zoom * 100)}%
-                </span>
-                <button
-                  onClick={() => stepZoom(ZOOM_STEP)}
-                  disabled={zoom >= ZOOM_MAX}
-                  aria-label="Acercar"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 enabled:hover:border-white/50 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ZoomIn className="h-4 w-4" strokeWidth={1.5} />
-                </button>
-                <div className="mx-1 h-5 w-px bg-white/15" />
-              </div>
-              <button
-                onClick={onClose}
-                aria-label="Cerrar lightbox"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 hover:border-white/50 hover:text-white"
-              >
-                <X className="h-4 w-4" strokeWidth={1.5} />
-              </button>
-            </div>
+            {/* On desktop this sits over the cream metadata sidebar, so it
+                carries its own dark chip — white-on-white otherwise. */}
+            <button
+              onClick={onClose}
+              aria-label="Cerrar lightbox"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white/70 backdrop-blur-sm transition-all duration-200 hover:border-white/50 hover:bg-black/60 hover:text-white"
+            >
+              <X className="h-4 w-4" strokeWidth={1.5} />
+            </button>
           </div>
 
           {/* ── Image area ─────────────────────────────────────────── */}
@@ -283,6 +260,37 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
           >
             <ChevronRight className="h-5 w-5 md:h-6 md:w-6" strokeWidth={1.5} />
           </button>
+
+          {/* ── Zoom controls — desktop only (touch devices pinch) ────────
+              Anchored to the image area, not the viewport: the metadata
+              sidebar owns the right 20/24rem, and anything placed over its
+              cream background in the site's white-on-dark control style is
+              invisible. Mirrors the offset the "siguiente" arrow already
+              uses so both stay clear of the sidebar at the same breakpoints. */}
+          <div
+            className="absolute bottom-6 z-30 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-black/50 px-2 py-1.5 backdrop-blur-sm md:left-[calc((100%-20rem)/2)] md:flex lg:left-[calc((100%-24rem)/2)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => stepZoom(-ZOOM_STEP)}
+              disabled={zoom <= ZOOM_MIN}
+              aria-label="Alejar"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-all duration-200 enabled:hover:bg-white/10 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+            >
+              <ZoomOut className="h-4 w-4" strokeWidth={1.5} />
+            </button>
+            <span className="w-11 text-center font-sans text-xs tabular-nums text-white/60">
+              {Math.round(zoom * 100)}%
+            </span>
+            <button
+              onClick={() => stepZoom(ZOOM_STEP)}
+              disabled={zoom >= ZOOM_MAX}
+              aria-label="Acercar"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-all duration-200 enabled:hover:bg-white/10 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-25"
+            >
+              <ZoomIn className="h-4 w-4" strokeWidth={1.5} />
+            </button>
+          </div>
 
           {/* ── Info toggle button — mobile only, shown when panel is closed ── */}
           <AnimatePresence>
