@@ -68,6 +68,8 @@ public class SecurityConfig {
                     "/api/cursos/*",
                     "/api/productos",
                     "/api/productos/*",
+                    "/api/obras",
+                    "/api/obras/*",
                     "/api/checkout/webhook",
                     "/health",
                     "/error",

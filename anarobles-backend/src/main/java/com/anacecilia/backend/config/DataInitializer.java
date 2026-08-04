@@ -1,10 +1,12 @@
 package com.anacecilia.backend.config;
 
 import com.anacecilia.backend.entity.Curso;
+import com.anacecilia.backend.entity.Obra;
 import com.anacecilia.backend.entity.Producto;
 import com.anacecilia.backend.entity.Role;
 import com.anacecilia.backend.entity.Usuario;
 import com.anacecilia.backend.repository.CursoRepository;
+import com.anacecilia.backend.repository.ObraRepository;
 import com.anacecilia.backend.repository.ProductoRepository;
 import com.anacecilia.backend.repository.RoleRepository;
 import com.anacecilia.backend.repository.UsuarioRepository;
@@ -23,6 +25,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UsuarioRepository usuarioRepository;
     private final CursoRepository cursoRepository;
     private final ProductoRepository productoRepository;
+    private final ObraRepository obraRepository;
     private final PasswordEncoder passwordEncoder;
     
     @Override
@@ -34,7 +37,8 @@ public class DataInitializer implements CommandLineRunner {
         crearUsuarioTestSiNoExiste();
         crearCursosSiNoExisten();
         crearProductosSiNoExisten();
-        
+        crearObrasSiNoExisten();
+
         log.info("Datos iniciales cargados correctamente");
     }
     
@@ -160,6 +164,169 @@ public class DataInitializer implements CommandLineRunner {
                     .precio(32.0).imagen("/product-tote.jpg").categoria("Accesorios")
                     .destacado(false).publicado(true).stock(40).build());
             log.info("Productos de ejemplo creados");
+        }
+    }
+
+    private void crearObrasSiNoExisten() {
+        if (obraRepository.count() == 0) {
+            // Transcripción exacta de anarobles-frontend/lib/obras.ts (id/slug, título,
+            // categoría, año, técnica, dimensiones, disponibilidad, destacada, imagen,
+            // imgW/imgH). precio queda null: lo carga la titular desde el admin. Las
+            // imágenes migradas mantienen su ruta estática /galeria/*, no se re-suben a
+            // Storage (solo las cargas nuevas desde el admin van a Supabase Storage).
+
+            // ── RETRATOS ──────────────────────────────────────────────────
+            obraRepository.save(Obra.builder()
+                    .titulo("Ella").slug("ella")
+                    .categoria("retratos").anio(2022)
+                    .tecnica("Dibujo en grafito").dimensiones("24 × 30 cm")
+                    .disponibilidad("consultar").destacada(true)
+                    .imagen("/galeria/ella.jpeg").imgW(825).imgH(1123)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Etnia").slug("etnia")
+                    .categoria("retratos").anio(2025)
+                    .tecnica("Dibujo sobre papel — pastel y grafito").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/etnia.jpeg").imgW(535).imgH(753)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Niña").slug("nina")
+                    .categoria("retratos").anio(2022)
+                    .tecnica("Acuarela").dimensiones("19 × 28 cm")
+                    .disponibilidad("consultar").destacada(true)
+                    .imagen("/galeria/nina.jpeg").imgW(2339).imgH(3399)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Titana").slug("titana")
+                    .categoria("retratos").anio(2021)
+                    .tecnica("Dibujo en grafito sobre papel").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/titana.jpg").imgW(1440).imgH(2196)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Melpómene").slug("melpomene")
+                    .categoria("retratos").anio(2025)
+                    .tecnica("Dibujo sobre papel — técnica mixta").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/melpomene.jpg").imgW(583).imgH(768)
+                    .publicado(true).build());
+
+            // ── NATURALEZA ────────────────────────────────────────────────
+            obraRepository.save(Obra.builder()
+                    .titulo("Abrazo").slug("abrazo")
+                    .categoria("naturaleza").anio(2024)
+                    .tecnica("Acuarela sobre papel").dimensiones("25 × 35 cm")
+                    .disponibilidad("disponible").destacada(true)
+                    .imagen("/galeria/abrazo.jpeg").imgW(720).imgH(1009)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Acuarela bordada floral abstracta").slug("acuarela-bordada-floral")
+                    .categoria("naturaleza").anio(2022)
+                    .tecnica("Acuarela bordada").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/acuarela-bordada-floral.jpeg").imgW(775).imgH(1022)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Amistad").slug("amistad")
+                    .categoria("naturaleza").anio(2023)
+                    .tecnica("Técnica mixta — acuarela bordada").dimensiones("15 × 21 cm")
+                    .disponibilidad("consultar").destacada(false)
+                    .imagen("/galeria/amistad.jpg").imgW(563).imgH(846)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Amistad 2").slug("amistad-2")
+                    .categoria("naturaleza").anio(2023)
+                    .tecnica("Acuarela bordada").dimensiones("15 × 21 cm")
+                    .disponibilidad("consultar").destacada(false)
+                    .imagen("/galeria/amistad-2.jpg").imgW(578).imgH(876)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Flor de Jacarandá").slug("flor-de-jacaranda")
+                    .categoria("naturaleza").anio(2024)
+                    .tecnica("Acuarela bordada").dimensiones("14 × 21 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/flor-de-jacaranda.jpeg").imgW(654).imgH(959)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Flores azules").slug("flores-azules")
+                    .categoria("naturaleza").anio(2021)
+                    .tecnica("Acuarela").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/flores-azules.jpeg").imgW(616).imgH(912)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Flores naranja").slug("flores-naranja")
+                    .categoria("naturaleza").anio(2022)
+                    .tecnica("Acuarela").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/flores-naranja.jpeg").imgW(512).imgH(716)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Geranios en flor").slug("geranios-en-flor")
+                    .categoria("naturaleza").anio(2023)
+                    .tecnica("Acuarela").dimensiones("21 × 28 cm")
+                    .disponibilidad("consultar").destacada(false)
+                    .imagen("/galeria/geranios-en-flor.jpg").imgW(774).imgH(1105)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Lavandas").slug("lavandas")
+                    .categoria("naturaleza").anio(2025)
+                    .tecnica("Acuarela bordada sobre papel").dimensiones("25 × 35 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/lavandas.jpg").imgW(906).imgH(1226)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Mi Jacarandá").slug("mi-jacaranda")
+                    .categoria("naturaleza").anio(2024)
+                    .tecnica("Acuarela").dimensiones("14 × 21 cm")
+                    .disponibilidad("vendida").destacada(false)
+                    .imagen("/galeria/mi-jacaranda.jpeg").imgW(747).imgH(1133)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Nido").slug("nido")
+                    .categoria("naturaleza").anio(2024)
+                    .tecnica("Acuarela").dimensiones("30 × 40 cm")
+                    .disponibilidad("vendida").destacada(true)
+                    .imagen("/galeria/nido.jpg").imgW(1536).imgH(2048)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Olivo").slug("olivo")
+                    .categoria("naturaleza").anio(2025)
+                    .tecnica("Acuarela bordada sobre papel").dimensiones("24 × 30 cm")
+                    .disponibilidad("consultar").destacada(false)
+                    .imagen("/galeria/olivo.jpeg").imgW(882).imgH(1106)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Otoño").slug("otono")
+                    .categoria("naturaleza").anio(2025)
+                    .tecnica("Acuarela bordada").dimensiones("15 × 21 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/otono.jpeg").imgW(706).imgH(1057)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Pétalos de rosa").slug("petalos-de-rosa")
+                    .categoria("naturaleza").anio(2024)
+                    .tecnica("Acuarela").dimensiones("14 × 14 cm")
+                    .disponibilidad("vendida").destacada(false)
+                    .imagen("/galeria/petalos-de-rosa.jpeg").imgW(1254).imgH(1280)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Santa Rita").slug("santa-rita")
+                    .categoria("naturaleza").anio(2020)
+                    .tecnica("Acuarela sobre papel").dimensiones("21 × 28 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/santa-rita.jpeg").imgW(764).imgH(1116)
+                    .publicado(true).build());
+            obraRepository.save(Obra.builder()
+                    .titulo("Sin detalle en las hojas").slug("sin-detalle-en-las-hojas")
+                    .categoria("naturaleza").anio(2025)
+                    .tecnica("Acuarela y pastel").dimensiones("14 × 21 cm")
+                    .disponibilidad("disponible").destacada(false)
+                    .imagen("/galeria/sin-detalle-en-las-hojas.jpg").imgW(686).imgH(1066)
+                    .publicado(true).build());
+
+            log.info("Obras de ejemplo creadas");
         }
     }
 }
