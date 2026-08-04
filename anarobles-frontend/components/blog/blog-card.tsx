@@ -29,7 +29,7 @@ export function BlogCard({ articulo, priority = false }: BlogCardProps) {
       {/* Content */}
       <div className="p-5">
         {/* Category chip */}
-        <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em] rounded-full px-2.5 py-0.5">
+        <span className="inline-block bg-primary/10 text-primary text-xs font-bold uppercase tracking-[0.2em] rounded-full px-2.5 py-0.5">
           {CATEGORIA_LABELS[articulo.categoria]}
         </span>
 

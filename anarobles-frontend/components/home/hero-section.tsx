@@ -54,7 +54,7 @@ export function HeroSection() {
           className="flex items-center justify-center gap-4 mb-10"
         >
           <span className="h-px w-12 bg-white/50" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-white/90">
+          <span className="text-xs font-bold uppercase tracking-[0.35em] text-white/90">
             Acuarela · Dibujo · Bordado
           </span>
           <span className="h-px w-12 bg-white/50" />
@@ -134,7 +134,7 @@ export function HeroSection() {
         aria-hidden="true"
       >
         <div className="scroll-line" />
-        <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/30">
+        <span className="text-xs font-bold uppercase tracking-[0.4em] text-white/30">
           Scroll
         </span>
       </motion.div>

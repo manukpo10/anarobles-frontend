@@ -45,7 +45,7 @@ export function ArticuloDetalle({ articulo }: ArticuloDetalleProps) {
         <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-10 lg:px-8 lg:pb-14">
           <div className="mx-auto max-w-4xl">
             {/* Category chip */}
-            <span className="inline-block bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.2em] rounded-full px-3 py-1 backdrop-blur-sm mb-4">
+            <span className="inline-block bg-primary/20 text-primary text-xs font-bold uppercase tracking-[0.2em] rounded-full px-3 py-1 backdrop-blur-sm mb-4">
               {CATEGORIA_LABELS[articulo.categoria]}
             </span>
 
@@ -114,7 +114,7 @@ export function ArticuloDetalle({ articulo }: ArticuloDetalleProps) {
 
                 {/* Categories */}
                 <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4">
                     Categorías
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -130,7 +130,7 @@ export function ArticuloDetalle({ articulo }: ArticuloDetalleProps) {
                       <Link
                         key={cat}
                         href={`/blog?categoria=${cat}`}
-                        className="inline-block rounded-full border border-border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-all hover:border-primary hover:text-primary"
+                        className="inline-block rounded-full border border-border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-all hover:border-primary hover:text-primary"
                       >
                         {CATEGORIA_LABELS[cat]}
                       </Link>

@@ -130,7 +130,7 @@ export function ShopPreview() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/60 to-secondary/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                         <div className="absolute left-4 top-4 flex flex-wrap gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                          <span className="rounded-full bg-white/95 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground shadow-sm">
+                          <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-foreground shadow-sm">
                             {product.category}
                           </span>
                         </div>

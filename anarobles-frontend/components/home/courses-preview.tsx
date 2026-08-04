@@ -110,7 +110,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
                         sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 23vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/0 to-black/10" aria-hidden="true" />
-                      <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-background/85 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md ring-1 ring-black/[0.04]">
+                      <span className="absolute left-3 top-3 inline-flex items-center rounded-full bg-background/85 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md ring-1 ring-black/[0.04]">
                         {curso.nivel}
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export function CoursesPreview({ cursos: propCursos }: CoursesPreviewProps) {
                       <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
                       <div className="mt-4 flex items-end justify-between">
                         <div className="flex flex-col">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">Desde</span>
+                          <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">Desde</span>
                           <span className="font-serif text-2xl font-bold leading-tight text-foreground">
                             ${formatPrice(curso.precio)}
                           </span>

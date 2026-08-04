@@ -143,10 +143,10 @@ export function BlogIndex({ articulos }: BlogIndexProps) {
                   {/* Content — 60% */}
                   <div className="flex flex-col justify-center gap-4 p-10 lg:p-14">
                     <div className="flex items-center gap-3">
-                      <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.2em] rounded-full px-2.5 py-0.5">
+                      <span className="inline-block bg-primary/10 text-primary text-xs font-bold uppercase tracking-[0.2em] rounded-full px-2.5 py-0.5">
                         {CATEGORIA_LABELS[featured.categoria]}
                       </span>
-                      <span className="inline-block rounded-full bg-secondary/10 text-secondary text-[10px] font-bold uppercase tracking-[0.15em] px-2.5 py-0.5">
+                      <span className="inline-block rounded-full bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-[0.15em] px-2.5 py-0.5">
                         Destacado
                       </span>
                     </div>

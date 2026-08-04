@@ -50,7 +50,7 @@ export function NewsletterSection({ data = defaultData }: NewsletterSectionProps
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Kicker on orange */}
-          <span className="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.3em] text-primary-foreground/55">
+          <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground/55">
             <span className="h-px w-8 bg-primary-foreground/30" />
             Próximamente
             <span className="h-px w-8 bg-primary-foreground/30" />

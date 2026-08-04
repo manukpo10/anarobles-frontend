@@ -64,7 +64,7 @@ export function BlogPreview({ posts = getRecentPosts(3), limit = 3 }: BlogPrevie
                 priority
               />
               {/* Category pill */}
-              <span className="absolute left-5 top-5 rounded-full bg-secondary px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary-foreground">
+              <span className="absolute left-5 top-5 rounded-full bg-secondary px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-secondary-foreground">
                 {featured.category}
               </span>
             </div>
@@ -117,7 +117,7 @@ export function BlogPreview({ posts = getRecentPosts(3), limit = 3 }: BlogPrevie
                 {/* Content */}
                 <div className="flex flex-1 flex-col justify-between p-5">
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">
+                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
                       {post.category}
                     </span>
                     <h3 className="mt-2 font-serif text-base font-semibold leading-snug text-card-foreground">

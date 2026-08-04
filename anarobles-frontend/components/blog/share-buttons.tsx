@@ -46,7 +46,7 @@ export function ShareButtons({ titulo, slug }: ShareButtonsProps) {
       >
         <Link2 className="h-4 w-4" />
         {copied && (
-          <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-foreground px-2 py-0.5 text-[10px] font-semibold text-background">
+          <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-foreground px-2 py-0.5 text-xs font-semibold text-background">
             ¡Copiado!
           </span>
         )}

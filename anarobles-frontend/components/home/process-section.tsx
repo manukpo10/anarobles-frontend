@@ -36,7 +36,7 @@ export function ProcessSection({ phases = getProcessPhases() }: ProcessSectionPr
           className="mb-16 text-center"
         >
           {/* Kicker on dark */}
-          <span className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-secondary-foreground/50">
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-secondary-foreground/50">
             <span className="h-px w-8 bg-secondary-foreground/25" />
             Mi Proceso
             <span className="h-px w-8 bg-secondary-foreground/25" />

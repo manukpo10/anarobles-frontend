@@ -139,7 +139,7 @@ export function Navbar() {
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
+                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground"
                 >
                   {itemCount > 9 ? "9+" : itemCount}
                 </motion.span>
@@ -314,7 +314,7 @@ export function Navbar() {
                       </div>
                     </div>
                     <p className="text-sm font-medium text-foreground sm:text-base">{user?.name}</p>
-                    <span className="mt-1 inline-block rounded-full bg-secondary/10 px-3 py-1 text-[10px] font-medium text-secondary sm:text-xs">
+                    <span className="mt-1 inline-block rounded-full bg-secondary/10 px-3 py-1 text-xs font-medium text-secondary sm:text-xs">
                       {user?.role === "admin" ? "Administrador" : "Usuario"}
                     </span>
                     <div className="mt-3 flex flex-col gap-2 sm:mt-4 sm:gap-3">
@@ -370,7 +370,7 @@ export function Navbar() {
                   <div className="relative">
                     <ShoppingBag className="h-6 w-6 sm:h-8 sm:w-8" />
                     {itemCount > 0 && (
-                      <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-[8px] font-bold text-secondary-foreground sm:-right-2 sm:-top-2 sm:h-5 sm:w-5 sm:text-[10px]">
+                      <span className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-[11px] font-bold text-secondary-foreground sm:-right-2 sm:-top-2 sm:h-6 sm:w-6 sm:text-xs">
                         {itemCount > 9 ? "9+" : itemCount}
                       </span>
                     )}

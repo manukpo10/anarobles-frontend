@@ -122,7 +122,7 @@ export function FeaturedGallery() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.15 }}
                     >
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/55">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/55">
                         {active.tecnica}
                       </p>
                       <h3 className="mt-1 font-serif text-xl font-semibold text-white md:text-2xl">

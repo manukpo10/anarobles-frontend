@@ -102,17 +102,17 @@ export function ObraCard({
 
           {/* Disponibilidad badge */}
           {obra.disponibilidad === "disponible" && (
-            <span className="mt-3 rounded-full border border-emerald-400/40 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-emerald-300">
+            <span className="mt-3 rounded-full border border-emerald-400/40 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-widest text-emerald-300">
               Disponible
             </span>
           )}
           {obra.disponibilidad === "consultar" && (
-            <span className="mt-3 rounded-full border border-primary/50 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-primary">
+            <span className="mt-3 rounded-full border border-primary/50 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-widest text-primary">
               Consultar
             </span>
           )}
           {obra.disponibilidad === "vendida" && (
-            <span className="mt-3 rounded-full border border-white/20 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-white/35 line-through">
+            <span className="mt-3 rounded-full border border-white/20 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-widest text-white/35 line-through">
               Vendida
             </span>
           )}

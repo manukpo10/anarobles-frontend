@@ -245,7 +245,7 @@ function CheckoutContent() {
                             fill
                             className="object-cover"
                           />
-                          <div className="absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-secondary-foreground">
+                          <div className="absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-xs font-bold text-secondary-foreground">
                             {item.type === "course" ? (
                               <BookOpen className="h-3 w-3" />
                             ) : (

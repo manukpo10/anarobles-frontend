@@ -331,7 +331,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
             <div>
               <div className="hidden h-14 md:block" aria-hidden="true" />
 
-              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-secondary">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
                 {obra.tecnica}
               </p>
               <h2
@@ -344,21 +344,21 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
 
               <dl className="mt-4 space-y-3">
                 <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Año</dt>
+                  <dt className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Año</dt>
                   <dd className="mt-0.5 text-sm text-foreground">{obra.año}</dd>
                 </div>
                 {obra.dimensiones && (
                   <div>
-                    <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Dimensiones</dt>
+                    <dt className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Dimensiones</dt>
                     <dd className="mt-0.5 text-sm text-foreground">{obra.dimensiones}</dd>
                   </div>
                 )}
                 <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Disponibilidad</dt>
+                  <dt className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Disponibilidad</dt>
                   <dd className={`mt-0.5 text-sm font-semibold ${disp?.cls ?? ""}`}>{disp?.label}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Precio</dt>
+                  <dt className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Precio</dt>
                   <dd className="mt-0.5 font-serif text-lg font-semibold text-primary">
                     {obra.disponibilidad === "consultar" || obra.precio === undefined
                       ? "Consultar"

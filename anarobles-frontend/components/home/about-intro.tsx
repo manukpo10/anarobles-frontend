@@ -78,7 +78,7 @@ export function AboutIntro({ data = aboutIntroData }: AboutIntroProps) {
             {/* Floating label */}
             <div className="absolute bottom-8 right-0 z-20 hidden lg:block">
               <div className="bg-primary px-5 py-3 shadow-float">
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary-foreground/70">
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground/70">
                   Artista Plástica
                 </p>
                 <p className="mt-0.5 font-serif text-base font-semibold text-primary-foreground">

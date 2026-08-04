@@ -120,6 +120,29 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Type scale — raised above Tailwind's defaults for readability.
+   Cormorant Garamond runs small for its nominal size (the reason body is
+   already 1.0625rem below), and the small end of the default scale lands
+   at 12-14px, which is hard going for older readers — the site's main
+   audience. Every step from xs through 2xl gains ~1px; display sizes are
+   clamp()-based elsewhere and already large enough to leave alone.
+   Overriding here rather than per-component keeps the ~500 existing
+   text-xs/text-sm usages consistent instead of drifting apart. */
+@theme {
+  --text-xs: 0.8125rem;         /* 13px — was 12 */
+  --text-xs--line-height: 1.15rem;
+  --text-sm: 0.9375rem;         /* 15px — was 14 */
+  --text-sm--line-height: 1.4rem;
+  --text-base: 1.0625rem;       /* 17px — was 16, matches body */
+  --text-base--line-height: 1.6rem;
+  --text-lg: 1.1875rem;         /* 19px — was 18 */
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.3125rem;         /* 21px — was 20 */
+  --text-xl--line-height: 1.85rem;
+  --text-2xl: 1.5625rem;        /* 25px — was 24 */
+  --text-2xl--line-height: 2.05rem;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -228,7 +251,7 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.875rem;
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -250,7 +273,7 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.875rem;
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -281,7 +304,7 @@ html {
   background-color: oklch(0.718 0.176 41);
   color: oklch(0.98 0.005 80);
   padding: 1rem 2.25rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -303,7 +326,7 @@ html {
   border: 1.5px solid oklch(0.22 0.01 0 / 0.20);
   color: oklch(0.22 0.01 0);
   padding: 1rem 2.25rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -374,7 +397,7 @@ html {
   border: 1.5px solid oklch(0.98 0.005 80 / 0.30);
   color: oklch(0.98 0.005 80);
   padding: 1rem 2.25rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
