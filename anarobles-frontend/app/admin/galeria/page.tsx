@@ -341,7 +341,7 @@ export default function AdminGaleriaPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-2">
                         <Link
-                          href={`/galeria`}
+                          href={`/galeria?obra=${encodeURIComponent(obra.slug)}`}
                           className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                         >
                           <Eye className="h-4 w-4" />

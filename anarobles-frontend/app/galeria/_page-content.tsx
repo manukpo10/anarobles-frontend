@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useMemo } from "react"
+import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { obras as obrasEstaticas, fetchObrasFromAPI } from "@/lib/obras"
 import type { Obra, Categoria } from "@/lib/obras"
@@ -52,6 +53,27 @@ export default function GaleriaPage() {
 
   const abrirLightbox  = useCallback((obra: Obra) => setObraActiva(obra), [])
   const cerrarLightbox = useCallback(() => setObraActiva(null), [])
+
+  // ── Deep link (?obra=slug) ──────────────────────────────────────────
+  // Lets other pages (the admin panel's "ver" action, the same pattern the
+  // lightbox's own "Consultar esta obra" link already uses toward /contacto)
+  // open a specific obra's lightbox directly instead of just landing on the
+  // grid. Re-checked whenever todasLasObras changes (static → API swap) so
+  // an obra that only exists in the API response still resolves once it
+  // loads — but only ever opens it once, so closing the lightbox afterward
+  // doesn't get overridden by this effect firing again.
+  const searchParams = useSearchParams()
+  const obraSlugParam = searchParams.get("obra")
+  const [deepLinkHandled, setDeepLinkHandled] = useState(false)
+
+  useEffect(() => {
+    if (!obraSlugParam || deepLinkHandled) return
+    const match = todasLasObras.find((o) => o.slug === obraSlugParam)
+    if (match) {
+      abrirLightbox(match)
+      setDeepLinkHandled(true)
+    }
+  }, [obraSlugParam, todasLasObras, deepLinkHandled, abrirLightbox])
 
   const navegarLightbox = useCallback(
     (dir: "anterior" | "siguiente") => {

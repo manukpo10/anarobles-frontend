@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import type { Metadata } from "next"
 import { JsonLd } from "@/components/seo/json-ld"
 import GaleriaPage from "./_page-content"
@@ -59,7 +60,9 @@ export default function Page() {
           ],
         }}
       />
-      <GaleriaPage />
+      <Suspense fallback={null}>
+        <GaleriaPage />
+      </Suspense>
     </>
   )
 }
