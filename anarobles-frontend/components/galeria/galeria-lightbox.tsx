@@ -242,7 +242,7 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
                 </div>
                 <div>
                   <dt className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">Precio</dt>
-                  <dd className="mt-0.5 text-sm text-foreground">
+                  <dd className="mt-0.5 font-serif text-lg font-semibold text-primary">
                     {obra.disponibilidad === "consultar" || obra.precio === undefined
                       ? "Consultar"
                       : `$${formatPrice(obra.precio)}`}

@@ -119,22 +119,27 @@ export function ObraCard({
 
           {/* Precio — omitted when disponibilidad is "consultar": the badge
               above already reads "Consultar" with no label, so repeating it
-              as a second unlabeled line looks like a duplicate, not new info. */}
+              as a second unlabeled line looks like a duplicate, not new info.
+              Sized and colored to actually read as a price at a glance,
+              not blend into the technical-metadata kicker style. */}
           {obra.disponibilidad !== "consultar" && (
-            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+            <p className="mt-3 font-serif text-xl font-semibold text-primary">
               {precioLabel}
             </p>
           )}
         </div>
       </div>
 
-      {/* ── Mobile metadata — title + year + precio, always visible below image ── */}
+      {/* ── Mobile metadata — title + year + precio, always visible below image ──
+          Precio gets its own line so it doesn't blend into the muted título/año
+          text — same reasoning as the desktop overlay treatment above. */}
       <div className="px-0.5 pt-2 pb-1 md:hidden">
         <p className="text-sm text-muted-foreground">
           {obra.titulo}
           <span className="mx-1.5 text-muted-foreground/35">·</span>
           {obra.año}
-          <span className="mx-1.5 text-muted-foreground/35">·</span>
+        </p>
+        <p className="mt-0.5 font-serif text-base font-semibold text-primary">
           {precioLabel}
         </p>
       </div>
