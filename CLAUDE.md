@@ -103,8 +103,11 @@ dependency. `mp.site-url` / `mp.backend-url` in `application.properties` are the
 callback targets. A `mercado-pago` skill is available — use it when working on this flow.
 
 ## Deployment summary
-- **Frontend**: Vercel, auto-deploy from `main` → `anaceciliarobles.com`
-- **Backend**: Render free tier (spins down after inactivity; first request is slow)
+- **Frontend**: Vercel, auto-deploy from `main` → `anaceciliarobles.com`. Vercel project root
+  directory is `anarobles-frontend/` (this repo has two apps — see Repo Layout).
+- **Backend**: Render free tier (spins down after inactivity; first request is slow). Render
+  service root directory is `anarobles-backend/`, same repo, same `main` branch. Both platforms
+  auto-deploy straight from this one repo — `git push` from the repo root ships both apps.
 - **DNS**: Cloudflare → HostGator registrar. Flush with `ipconfig /flushdns` if stale.
 
 ## Brand
@@ -114,7 +117,16 @@ callback targets. A `mercado-pago` skill is available — use it when working on
   `--secondary`, `--accent`); the hex codes above are that file's own header comment, kept
   here for quick reference.
 
-## Gotchas
+- **This repo is the single source of truth for both Render and Vercel** (fixed 2026-08-04).
+  It didn't used to be: `anarobles-backend/` briefly had its own nested `.git` pointed at a
+  separate, now-unused GitHub repo (`github.com/manukpo10/anarobles-backend`), which is what
+  Render's backend service actually watched — so backend commits/pushes made through this repo
+  looked like they worked but silently never reached Render for months (2026-05-13 to
+  2026-08-03). Fixed by removing the nested `.git` and repointing Render's service (dashboard →
+  Settings → Build & Deploy) at this repo with root directory `anarobles-backend`, mirroring how
+  Vercel's project is already scoped to root directory `anarobles-frontend`. If a backend deploy
+  ever again doesn't show up live, check `anarobles-backend/` for a stray nested `.git` before
+  assuming the code itself is broken — that's exactly what caused this the first time.
 - `npm run lint` has no ESLint installed — see Commands above, don't trust it as a gate.
 - `next.config.mjs` sets security headers and restricts image `formats` to webp. It does
   **not** set `typescript.ignoreBuildErrors` or `images.unoptimized` — TS/build errors and
