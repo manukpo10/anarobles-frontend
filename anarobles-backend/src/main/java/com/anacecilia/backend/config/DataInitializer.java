@@ -1,20 +1,31 @@
 package com.anacecilia.backend.config;
 
+import com.anacecilia.backend.entity.Articulo;
 import com.anacecilia.backend.entity.Curso;
 import com.anacecilia.backend.entity.Obra;
 import com.anacecilia.backend.entity.Producto;
 import com.anacecilia.backend.entity.Role;
 import com.anacecilia.backend.entity.Usuario;
+import com.anacecilia.backend.repository.ArticuloRepository;
 import com.anacecilia.backend.repository.CursoRepository;
 import com.anacecilia.backend.repository.ObraRepository;
 import com.anacecilia.backend.repository.ProductoRepository;
 import com.anacecilia.backend.repository.RoleRepository;
 import com.anacecilia.backend.repository.UsuarioRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -26,20 +37,87 @@ public class DataInitializer implements CommandLineRunner {
     private final CursoRepository cursoRepository;
     private final ProductoRepository productoRepository;
     private final ObraRepository obraRepository;
+    private final ArticuloRepository articuloRepository;
     private final PasswordEncoder passwordEncoder;
-    
+
     @Override
     public void run(String... args) throws Exception {
         crearRolSiNoExiste(Role.RoleName.ADMIN);
         crearRolSiNoExiste(Role.RoleName.USER);
-        
+
         crearAdminSiNoExiste();
         crearUsuarioTestSiNoExiste();
         crearCursosSiNoExisten();
         crearProductosSiNoExisten();
         crearObrasSiNoExisten();
+        crearArticulosSiNoExisten();
 
         log.info("Datos iniciales cargados correctamente");
+    }
+
+    /**
+     * Migra los 6 artículos que vivían hardcodeados en lib/articulos.ts. Se leen de
+     * seed-articulos.json (generado desde ese mismo archivo) en vez de escribirse como
+     * literales Java: el cuerpo de cada artículo es Markdown largo con comillas,
+     * backticks y saltos de línea, y escaparlo a mano es una fuente de errores
+     * silenciosos en el contenido publicado.
+     */
+    private void crearArticulosSiNoExisten() {
+        if (articuloRepository.count() > 0) return;
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        try (InputStream in = new ClassPathResource("seed-articulos.json").getInputStream()) {
+            List<SeedArticulo> semillas = mapper.readValue(in, new TypeReference<List<SeedArticulo>>() {});
+            for (SeedArticulo s : semillas) {
+                articuloRepository.save(Articulo.builder()
+                        .titulo(s.titulo)
+                        .slug(s.slug)
+                        .subtitulo(s.subtitulo)
+                        .resumen(s.resumen)
+                        .categoria(s.categoria)
+                        .fechaPublicacion(LocalDate.parse(s.fechaPublicacion))
+                        .tiempoLectura(s.tiempoLectura)
+                        .imagenDestacada(s.imagenDestacada)
+                        .imagenDestacadaAlt(s.imagenDestacadaAlt)
+                        .contenido(s.contenido)
+                        .metaDescripcion(s.metaDescripcion)
+                        .palabrasClave(unirSemilla(s.palabrasClave))
+                        .relacionados(unirSemilla(s.relacionados))
+                        .destacado(Boolean.TRUE.equals(s.destacado))
+                        .publicado(true)
+                        .build());
+            }
+            log.info("Artículos iniciales creados: {}", semillas.size());
+        } catch (IOException e) {
+            // No aborta el arranque: el frontend cae al array estático si /api/articulos
+            // viene vacío, así que un seed fallido degrada en vez de romper el sitio.
+            log.error("No se pudieron cargar los artículos iniciales desde seed-articulos.json", e);
+        }
+    }
+
+    private String unirSemilla(List<String> valores) {
+        if (valores == null || valores.isEmpty()) return null;
+        return String.join(",", valores);
+    }
+
+    /** Forma de cada entrada de seed-articulos.json. */
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+    static class SeedArticulo {
+        public String titulo;
+        public String slug;
+        public String subtitulo;
+        public String resumen;
+        public String categoria;
+        public String fechaPublicacion;
+        public Integer tiempoLectura;
+        public String imagenDestacada;
+        public String imagenDestacadaAlt;
+        public String contenido;
+        public String metaDescripcion;
+        public List<String> palabrasClave;
+        public List<String> relacionados;
+        public Boolean destacado;
     }
     
     private void crearRolSiNoExiste(Role.RoleName nombre) {

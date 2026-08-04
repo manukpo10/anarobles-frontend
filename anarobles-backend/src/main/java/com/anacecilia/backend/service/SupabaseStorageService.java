@@ -43,7 +43,17 @@ public class SupabaseStorageService {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
+    /** Sube al prefijo "galeria/" — sobrecarga histórica usada por las obras. */
     public ImagenUploadResponse subirImagen(MultipartFile file) {
+        return subirImagen(file, "galeria");
+    }
+
+    /**
+     * @param prefijo carpeta lógica dentro del bucket ("galeria", "blog", ...). Se
+     *                slugifica igual que el nombre del archivo, así que no puede
+     *                escapar del bucket aunque llegue con "/" o "..".
+     */
+    public ImagenUploadResponse subirImagen(MultipartFile file, String prefijo) {
         if (file == null || file.isEmpty()) {
             throw new RuntimeException("No se recibió ningún archivo");
         }
@@ -87,7 +97,7 @@ public class SupabaseStorageService {
         int width = imagen.getWidth();
         int height = imagen.getHeight();
 
-        String path = generarPath(file, extension);
+        String path = generarPath(file, extension, prefijo);
         String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
 
         try {
@@ -121,9 +131,10 @@ public class SupabaseStorageService {
                 .build();
     }
 
-    private String generarPath(MultipartFile file, String extension) {
+    private String generarPath(MultipartFile file, String extension, String prefijo) {
         // slugify() reduces the name to [a-z0-9-], so even a filename crafted with
-        // "/" or ".." characters can't steer this segment outside "galeria/".
+        // "/" or ".." characters can't steer this segment outside its folder. The
+        // prefix goes through the same filter for the same reason.
         String base = "";
         if (file.getOriginalFilename() != null) {
             base = slugify(file.getOriginalFilename().replaceAll("\\.[^.]+$", ""));
@@ -133,7 +144,9 @@ public class SupabaseStorageService {
             // external_reference (System.currentTimeMillis() + UUID acortado).
             base = UUID.randomUUID().toString().substring(0, 8);
         }
-        return "galeria/" + System.currentTimeMillis() + "-" + base + extension;
+        String carpeta = slugify(prefijo == null ? "" : prefijo);
+        if (carpeta.isEmpty()) carpeta = "galeria";
+        return carpeta + "/" + System.currentTimeMillis() + "-" + base + extension;
     }
 
     /** Maps an ImageIO-detected format name (read from the file's actual header
