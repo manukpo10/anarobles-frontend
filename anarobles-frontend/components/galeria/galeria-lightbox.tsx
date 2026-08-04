@@ -5,9 +5,13 @@ import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { X, ChevronLeft, ChevronRight, ChevronUp, MessageCircle } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ChevronUp, MessageCircle, ZoomIn, ZoomOut } from "lucide-react"
 import type { Obra } from "@/lib/obras"
 import { formatPrice } from "@/lib/utils"
+
+const ZOOM_MIN = 1
+const ZOOM_MAX = 4
+const ZOOM_STEP = 0.5
 
 const DISP: Record<string, { label: string; cls: string }> = {
   disponible: { label: "Disponible", cls: "text-emerald-500" },
@@ -28,8 +32,33 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
   const [isMobile, setIsMobile] = useState(false)
   const touchStartX = useRef<number | null>(null)
 
+  // Zoom is a pure CSS transform on a wrapper that occupies exactly the same
+  // box the images already did, so layout — and therefore whether the image
+  // renders at all — is identical to the un-zoomed state at scale 1.
+  const [zoom, setZoom] = useState(1)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const dragStart = useRef<{ x: number; y: number; panX: number; panY: number } | null>(null)
+  const didDrag = useRef(false)
+  const isZoomed = zoom > 1
+
+  // Functional update so rapid clicks accumulate instead of each reading the
+  // same pre-batch scale.
+  const stepZoom = useCallback((delta: number) => {
+    setZoom((prev) => {
+      const next = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, prev + delta))
+      if (next === 1) setPan({ x: 0, y: 0 })
+      return next
+    })
+  }, [])
+
+  const setZoomTo = useCallback((value: number) => {
+    setZoom(value)
+    if (value === 1) setPan({ x: 0, y: 0 })
+  }, [])
+
   useEffect(() => { setHiResLoaded(false) }, [obra?.id])
   useEffect(() => { setPanelOpen(false) }, [obra?.id])
+  useEffect(() => { setZoom(1); setPan({ x: 0, y: 0 }) }, [obra?.id])
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
     check()
@@ -44,10 +73,12 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
       if (e.key === "Escape")     onClose()
       if (e.key === "ArrowLeft")  onNavegar("anterior")
       if (e.key === "ArrowRight") onNavegar("siguiente")
+      if (e.key === "+" || e.key === "=") stepZoom(ZOOM_STEP)
+      if (e.key === "-")                  stepZoom(-ZOOM_STEP)
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [obra, onClose, onNavegar])
+  }, [obra, onClose, onNavegar, stepZoom])
 
   // Body scroll lock
   useEffect(() => {
@@ -55,16 +86,48 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
     return () => { document.body.style.overflow = "" }
   }, [obra])
 
-  // Swipe
+  // Swipe — suppressed while zoomed in, where a horizontal drag means
+  // "pan across the artwork", not "next piece".
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
   }, [])
   const onTouchEnd = useCallback((e: React.TouchEvent) => {
     if (touchStartX.current === null) return
     const delta = e.changedTouches[0].clientX - touchStartX.current
-    if (Math.abs(delta) > 50) onNavegar(delta < 0 ? "siguiente" : "anterior")
+    if (!isZoomed && Math.abs(delta) > 50) onNavegar(delta < 0 ? "siguiente" : "anterior")
     touchStartX.current = null
-  }, [onNavegar])
+  }, [onNavegar, isZoomed])
+
+  // Drag-to-pan (desktop, while zoomed). Bounds come from the dragged
+  // element's own rect read inside the event, so there's no measurement
+  // effect that can race the lightbox's mount.
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    if (!isZoomed) return
+    didDrag.current = false
+    dragStart.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y }
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }, [isZoomed, pan])
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    const start = dragStart.current
+    if (!start) return
+    const dx = e.clientX - start.x
+    const dy = e.clientY - start.y
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag.current = true
+    const rect = e.currentTarget.getBoundingClientRect()
+    const maxX = (rect.width  * (zoom - 1)) / (2 * zoom)
+    const maxY = (rect.height * (zoom - 1)) / (2 * zoom)
+    setPan({
+      x: Math.min(maxX, Math.max(-maxX, start.panX + dx / zoom)),
+      y: Math.min(maxY, Math.max(-maxY, start.panY + dy / zoom)),
+    })
+  }, [zoom])
+
+  const onPointerUp = useCallback(() => { dragStart.current = null }, [])
+
+  const onWheel = useCallback((e: React.WheelEvent) => {
+    stepZoom(e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP)
+  }, [stepZoom])
 
   if (typeof window === "undefined") return null
 
@@ -95,53 +158,99 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
               <span className="mx-1.5 text-white/30">/</span>
               {total}
             </span>
-            <button
-              onClick={onClose}
-              aria-label="Cerrar lightbox"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 hover:border-white/50 hover:text-white"
-            >
-              <X className="h-4 w-4" strokeWidth={1.5} />
-            </button>
+            <div className="flex items-center gap-2">
+              {/* Desktop-only: touch devices already zoom by pinching. */}
+              <div className="hidden items-center gap-2 md:flex">
+                <button
+                  onClick={() => stepZoom(-ZOOM_STEP)}
+                  disabled={zoom <= ZOOM_MIN}
+                  aria-label="Alejar"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 enabled:hover:border-white/50 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  <ZoomOut className="h-4 w-4" strokeWidth={1.5} />
+                </button>
+                <span className="w-10 text-center font-sans text-xs tabular-nums text-white/40">
+                  {Math.round(zoom * 100)}%
+                </span>
+                <button
+                  onClick={() => stepZoom(ZOOM_STEP)}
+                  disabled={zoom >= ZOOM_MAX}
+                  aria-label="Acercar"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 enabled:hover:border-white/50 enabled:hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  <ZoomIn className="h-4 w-4" strokeWidth={1.5} />
+                </button>
+                <div className="mx-1 h-5 w-px bg-white/15" />
+              </div>
+              <button
+                onClick={onClose}
+                aria-label="Cerrar lightbox"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/50 transition-all duration-200 hover:border-white/50 hover:text-white"
+              >
+                <X className="h-4 w-4" strokeWidth={1.5} />
+              </button>
+            </div>
           </div>
 
           {/* ── Image area ─────────────────────────────────────────── */}
           <div
-            className="absolute inset-0 flex cursor-pointer items-center justify-center"
-            onClick={onClose}
+            className={[
+              "absolute inset-0 flex items-center justify-center overflow-hidden",
+              isZoomed ? (dragStart.current ? "cursor-grabbing" : "cursor-grab") : "cursor-pointer",
+            ].join(" ")}
+            onClick={() => { if (!isZoomed && !didDrag.current) onClose() }}
+            onWheel={onWheel}
+            onDoubleClick={() => setZoomTo(isZoomed ? 1 : 2)}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
           >
             <div
               className="relative h-full w-full transition-[padding] duration-300 md:pr-80 lg:pr-96"
               style={{ paddingBottom: isMobile && panelOpen ? "48vh" : undefined }}
             >
-              {/* Blur placeholder */}
-              <Image
-                key={`blur-${obra.id}`}
-                src={obra.imagen}
-                alt=""
-                fill
-                className={[
-                  "object-contain p-4 transition-all duration-600 md:p-10 lg:p-12",
-                  hiResLoaded ? "opacity-0" : "opacity-100 blur-xl scale-[1.04]",
-                ].join(" ")}
-                sizes="20vw"
-                quality={8}
-                aria-hidden="true"
-              />
-              {/* Hi-res image */}
-              <Image
-                key={`hi-${obra.id}`}
-                src={obra.imagen}
-                alt={`${obra.titulo} — ${obra.tecnica} — ${obra.año}`}
-                fill
-                className={[
-                  "object-contain p-4 transition-opacity duration-500 md:p-10 lg:p-12",
-                  hiResLoaded ? "opacity-100" : "opacity-0",
-                ].join(" ")}
-                sizes="(max-width: 768px) 100vw, calc(100vw - 20rem)"
-                quality={92}
-                priority
-                onLoad={() => setHiResLoaded(true)}
-              />
+              {/* Zoom layer — spans the exact same box the images position
+                  themselves against, so at scale 1 nothing about their layout
+                  changes. transform is purely visual and never affects it. */}
+              <div
+                className="absolute inset-0 transition-transform duration-200 ease-out"
+                style={{
+                  transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
+                  willChange: isZoomed ? "transform" : undefined,
+                }}
+              >
+                {/* Blur placeholder */}
+                <Image
+                  key={`blur-${obra.id}`}
+                  src={obra.imagen}
+                  alt=""
+                  fill
+                  className={[
+                    "object-contain p-4 transition-all duration-600 md:p-10 lg:p-12",
+                    hiResLoaded ? "opacity-0" : "opacity-100 blur-xl scale-[1.04]",
+                  ].join(" ")}
+                  sizes="20vw"
+                  quality={8}
+                  aria-hidden="true"
+                />
+                {/* Hi-res image */}
+                <Image
+                  key={`hi-${obra.id}`}
+                  src={obra.imagen}
+                  alt={`${obra.titulo} — ${obra.tecnica} — ${obra.año}`}
+                  fill
+                  className={[
+                    "object-contain p-4 transition-opacity duration-500 md:p-10 lg:p-12",
+                    hiResLoaded ? "opacity-100" : "opacity-0",
+                  ].join(" ")}
+                  sizes="(max-width: 768px) 100vw, calc(100vw - 20rem)"
+                  quality={92}
+                  priority
+                  draggable={false}
+                  onLoad={() => setHiResLoaded(true)}
+                />
+              </div>
             </div>
           </div>
 
