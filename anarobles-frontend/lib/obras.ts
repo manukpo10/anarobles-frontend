@@ -15,6 +15,7 @@ export type Obra = {
   imgW:           number   // real pixel width  — for correct aspect ratio in masonry
   imgH:           number   // real pixel height
   descripcion?:   string
+  precio?:        number
 }
 
 export const obras: Obra[] = [
@@ -192,3 +193,174 @@ export const getObras = (
     if (filtros.tecnica && o.tecnica !== filtros.tecnica) return false
     return true
   })
+
+// ── API (backend) ─────────────────────────────────────────────────────
+// The static `obras` array above stays as the offline/error fallback —
+// same role `products`/`getProducts` plays in lib/data.ts. Callers decide
+// whether/how to fall back to it; these functions just talk to the API.
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapObraFromAPI = (r: any): Obra => ({
+  id: String(r.id),
+  slug: r.slug,
+  titulo: r.titulo,
+  categoria: r.categoria,
+  año: r.anio,
+  tecnica: r.tecnica,
+  dimensiones: r.dimensiones,
+  disponibilidad: r.disponibilidad as Disponibilidad,
+  destacada: r.destacada,
+  imagen: r.imagen,
+  imgW: r.imgW,
+  imgH: r.imgH,
+  descripcion: r.descripcion,
+  precio: r.precio ?? undefined,
+})
+
+export const fetchObrasFromAPI = async (): Promise<Obra[]> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/obras`, { cache: "no-store" })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return (await res.json()).map(mapObraFromAPI)
+  } catch (error) {
+    console.warn("Backend no disponible para obras:", error)
+    return []
+  }
+}
+
+export const fetchAdminObras = async (token: string): Promise<Obra[]> => {
+  if (!token) {
+    console.error("No token provided for admin fetch")
+    return []
+  }
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/obras`, {
+      cache: "no-store",
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    if (!res.ok) {
+      console.error(`Error fetching admin obras: ${res.status}`)
+      return []
+    }
+    return (await res.json()).map(mapObraFromAPI)
+  } catch (error) {
+    console.error("Error fetching admin obras:", error)
+    return []
+  }
+}
+
+export const fetchAdminObraByIdAPI = async (token: string, id: string): Promise<Obra | null> => {
+  if (!token) {
+    console.error("No token provided for admin fetch")
+    return null
+  }
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/obras/${id}`, {
+      cache: "no-store",
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return mapObraFromAPI(await res.json())
+  } catch (error) {
+    console.error("Error fetching admin obra por id:", error)
+    return null
+  }
+}
+
+export const crearObraAPI = async (token: string, obra: Partial<Obra>): Promise<Obra | null> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/obras`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify({
+        titulo: obra.titulo,
+        categoria: obra.categoria,
+        anio: obra.año,
+        tecnica: obra.tecnica,
+        dimensiones: obra.dimensiones,
+        disponibilidad: obra.disponibilidad,
+        destacada: obra.destacada,
+        imagen: obra.imagen,
+        imgW: obra.imgW,
+        imgH: obra.imgH,
+        descripcion: obra.descripcion,
+        precio: obra.precio,
+        publicado: true,
+      })
+    })
+    if (!res.ok) {
+      const errText = await res.text()
+      console.error("crearObraAPI error:", errText)
+      throw new Error(`HTTP ${res.status}`)
+    }
+    return mapObraFromAPI(await res.json())
+  } catch (error) {
+    console.error("Error creating obra:", error)
+    return null
+  }
+}
+
+export const actualizarObraAPI = async (token: string, id: string, obra: Partial<Obra>): Promise<Obra | null> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/obras/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify({
+        titulo: obra.titulo,
+        categoria: obra.categoria,
+        anio: obra.año,
+        tecnica: obra.tecnica,
+        dimensiones: obra.dimensiones,
+        disponibilidad: obra.disponibilidad,
+        destacada: obra.destacada,
+        imagen: obra.imagen,
+        imgW: obra.imgW,
+        imgH: obra.imgH,
+        descripcion: obra.descripcion,
+        precio: obra.precio,
+        publicado: true,
+      })
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return mapObraFromAPI(await res.json())
+  } catch (error) {
+    console.error("Error updating obra:", error)
+    return null
+  }
+}
+
+export const eliminarObraAPI = async (token: string, id: string): Promise<boolean> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/obras/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    return res.ok
+  } catch (error) {
+    console.error("Error deleting obra:", error)
+    return false
+  }
+}
+
+export const subirImagenObraAPI = async (
+  token: string,
+  file: File
+): Promise<{ url: string; width: number; height: number } | null> => {
+  try {
+    const formData = new FormData()
+    formData.append("file", file)
+    // No Content-Type header — the browser sets the multipart boundary itself.
+    const res = await fetch(`${API_BASE}/api/admin/obras/upload-imagen`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}` },
+      body: formData,
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return await res.json()
+  } catch (error) {
+    console.error("Error uploading imagen de obra:", error)
+    return null
+  }
+}
