@@ -142,6 +142,53 @@ export default function AdminGaleriaPage() {
     return sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />
   }
 
+  // Shared between the desktop table row and the mobile card layout below,
+  // so the delete-confirmation flow only exists in one place.
+  const ObraActions = ({ obra }: { obra: Obra }) => (
+    <>
+      <Link
+        href={`/galeria?obra=${encodeURIComponent(obra.slug)}`}
+        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+      >
+        <Eye className="h-4 w-4" />
+      </Link>
+      <Link
+        href={`/admin/galeria/${obra.id}/edit`}
+        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-primary transition-colors"
+      >
+        <Edit className="h-4 w-4" />
+      </Link>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <button
+            onClick={() => setDeleteTargetId(obra.id)}
+            className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-destructive transition-colors"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Estás segura de que querés eliminar esta obra?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción no se puede deshacer. La obra será eliminada permanentemente de la galería.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDeleteTargetId(null)}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              disabled={deletePending}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deletePending ? "Eliminando..." : "Eliminar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  )
+
   const handleConfirmDelete = async () => {
     if (!deleteTargetId || !token) return
     setDeletePending(true)
@@ -191,7 +238,7 @@ export default function AdminGaleriaPage() {
       </motion.div>
 
       {/* Header */}
-      <motion.div variants={itemVariants} className="flex items-center justify-between">
+      <motion.div variants={itemVariants} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-light text-foreground">
             Gestión de Galería
@@ -202,7 +249,7 @@ export default function AdminGaleriaPage() {
         </div>
         <Link
           href="/admin/galeria/nuevo"
-          className="flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground shadow-lg shadow-secondary/25 transition-all hover:bg-secondary/90"
+          className="flex items-center justify-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground shadow-lg shadow-secondary/25 transition-all hover:bg-secondary/90"
         >
           <Plus className="h-4 w-4" />
           Nueva Obra
@@ -210,7 +257,7 @@ export default function AdminGaleriaPage() {
       </motion.div>
 
       {/* Stats */}
-      <motion.div variants={itemVariants} className="grid gap-4 md:grid-cols-4">
+      <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <div className="rounded-xl bg-background p-4 shadow-sm border border-border">
           <p className="text-sm text-muted-foreground">Total Obras</p>
           <p className="text-2xl font-semibold text-foreground">{obrasList.length}</p>
@@ -243,7 +290,7 @@ export default function AdminGaleriaPage() {
             className="w-full rounded-xl border border-border bg-muted/50 py-3 pl-12 pr-4 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
@@ -254,12 +301,37 @@ export default function AdminGaleriaPage() {
               <option key={cat} value={cat}>{cat}</option>
             ))}
           </select>
+          {/* Sort control — mobile only, since the table's clickable column
+              headers cover this on desktop and aren't visible on the card
+              layout below. */}
+          <select
+            value={`${sortBy}-${sortDir}`}
+            onChange={(e) => {
+              const [col, dir] = e.target.value.split("-") as [SortKey, SortDir]
+              setSortBy(col)
+              setSortDir(dir)
+              setCurrentPage(1)
+            }}
+            className="rounded-xl border border-border bg-muted/50 px-4 py-3 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 md:hidden"
+          >
+            <option value="updatedAt-desc">Recién editadas primero</option>
+            <option value="updatedAt-asc">Recién editadas al final</option>
+            <option value="titulo-asc">Obra (A-Z)</option>
+            <option value="titulo-desc">Obra (Z-A)</option>
+            <option value="categoria-asc">Categoría (A-Z)</option>
+            <option value="categoria-desc">Categoría (Z-A)</option>
+            <option value="disponibilidad-asc">Disponibilidad (A-Z)</option>
+            <option value="disponibilidad-desc">Disponibilidad (Z-A)</option>
+            <option value="precio-asc">Precio (menor a mayor)</option>
+            <option value="precio-desc">Precio (mayor a menor)</option>
+          </select>
         </div>
       </motion.div>
 
       {/* Obras Table */}
       <motion.div variants={itemVariants} className="rounded-2xl bg-background shadow-sm border border-border overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop: full table */}
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full">
             <thead>
               <tr className="border-b border-border bg-muted/50">
@@ -340,46 +412,7 @@ export default function AdminGaleriaPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-2">
-                        <Link
-                          href={`/galeria?obra=${encodeURIComponent(obra.slug)}`}
-                          className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Link>
-                        <Link
-                          href={`/admin/galeria/${obra.id}/edit`}
-                          className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-primary transition-colors"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Link>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <button
-                              onClick={() => setDeleteTargetId(obra.id)}
-                              className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-destructive transition-colors"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>¿Estás segura de que querés eliminar esta obra?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                Esta acción no se puede deshacer. La obra será eliminada permanentemente de la galería.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel onClick={() => setDeleteTargetId(null)}>Cancelar</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={handleConfirmDelete}
-                                disabled={deletePending}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                              >
-                                {deletePending ? "Eliminando..." : "Eliminar"}
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
+                        <ObraActions obra={obra} />
                       </div>
                     </td>
                   </tr>
@@ -387,6 +420,55 @@ export default function AdminGaleriaPage() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile: stacked cards. A 5-column table has no good narrow-viewport
+            layout even with horizontal scroll — this is a distinct rendering,
+            not a squeezed-in table. */}
+        <div className="divide-y divide-border md:hidden">
+          {paginatedObras.length === 0 ? (
+            <p className="px-6 py-12 text-center text-muted-foreground">No se encontraron obras</p>
+          ) : (
+            paginatedObras.map((obra) => (
+              <div key={obra.id} className="p-4">
+                <div className="flex gap-3">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-muted">
+                    <Image
+                      src={obra.imagen}
+                      alt={obra.titulo}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-medium text-foreground">{obra.titulo}</p>
+                    {obra.destacada && (
+                      <Badge variant="secondary" className="mt-1 gap-1">
+                        <Star className="h-3 w-3" />
+                        Destacada
+                      </Badge>
+                    )}
+                    <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                      <span className="inline-flex rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                        {obra.categoria}
+                      </span>
+                      <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium ${DISP_BADGE[obra.disponibilidad]}`}>
+                        {DISP_LABEL[obra.disponibilidad]}
+                      </span>
+                    </div>
+                    <p className="mt-2 font-semibold text-foreground">
+                      {obra.disponibilidad === "consultar" || obra.precio === undefined
+                        ? "Consultar"
+                        : `$${formatPrice(obra.precio)}`}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-end gap-1 border-t border-border/60 pt-3">
+                  <ObraActions obra={obra} />
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </motion.div>
 
