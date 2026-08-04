@@ -5,8 +5,7 @@ import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { TransformWrapper, TransformComponent, type ReactZoomPanPinchContentRef } from "react-zoom-pan-pinch"
-import { X, ChevronLeft, ChevronRight, ChevronUp, MessageCircle, ZoomIn, ZoomOut } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, ChevronUp, MessageCircle } from "lucide-react"
 import type { Obra } from "@/lib/obras"
 import { formatPrice } from "@/lib/utils"
 
@@ -27,20 +26,10 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
   const [hiResLoaded, setHiResLoaded] = useState(false)
   const [panelOpen, setPanelOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [zoomScale, setZoomScale] = useState(1)
   const touchStartX = useRef<number | null>(null)
-  // Ref instead of useControls(): the hook's zoomIn/zoomOut silently no-op'd
-  // in testing (wheel-zoom worked fine, so the underlying mechanism is sound —
-  // this sidesteps whatever mount-timing issue the hook had) — ref.current is
-  // read fresh on each click instead of captured once.
-  const transformRef = useRef<ReactZoomPanPinchContentRef>(null)
 
   useEffect(() => { setHiResLoaded(false) }, [obra?.id])
   useEffect(() => { setPanelOpen(false) }, [obra?.id])
-  // Pinch/zoom resets on its own — the TransformWrapper below is remounted
-  // (via key={obra.id}) on navigation — but the tracked scale needs a manual
-  // reset in step with it so the swipe guard below doesn't stay "zoomed".
-  useEffect(() => { setZoomScale(1) }, [obra?.id])
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
     check()
@@ -66,19 +55,16 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
     return () => { document.body.style.overflow = "" }
   }, [obra])
 
-  // Swipe — disabled while zoomed in, since a drag at that point means "pan
-  // around the image", not "go to the next one". Checked on both ends so a
-  // pinch that starts at scale 1 and ends zoomed-in doesn't still fire a nav.
+  // Swipe
   const onTouchStart = useCallback((e: React.TouchEvent) => {
-    if (zoomScale > 1.01) return
     touchStartX.current = e.touches[0].clientX
-  }, [zoomScale])
+  }, [])
   const onTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (touchStartX.current === null || zoomScale > 1.01) return
+    if (touchStartX.current === null) return
     const delta = e.changedTouches[0].clientX - touchStartX.current
     if (Math.abs(delta) > 50) onNavegar(delta < 0 ? "siguiente" : "anterior")
     touchStartX.current = null
-  }, [onNavegar, zoomScale])
+  }, [onNavegar])
 
   if (typeof window === "undefined") return null
 
@@ -119,68 +105,44 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
           </div>
 
           {/* ── Image area ─────────────────────────────────────────── */}
-          {/* Tapping the dark margin around the image still closes the
-              lightbox; tapping/pinching the image itself no longer does
-              (the stopPropagation div below), since that would fight with
-              zooming in to look around. Closing still works via the X
-              button, Escape, or swiping (when not zoomed). */}
           <div
             className="absolute inset-0 flex cursor-pointer items-center justify-center"
             onClick={onClose}
           >
-            <TransformWrapper
-              ref={transformRef}
-              key={obra.id}
-              initialScale={1}
-              minScale={1}
-              maxScale={4}
-              limitToBounds
-              centerOnInit
-              doubleClick={{ mode: "toggle", step: 2 }}
-              onTransform={(_ref, state) => setZoomScale(state.scale)}
+            <div
+              className="relative h-full w-full transition-[padding] duration-300 md:pr-80 lg:pr-96"
+              style={{ paddingBottom: isMobile && panelOpen ? "48vh" : undefined }}
             >
-              <TransformComponent
-                wrapperClass="relative h-full w-full transition-[padding] duration-300 md:pr-80 lg:pr-96"
-                wrapperStyle={{ paddingBottom: isMobile && panelOpen ? "48vh" : undefined }}
-                contentClass="h-full w-full"
-                contentStyle={{ width: "100%", height: "100%" }}
-              >
-                <div
-                  className="relative h-full w-full cursor-default"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {/* Blur placeholder */}
-                  <Image
-                    key={`blur-${obra.id}`}
-                    src={obra.imagen}
-                    alt=""
-                    fill
-                    className={[
-                      "object-contain p-4 transition-all duration-600 md:p-10 lg:p-12",
-                      hiResLoaded ? "opacity-0" : "opacity-100 blur-xl scale-[1.04]",
-                    ].join(" ")}
-                    sizes="20vw"
-                    quality={8}
-                    aria-hidden="true"
-                  />
-                  {/* Hi-res image */}
-                  <Image
-                    key={`hi-${obra.id}`}
-                    src={obra.imagen}
-                    alt={`${obra.titulo} — ${obra.tecnica} — ${obra.año}`}
-                    fill
-                    className={[
-                      "object-contain p-4 transition-opacity duration-500 md:p-10 lg:p-12",
-                      hiResLoaded ? "opacity-100" : "opacity-0",
-                    ].join(" ")}
-                    sizes="(max-width: 768px) 100vw, calc(100vw - 20rem)"
-                    quality={92}
-                    priority
-                    onLoad={() => setHiResLoaded(true)}
-                  />
-                </div>
-              </TransformComponent>
-            </TransformWrapper>
+              {/* Blur placeholder */}
+              <Image
+                key={`blur-${obra.id}`}
+                src={obra.imagen}
+                alt=""
+                fill
+                className={[
+                  "object-contain p-4 transition-all duration-600 md:p-10 lg:p-12",
+                  hiResLoaded ? "opacity-0" : "opacity-100 blur-xl scale-[1.04]",
+                ].join(" ")}
+                sizes="20vw"
+                quality={8}
+                aria-hidden="true"
+              />
+              {/* Hi-res image */}
+              <Image
+                key={`hi-${obra.id}`}
+                src={obra.imagen}
+                alt={`${obra.titulo} — ${obra.tecnica} — ${obra.año}`}
+                fill
+                className={[
+                  "object-contain p-4 transition-opacity duration-500 md:p-10 lg:p-12",
+                  hiResLoaded ? "opacity-100" : "opacity-0",
+                ].join(" ")}
+                sizes="(max-width: 768px) 100vw, calc(100vw - 20rem)"
+                quality={92}
+                priority
+                onLoad={() => setHiResLoaded(true)}
+              />
+            </div>
           </div>
 
           {/* ── Arrows ─────────────────────────────────────────────── */}
@@ -212,27 +174,6 @@ export function GaleriaLightbox({ obra, todasLasObras, onClose, onNavegar }: Pro
           >
             <ChevronRight className="h-5 w-5 md:h-6 md:w-6" strokeWidth={1.5} />
           </button>
-
-          {/* ── Zoom controls — desktop only. Mouse wheel over the image
-              already zooms (same TransformWrapper pinch/wheel handles on
-              mobile), but that's not discoverable without an explicit
-              control. */}
-          <div className="absolute bottom-6 left-3 z-20 hidden flex-col gap-2 md:left-4 md:flex">
-            <button
-              onClick={(e) => { e.stopPropagation(); transformRef.current?.zoomIn() }}
-              aria-label="Acercar"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/55 transition-all duration-200 hover:border-white/55 hover:bg-white/8 hover:text-white"
-            >
-              <ZoomIn className="h-4 w-4" strokeWidth={1.5} />
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); transformRef.current?.zoomOut() }}
-              aria-label="Alejar"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/55 transition-all duration-200 hover:border-white/55 hover:bg-white/8 hover:text-white"
-            >
-              <ZoomOut className="h-4 w-4" strokeWidth={1.5} />
-            </button>
-          </div>
 
           {/* ── Info toggle button — mobile only, shown when panel is closed ── */}
           <AnimatePresence>
