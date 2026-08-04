@@ -1,13 +1,17 @@
-import { getArticulosRelacionados } from "@/lib/articulos"
+import type { Articulo } from "@/lib/articulos"
 import { BlogCard } from "./blog-card"
 
 interface ArticuloRelacionadosProps {
-  slugs: string[]
+  /**
+   * Ya resueltos, no slugs. Este componente termina en el bundle del cliente
+   * (lo renderiza ArticuloDetalle, que es "use client"), así que no puede
+   * consultar la API por su cuenta; resolverlos en el servidor además deja los
+   * enlaces en el HTML inicial, que es donde los lee un buscador.
+   */
+  relacionados: Articulo[]
 }
 
-export function ArticuloRelacionados({ slugs }: ArticuloRelacionadosProps) {
-  const relacionados = getArticulosRelacionados(slugs)
-
+export function ArticuloRelacionados({ relacionados }: ArticuloRelacionadosProps) {
   if (relacionados.length === 0) return null
 
   return (

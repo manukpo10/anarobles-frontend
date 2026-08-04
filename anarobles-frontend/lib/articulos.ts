@@ -31,6 +31,10 @@ export type Articulo = {
   palabrasClave?: string[]
   destacado?: boolean
   relacionados?: string[] // slugs
+  /** Solo llega desde la API — sirve para ordenar la lista del panel admin. */
+  updatedAt?: string
+  /** Solo desde la API. Un borrador (false) no aparece en el blog público. */
+  publicado?: boolean
 }
 
 const articulos: Articulo[] = [
@@ -440,4 +444,195 @@ export function getArticulosDestacados(): Articulo[] {
 
 export function formatFecha(iso: string): string {
   return formatDateUtil(iso)
+}
+
+// ── API ────────────────────────────────────────────────────────────────────
+// El array `articulos` de arriba queda como fallback: si el backend no responde
+// (Render free tier se duerme), el blog sigue mostrando los artículos migrados
+// en vez de quedar vacío. Mismo rol que cumple `obras` en lib/obras.ts.
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
+/** Cada cuánto revalidan las páginas del blog generadas estáticamente. */
+export const BLOG_REVALIDATE_SECONDS = 300
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapArticuloFromAPI = (r: any): Articulo => ({
+  id: String(r.id),
+  slug: r.slug,
+  titulo: r.titulo,
+  subtitulo: r.subtitulo ?? undefined,
+  resumen: r.resumen,
+  categoria: r.categoria as CategoriaSlug,
+  fechaPublicacion: r.fechaPublicacion,
+  tiempoLectura: r.tiempoLectura,
+  imagenDestacada: r.imagenDestacada,
+  imagenDestacadaAlt: r.imagenDestacadaAlt ?? "",
+  contenido: r.contenido,
+  metaDescripcion: r.metaDescripcion ?? undefined,
+  palabrasClave: r.palabrasClave ?? [],
+  destacado: r.destacado,
+  relacionados: r.relacionados ?? [],
+  updatedAt: r.updatedAt,
+  publicado: r.publicado,
+})
+
+/**
+ * Lista pública. Se cachea con revalidación en vez de `no-store` a propósito: la
+ * usan Server Components, y `no-store` los volvería dinámicos, perdiendo el
+ * prerenderizado estático del que depende el SEO del blog.
+ */
+export const fetchArticulosFromAPI = async (): Promise<Articulo[]> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/articulos`, {
+      next: { revalidate: BLOG_REVALIDATE_SECONDS },
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return (await res.json()).map(mapArticuloFromAPI)
+  } catch (error) {
+    console.warn("Backend no disponible para artículos:", error)
+    return []
+  }
+}
+
+export const fetchArticuloBySlugFromAPI = async (slug: string): Promise<Articulo | null> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/articulos/${encodeURIComponent(slug)}`, {
+      next: { revalidate: BLOG_REVALIDATE_SECONDS },
+    })
+    if (!res.ok) return null
+    return mapArticuloFromAPI(await res.json())
+  } catch (error) {
+    console.warn("Backend no disponible para el artículo:", slug, error)
+    return null
+  }
+}
+
+export const fetchAdminArticulos = async (token: string): Promise<Articulo[]> => {
+  if (!token) {
+    console.error("No token provided for admin fetch")
+    return []
+  }
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/articulos`, {
+      cache: "no-store",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+    if (!res.ok) {
+      console.error(`Error fetching admin articulos: ${res.status}`)
+      return []
+    }
+    return (await res.json()).map(mapArticuloFromAPI)
+  } catch (error) {
+    console.error("Error fetching admin articulos:", error)
+    return []
+  }
+}
+
+export const fetchAdminArticuloByIdAPI = async (
+  token: string,
+  id: string,
+): Promise<Articulo | null> => {
+  if (!token) {
+    console.error("No token provided for admin fetch")
+    return null
+  }
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/articulos/${id}`, {
+      cache: "no-store",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return mapArticuloFromAPI(await res.json())
+  } catch (error) {
+    console.error("Error fetching admin articulo por id:", error)
+    return null
+  }
+}
+
+const toArticuloPayload = (a: Partial<Articulo>) => ({
+  titulo: a.titulo,
+  subtitulo: a.subtitulo || null,
+  resumen: a.resumen,
+  categoria: a.categoria,
+  fechaPublicacion: a.fechaPublicacion,
+  tiempoLectura: a.tiempoLectura,
+  imagenDestacada: a.imagenDestacada,
+  imagenDestacadaAlt: a.imagenDestacadaAlt || null,
+  contenido: a.contenido,
+  metaDescripcion: a.metaDescripcion || null,
+  palabrasClave: a.palabrasClave ?? [],
+  relacionados: a.relacionados ?? [],
+  destacado: a.destacado ?? false,
+  publicado: a.publicado ?? true,
+})
+
+export const crearArticuloAPI = async (
+  token: string,
+  articulo: Partial<Articulo>,
+): Promise<Articulo | null> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/articulos`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify(toArticuloPayload(articulo)),
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return mapArticuloFromAPI(await res.json())
+  } catch (error) {
+    console.error("Error creando artículo:", error)
+    return null
+  }
+}
+
+export const actualizarArticuloAPI = async (
+  token: string,
+  id: string,
+  articulo: Partial<Articulo>,
+): Promise<Articulo | null> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/articulos/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify(toArticuloPayload(articulo)),
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return mapArticuloFromAPI(await res.json())
+  } catch (error) {
+    console.error("Error actualizando artículo:", error)
+    return null
+  }
+}
+
+export const eliminarArticuloAPI = async (token: string, id: string): Promise<boolean> => {
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/articulos/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+    return res.ok
+  } catch (error) {
+    console.error("Error eliminando artículo:", error)
+    return false
+  }
+}
+
+export const subirImagenArticuloAPI = async (
+  token: string,
+  file: File,
+): Promise<{ url: string; width: number; height: number } | null> => {
+  try {
+    const formData = new FormData()
+    formData.append("file", file)
+    const res = await fetch(`${API_BASE}/api/admin/articulos/upload-imagen`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}` },
+      body: formData,
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return await res.json()
+  } catch (error) {
+    console.error("Error subiendo imagen del artículo:", error)
+    return null
+  }
 }

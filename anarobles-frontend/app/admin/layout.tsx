@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, BookOpen, Package, Images, Users, ChevronRight, LogOut, Menu } from "lucide-react"
+import { LayoutDashboard, BookOpen, Package, Images, FileText, Users, ChevronRight, LogOut, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/contexts/auth-context"
 import ProtectedRoute from "@/components/protected-route"
@@ -16,6 +16,7 @@ const adminNavItems = [
   { href: "/admin/cursos", label: "Cursos", icon: BookOpen },
   { href: "/admin/productos", label: "Productos", icon: Package },
   { href: "/admin/galeria", label: "Galería", icon: Images },
+  { href: "/admin/blog", label: "Blog", icon: FileText },
   { href: "/mi-cuenta", label: "Mi Cuenta", icon: Users },
 ]
 

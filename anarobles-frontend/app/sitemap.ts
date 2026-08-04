@@ -1,8 +1,13 @@
 import { MetadataRoute } from "next"
 import { getProducts, getCursos } from "@/lib/data"
-import { getArticulos } from "@/lib/articulos"
+import { getArticulos, fetchArticulosFromAPI } from "@/lib/articulos"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// El sitemap se regenera junto con el blog: si un artículo publicado desde el
+// panel no entra acá, Google no tiene cómo descubrirlo.
+// Literal por exigencia del análisis estático de Next (ver nota en blog/[slug]/page.tsx).
+export const revalidate = 300
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://anaceciliarobles.com"
 
   // Stable content-revision date. Bump this when site content meaningfully
@@ -68,11 +73,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // Blog article routes
-  const articulos = getArticulos()
+  // Blog article routes — desde la API, con el array estático como respaldo si
+  // el backend no responde durante el build.
+  const desdeAPI = await fetchArticulosFromAPI()
+  const articulos = desdeAPI.length > 0 ? desdeAPI : getArticulos()
   const blogRoutes: MetadataRoute.Sitemap = articulos.map((a) => ({
     url: `${baseUrl}/blog/${a.slug}`,
-    lastModified: new Date(a.fechaPublicacion),
+    // updatedAt refleja la última edición real; la fecha de publicación es el
+    // respaldo para los artículos que vienen del array estático.
+    lastModified: new Date(a.updatedAt ?? a.fechaPublicacion),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }))

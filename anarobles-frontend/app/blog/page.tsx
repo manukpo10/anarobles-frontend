@@ -1,6 +1,11 @@
 import type { Metadata } from "next"
-import { getArticulos } from "@/lib/articulos"
+import { getArticulos, fetchArticulosFromAPI } from "@/lib/articulos"
 import { BlogIndex } from "@/components/blog/blog-index"
+
+// Mismo criterio que /blog/[slug]: se regenera sola para que un artículo nuevo
+// aparezca en el listado sin redeploy, sin dejar de ser una página estática.
+// Literal por exigencia del análisis estático de Next (ver nota en [slug]/page.tsx).
+export const revalidate = 300
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -22,7 +27,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function BlogPage() {
-  const articulos = getArticulos()
+export default async function BlogPage() {
+  const desdeAPI = await fetchArticulosFromAPI()
+  const articulos = desdeAPI.length > 0 ? desdeAPI : getArticulos()
   return <BlogIndex articulos={articulos} />
 }

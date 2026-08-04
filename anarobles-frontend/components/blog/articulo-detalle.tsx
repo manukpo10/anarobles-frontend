@@ -12,9 +12,11 @@ import { ArrowLeft, User } from "lucide-react"
 
 interface ArticuloDetalleProps {
   articulo: Articulo
+  /** Resueltos en el servidor por la página — ver nota en ArticuloRelacionados. */
+  relacionados?: Articulo[]
 }
 
-export function ArticuloDetalle({ articulo }: ArticuloDetalleProps) {
+export function ArticuloDetalle({ articulo, relacionados = [] }: ArticuloDetalleProps) {
   return (
     <>
       {/* Hero */}
@@ -146,9 +148,7 @@ export function ArticuloDetalle({ articulo }: ArticuloDetalleProps) {
       </div>
 
       {/* Related articles */}
-      {articulo.relacionados && articulo.relacionados.length > 0 && (
-        <ArticuloRelacionados slugs={articulo.relacionados} />
-      )}
+      {relacionados.length > 0 && <ArticuloRelacionados relacionados={relacionados} />}
 
       <BlogCTA />
     </>
